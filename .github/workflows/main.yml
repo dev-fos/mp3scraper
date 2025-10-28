@@ -12,3 +12,9 @@ jobs:
 
     - name: Run the executable
       run: .\mp3scraper\bin\Release\mp3scraper.exe  # Adjust path and arguments as needed
+ 
+    - name: Upload generated file
+      uses: actions/upload-artifact@v4
+      with:
+        name: my-generated-file
+        path: .\mp3scraper\bin\Release\podcasts\ # Replace with the actual path
