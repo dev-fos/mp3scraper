@@ -5,18 +5,25 @@ on: [push]
 jobs:
   run-exe:
     runs-on: windows-latest # Use a Windows runner
-
+    outputs:
+      output1: ${{ steps.run.outputs.artifact-id }}
     steps:
     - name: Checkout repository
+      id: run
       uses: actions/checkout@v4 # Get your repository content
 
     - name: Run the executable
       run: .\mp3scraper\bin\Release\mp3scraper.exe  # Adjust path and arguments as needed
- 
-    - name: Upload generated file
+      
+  upload:
+    runs-on: windows-latest # Use a Windows runner
+    needs: run-exe
+      
+    steps:
+    - name: Upload generated file      
       uses: actions/upload-artifact@v4
       with:
-        name: my-generated-file
+        name: ${{needs.run-exe.outputs.output1}}
         path: .\mp3scraper\bin\Release\podcasts\ # Replace with the actual path
-        compression-level: 0
+        compression-level: 9
         if-no-files-found: ignore
