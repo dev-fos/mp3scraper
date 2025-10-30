@@ -17,4 +17,6 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: my-generated-file
-        path: .\mp3scraper\bin\Release\podcasts\ # Replace with the actual path
+        path: /mp3scraper/bin/Release/podcasts/ # Replace with the actual path
+        compression-level: 0
+        if-no-files-found: ignore
