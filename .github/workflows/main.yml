@@ -9,10 +9,10 @@ jobs:
       output1: ${{ steps.run.outputs.artifact-id }}
     steps:
     - name: Checkout repository
-      id: run
       uses: actions/checkout@v4 # Get your repository content
 
     - name: Run the executable
+      id : run
       run: .\mp3scraper\bin\Release\mp3scraper.exe  # Adjust path and arguments as needed
       
   upload:
