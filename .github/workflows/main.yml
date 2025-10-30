@@ -20,6 +20,10 @@ jobs:
     needs: run-exe
       
     steps:
+    - name: Checkout repository
+      id: run
+      uses: actions/checkout@v4 # Get your repository content
+
     - name: Upload generated file      
       uses: actions/upload-artifact@v4
       with:
