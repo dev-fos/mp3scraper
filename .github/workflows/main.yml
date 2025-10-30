@@ -27,7 +27,7 @@ jobs:
     - name: Upload generated file      
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ steps.upload.outputs.artifact-id }} #${{ needs.run-exe.outputs.output1 }}
+        name: ${{ steps.f.outputs.artifact-id }} #${{ needs.run-exe.outputs.output1 }}
         path: .\mp3scraper\bin\Release\podcasts\ # Replace with the actual path
         compression-level: 9
         if-no-files-found: ignore
