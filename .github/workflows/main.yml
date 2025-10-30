@@ -20,13 +20,14 @@ jobs:
     needs: run-exe
       
     steps:
-    - name: Checkout repository
+    - name: Checkout repositor
+      id : f
       uses: actions/checkout@v4 # Get your repository content
 
     - name: Upload generated file      
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ needs.run-exe.outputs.output1 }}
+        name: ${{ steps.upload.outputs.artifact-id }} #${{ needs.run-exe.outputs.output1 }}
         path: .\mp3scraper\bin\Release\podcasts\ # Replace with the actual path
         compression-level: 9
         if-no-files-found: ignore
