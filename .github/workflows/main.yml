@@ -30,7 +30,7 @@ jobs:
         if-no-files-found: ignore
 
       # 4️⃣ إضافة الملف المُولَّد إلى المستودع نفسه
-      - name: Commit generated files back to repo
+     - name: Commit generated files back to repo
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
