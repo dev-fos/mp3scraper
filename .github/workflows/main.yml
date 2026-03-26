@@ -30,6 +30,7 @@ jobs:
 
       # 4️⃣ إضافة الملف المُولَّد إلى المستودع نفسه
       - name: Commit generated files back to repo
+        shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
