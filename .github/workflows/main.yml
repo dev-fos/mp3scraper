@@ -25,7 +25,7 @@ jobs:
         with:
           name: ${{ github.run_id }}
           path: .\mp3scraper\bin\Release\podcasts\
-          archive: false
+       #   archive: false
           compression-level: 9
           if-no-files-found: ignore
 
