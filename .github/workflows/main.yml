@@ -21,10 +21,11 @@ jobs:
         run: .\mp3scraper\bin\Release\mp3scraper.exe
 
       - name: Upload generated file
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ github.run_id }}
           path: .\mp3scraper\bin\Release\podcasts\
+          archive: false
           compression-level: 9
           if-no-files-found: ignore
 
