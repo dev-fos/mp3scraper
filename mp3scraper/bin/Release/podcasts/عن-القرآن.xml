@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:a10="http://www.w3.org/2005/Atom" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:media="http://search.yahoo.com/mrss/" xmlns:podcast="https://podcastindex.org/namespace/1.0" version="2.0">
+  <channel permissionRevoked="" notes="">
+    <title>عن القرآن | د. أحمد عبدالمنعم</title>
+    <link>https://www.youtube.com/playlist?list=PLnpYU8_AiEPewP5IKNKO2Wr8x_s6LG6b5</link>
+    <description>سلسلة عن القرآن .</description>
+    <language>ar</language>
+    <lastBuildDate>Mon, 30 Mar 2026 16:39:04 Z</lastBuildDate>
+    <generator>mp3scraper v2023.9.19.0, mp3scrApi v2022.5.6.1, by Gary Gocek, http://www.gocek.org/software/</generator>
+    <itunes:image href="https://i1.sndcdn.com/avatars-FyM2PHY0J4urU4rS-5ySxYQ-t1080x1080.jpg" />
+    <itunes:category text="Religion &amp; Spirituality">
+      <itunes:category text="Islam" />
+    </itunes:category>
+    <itunes:explicit>False</itunes:explicit>
+    <itunes:title>عن القرآن | د. أحمد عبدالمنعم</itunes:title>
+    <itunes:author>إسلام بودكاست</itunes:author>
+    <itunes:complete>Yes</itunes:complete>
+    <itunes:type>Serial</itunes:type>
+    <image>
+      <url>https://i1.sndcdn.com/avatars-FyM2PHY0J4urU4rS-5ySxYQ-t1080x1080.jpg</url>
+      <title>عن القرآن | د. أحمد عبدالمنعم</title>
+      <link>https://www.youtube.com/playlist?list=PLnpYU8_AiEPewP5IKNKO2Wr8x_s6LG6b5</link>
+    </image>
+  </channel>
+</rss>
