@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:a10="http://www.w3.org/2005/Atom" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:media="http://search.yahoo.com/mrss/" xmlns:podcast="https://podcastindex.org/namespace/1.0" version="2.0">
+  <channel permissionRevoked="" notes="">
+    <title>رسائل الفجر - الموسم الأول | د. شريف طه يونس</title>
+    <link>http://www.youtube.com/@BelWahinhya</link>
+    <description>سلسلة رسائل الفجر - الموسم الأول
+ .</description>
+    <language>ar</language>
+    <lastBuildDate>Thu, 09 Apr 2026 10:44:17 Z</lastBuildDate>
+    <generator>mp3scraper v2023.9.19.0, mp3scrApi v2022.5.6.1, by Gary Gocek, http://www.gocek.org/software/</generator>
+    <itunes:image href="https://raw.githubusercontent.com/dev-fos/islampodcast/main/%D8%B4%D8%B1%D9%8A%D9%81-%D8%B7%D9%87-%D9%8A%D9%88%D9%86%D8%B3/SherifTahaYounos.jpg" />
+    <itunes:category text="Religion &amp; Spirituality">
+      <itunes:category text="Islam" />
+    </itunes:category>
+    <itunes:explicit>False</itunes:explicit>
+    <itunes:title>رسائل الفجر - الموسم الأول | د. شريف طه يونس</itunes:title>
+    <itunes:author>إسلام بودكاست</itunes:author>
+    <itunes:complete>Yes</itunes:complete>
+    <itunes:type>Serial</itunes:type>
+    <image>
+      <url>https://raw.githubusercontent.com/dev-fos/islampodcast/main/%D8%B4%D8%B1%D9%8A%D9%81-%D8%B7%D9%87-%D9%8A%D9%88%D9%86%D8%B3/SherifTahaYounos.jpg</url>
+      <title>رسائل الفجر - الموسم الأول | د. شريف طه يونس</title>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+    </image>
+    <item>
+      <guid isPermaLink="false">رسائل الفجر - الموسم الأول - 01_برومو رسائل الفجرلد.شريف طه يونس</guid>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+      <title>01_برومو رسائل الفجرلد.شريف طه يونس</title>
+      <description>• سلسلة : رسائل الفجر - الموسم الأول
+
+• د. شريف طه يونس
+
+• للمزيد , تابعنا على قناة التيليجرام :
+https://t.me/islampodcast1
+</description>
+      <pubDate>Thu, 09 Apr 2026 02:47:21 Z</pubDate>
+      <enclosure url="http://archive.org/download/islampodcst-UCvelOcVWHNVG0qMds2N1E3A-PL7_Jp3gcxeGndUeYX8FRfzh56k6mt2u89/01_%D8%A8%D8%B1%D9%88%D9%85%D9%88%20%D8%B1%D8%B3%D8%A7%D8%A6%D9%84%20%D8%A7%D9%84%D9%81%D8%AC%D8%B1%D9%84%D8%AF.%D8%B4%D8%B1%D9%8A%D9%81%20%D8%B7%D9%87%20%D9%8A%D9%88%D9%86%D8%B3.mp3" type="audio/mpeg" length="6614829" />
+      <a10:updated>2026-04-09T02:47:21Z</a10:updated>
+      <itunes:duration>413</itunes:duration>
+      <itunes:episode>1</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:title>01_برومو رسائل الفجرلد.شريف طه يونس</itunes:title>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+    </item>
+    <item>
+      <guid isPermaLink="false">رسائل الفجر - الموسم الأول - 02_رسائل الفجر 1 لد.شريف طه يونس</guid>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+      <title>02_رسائل الفجر 1 لد.شريف طه يونس</title>
+      <description>• سلسلة : رسائل الفجر - الموسم الأول
+
+• د. شريف طه يونس
+
+• للمزيد , تابعنا على قناة التيليجرام :
+https://t.me/islampodcast1
+</description>
+      <pubDate>Thu, 09 Apr 2026 02:46:36 Z</pubDate>
+      <enclosure url="http://archive.org/download/islampodcst-UCvelOcVWHNVG0qMds2N1E3A-PL7_Jp3gcxeGndUeYX8FRfzh56k6mt2u89/02_%D8%B1%D8%B3%D8%A7%D8%A6%D9%84%20%D8%A7%D9%84%D9%81%D8%AC%D8%B1%201%20%D9%84%D8%AF.%D8%B4%D8%B1%D9%8A%D9%81%20%D8%B7%D9%87%20%D9%8A%D9%88%D9%86%D8%B3.mp3" type="audio/mpeg" length="16759725" />
+      <a10:updated>2026-04-09T02:46:36Z</a10:updated>
+      <itunes:duration>1047</itunes:duration>
+      <itunes:episode>2</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:title>02_رسائل الفجر 1 لد.شريف طه يونس</itunes:title>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+    </item>
+    <item>
+      <guid isPermaLink="false">رسائل الفجر - الموسم الأول - 03_رسائل الفجر 2 لد.شريف طه يونس</guid>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+      <title>03_رسائل الفجر 2 لد.شريف طه يونس</title>
+      <description>• سلسلة : رسائل الفجر - الموسم الأول
+
+• د. شريف طه يونس
+
+• للمزيد , تابعنا على قناة التيليجرام :
+https://t.me/islampodcast1
+</description>
+      <pubDate>Thu, 09 Apr 2026 02:46:14 Z</pubDate>
+      <enclosure url="http://archive.org/download/islampodcst-UCvelOcVWHNVG0qMds2N1E3A-PL7_Jp3gcxeGndUeYX8FRfzh56k6mt2u89/03_%D8%B1%D8%B3%D8%A7%D8%A6%D9%84%20%D8%A7%D9%84%D9%81%D8%AC%D8%B1%202%20%D9%84%D8%AF.%D8%B4%D8%B1%D9%8A%D9%81%20%D8%B7%D9%87%20%D9%8A%D9%88%D9%86%D8%B3.mp3" type="audio/mpeg" length="16162605" />
+      <a10:updated>2026-04-09T02:46:14Z</a10:updated>
+      <itunes:duration>1010</itunes:duration>
+      <itunes:episode>3</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:title>03_رسائل الفجر 2 لد.شريف طه يونس</itunes:title>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+    </item>
+    <item>
+      <guid isPermaLink="false">رسائل الفجر - الموسم الأول - 04_رسائل الفجر 3 لد.شريف طه يونس</guid>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+      <title>04_رسائل الفجر 3 لد.شريف طه يونس</title>
+      <description>• سلسلة : رسائل الفجر - الموسم الأول
+
+• د. شريف طه يونس
+
+• للمزيد , تابعنا على قناة التيليجرام :
+https://t.me/islampodcast1
+</description>
+      <pubDate>Thu, 09 Apr 2026 02:47:27 Z</pubDate>
+      <enclosure url="http://archive.org/download/islampodcst-UCvelOcVWHNVG0qMds2N1E3A-PL7_Jp3gcxeGndUeYX8FRfzh56k6mt2u89/04_%D8%B1%D8%B3%D8%A7%D8%A6%D9%84%20%D8%A7%D9%84%D9%81%D8%AC%D8%B1%203%20%D9%84%D8%AF.%D8%B4%D8%B1%D9%8A%D9%81%20%D8%B7%D9%87%20%D9%8A%D9%88%D9%86%D8%B3.mp3" type="audio/mpeg" length="16975149" />
+      <a10:updated>2026-04-09T02:47:27Z</a10:updated>
+      <itunes:duration>1060</itunes:duration>
+      <itunes:episode>4</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:title>04_رسائل الفجر 3 لد.شريف طه يونس</itunes:title>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+    </item>
+    <item>
+      <guid isPermaLink="false">رسائل الفجر - الموسم الأول - 05_رسائل الفجر 4 لد.شريف طه يونس</guid>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+      <title>05_رسائل الفجر 4 لد.شريف طه يونس</title>
+      <description>• سلسلة : رسائل الفجر - الموسم الأول
+
+• د. شريف طه يونس
+
+• للمزيد , تابعنا على قناة التيليجرام :
+https://t.me/islampodcast1
+</description>
+      <pubDate>Thu, 09 Apr 2026 02:46:45 Z</pubDate>
+      <enclosure url="http://archive.org/download/islampodcst-UCvelOcVWHNVG0qMds2N1E3A-PL7_Jp3gcxeGndUeYX8FRfzh56k6mt2u89/05_%D8%B1%D8%B3%D8%A7%D8%A6%D9%84%20%D8%A7%D9%84%D9%81%D8%AC%D8%B1%204%20%D9%84%D8%AF.%D8%B4%D8%B1%D9%8A%D9%81%20%D8%B7%D9%87%20%D9%8A%D9%88%D9%86%D8%B3.mp3" type="audio/mpeg" length="19388433" />
+      <a10:updated>2026-04-09T02:46:45Z</a10:updated>
+      <itunes:duration>1211</itunes:duration>
+      <itunes:episode>5</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:title>05_رسائل الفجر 4 لد.شريف طه يونس</itunes:title>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+    </item>
+    <item>
+      <guid isPermaLink="false">رسائل الفجر - الموسم الأول - 06_رسائل الفجر 5 لد.شريف طه يونس</guid>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+      <title>06_رسائل الفجر 5 لد.شريف طه يونس</title>
+      <description>• سلسلة : رسائل الفجر - الموسم الأول
+
+• د. شريف طه يونس
+
+• للمزيد , تابعنا على قناة التيليجرام :
+https://t.me/islampodcast1
+</description>
+      <pubDate>Thu, 09 Apr 2026 02:46:52 Z</pubDate>
+      <enclosure url="http://archive.org/download/islampodcst-UCvelOcVWHNVG0qMds2N1E3A-PL7_Jp3gcxeGndUeYX8FRfzh56k6mt2u89/06_%D8%B1%D8%B3%D8%A7%D8%A6%D9%84%20%D8%A7%D9%84%D9%81%D8%AC%D8%B1%205%20%D9%84%D8%AF.%D8%B4%D8%B1%D9%8A%D9%81%20%D8%B7%D9%87%20%D9%8A%D9%88%D9%86%D8%B3.mp3" type="audio/mpeg" length="17657133" />
+      <a10:updated>2026-04-09T02:46:52Z</a10:updated>
+      <itunes:duration>1103</itunes:duration>
+      <itunes:episode>6</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:title>06_رسائل الفجر 5 لد.شريف طه يونس</itunes:title>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+    </item>
+    <item>
+      <guid isPermaLink="false">رسائل الفجر - الموسم الأول - 07_رسائل الفجر 6 لد.شريف طه يونس</guid>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+      <title>07_رسائل الفجر 6 لد.شريف طه يونس</title>
+      <description>• سلسلة : رسائل الفجر - الموسم الأول
+
+• د. شريف طه يونس
+
+• للمزيد , تابعنا على قناة التيليجرام :
+https://t.me/islampodcast1
+</description>
+      <pubDate>Thu, 09 Apr 2026 02:47:00 Z</pubDate>
+      <enclosure url="http://archive.org/download/islampodcst-UCvelOcVWHNVG0qMds2N1E3A-PL7_Jp3gcxeGndUeYX8FRfzh56k6mt2u89/07_%D8%B1%D8%B3%D8%A7%D8%A6%D9%84%20%D8%A7%D9%84%D9%81%D8%AC%D8%B1%206%20%D9%84%D8%AF.%D8%B4%D8%B1%D9%8A%D9%81%20%D8%B7%D9%87%20%D9%8A%D9%88%D9%86%D8%B3.mp3" type="audio/mpeg" length="16602669" />
+      <a10:updated>2026-04-09T02:47:00Z</a10:updated>
+      <itunes:duration>1037</itunes:duration>
+      <itunes:episode>7</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:title>07_رسائل الفجر 6 لد.شريف طه يونس</itunes:title>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+    </item>
+    <item>
+      <guid isPermaLink="false">رسائل الفجر - الموسم الأول - 08_رسائل الفجر 7 لد.شريف طه يونس</guid>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+      <title>08_رسائل الفجر 7 لد.شريف طه يونس</title>
+      <description>• سلسلة : رسائل الفجر - الموسم الأول
+
+• د. شريف طه يونس
+
+• للمزيد , تابعنا على قناة التيليجرام :
+https://t.me/islampodcast1
+</description>
+      <pubDate>Thu, 09 Apr 2026 02:47:09 Z</pubDate>
+      <enclosure url="http://archive.org/download/islampodcst-UCvelOcVWHNVG0qMds2N1E3A-PL7_Jp3gcxeGndUeYX8FRfzh56k6mt2u89/08_%D8%B1%D8%B3%D8%A7%D8%A6%D9%84%20%D8%A7%D9%84%D9%81%D8%AC%D8%B1%207%20%D9%84%D8%AF.%D8%B4%D8%B1%D9%8A%D9%81%20%D8%B7%D9%87%20%D9%8A%D9%88%D9%86%D8%B3.mp3" type="audio/mpeg" length="17543469" />
+      <a10:updated>2026-04-09T02:47:09Z</a10:updated>
+      <itunes:duration>1096</itunes:duration>
+      <itunes:episode>8</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:title>08_رسائل الفجر 7 لد.شريف طه يونس</itunes:title>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+    </item>
+    <item>
+      <guid isPermaLink="false">رسائل الفجر - الموسم الأول - 09_رسائل الفجر 8 لد. شريف طه يونس</guid>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+      <title>09_رسائل الفجر 8 لد. شريف طه يونس</title>
+      <description>• سلسلة : رسائل الفجر - الموسم الأول
+
+• د. شريف طه يونس
+
+• للمزيد , تابعنا على قناة التيليجرام :
+https://t.me/islampodcast1
+</description>
+      <pubDate>Thu, 09 Apr 2026 02:47:16 Z</pubDate>
+      <enclosure url="http://archive.org/download/islampodcst-UCvelOcVWHNVG0qMds2N1E3A-PL7_Jp3gcxeGndUeYX8FRfzh56k6mt2u89/09_%D8%B1%D8%B3%D8%A7%D8%A6%D9%84%20%D8%A7%D9%84%D9%81%D8%AC%D8%B1%208%20%D9%84%D8%AF.%20%D8%B4%D8%B1%D9%8A%D9%81%20%D8%B7%D9%87%20%D9%8A%D9%88%D9%86%D8%B3.mp3" type="audio/mpeg" length="18747309" />
+      <a10:updated>2026-04-09T02:47:16Z</a10:updated>
+      <itunes:duration>1171</itunes:duration>
+      <itunes:episode>9</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:title>09_رسائل الفجر 8 لد. شريف طه يونس</itunes:title>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+    </item>
+    <item>
+      <guid isPermaLink="false">رسائل الفجر - الموسم الأول - 10_رسائل الفجر 9 لد.شريف طه يونس</guid>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+      <title>10_رسائل الفجر 9 لد.شريف طه يونس</title>
+      <description>• سلسلة : رسائل الفجر - الموسم الأول
+
+• د. شريف طه يونس
+
+• للمزيد , تابعنا على قناة التيليجرام :
+https://t.me/islampodcast1
+</description>
+      <pubDate>Thu, 09 Apr 2026 02:47:27 Z</pubDate>
+      <enclosure url="http://archive.org/download/islampodcst-UCvelOcVWHNVG0qMds2N1E3A-PL7_Jp3gcxeGndUeYX8FRfzh56k6mt2u89/10_%D8%B1%D8%B3%D8%A7%D8%A6%D9%84%20%D8%A7%D9%84%D9%81%D8%AC%D8%B1%209%20%D9%84%D8%AF.%D8%B4%D8%B1%D9%8A%D9%81%20%D8%B7%D9%87%20%D9%8A%D9%88%D9%86%D8%B3.mp3" type="audio/mpeg" length="20815346" />
+      <a10:updated>2026-04-09T02:47:27Z</a10:updated>
+      <itunes:duration>1300</itunes:duration>
+      <itunes:episode>10</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:title>10_رسائل الفجر 9 لد.شريف طه يونس</itunes:title>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+    </item>
+    <item>
+      <guid isPermaLink="false">رسائل الفجر - الموسم الأول - 11_رسائل الفجر 10 لد.شريف طه يونس</guid>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+      <title>11_رسائل الفجر 10 لد.شريف طه يونس</title>
+      <description>• سلسلة : رسائل الفجر - الموسم الأول
+
+• د. شريف طه يونس
+
+• للمزيد , تابعنا على قناة التيليجرام :
+https://t.me/islampodcast1
+</description>
+      <pubDate>Thu, 09 Apr 2026 02:47:28 Z</pubDate>
+      <enclosure url="http://archive.org/download/islampodcst-UCvelOcVWHNVG0qMds2N1E3A-PL7_Jp3gcxeGndUeYX8FRfzh56k6mt2u89/11_%D8%B1%D8%B3%D8%A7%D8%A6%D9%84%20%D8%A7%D9%84%D9%81%D8%AC%D8%B1%2010%20%D9%84%D8%AF.%D8%B4%D8%B1%D9%8A%D9%81%20%D8%B7%D9%87%20%D9%8A%D9%88%D9%86%D8%B3.mp3" type="audio/mpeg" length="25682349" />
+      <a10:updated>2026-04-09T02:47:28Z</a10:updated>
+      <itunes:duration>1605</itunes:duration>
+      <itunes:episode>11</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:title>11_رسائل الفجر 10 لد.شريف طه يونس</itunes:title>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+    </item>
+    <item>
+      <guid isPermaLink="false">رسائل الفجر - الموسم الأول - 12_رسائل الفجر 13 لد.شريف طه يونس</guid>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+      <title>12_رسائل الفجر 13 لد.شريف طه يونس</title>
+      <description>• سلسلة : رسائل الفجر - الموسم الأول
+
+• د. شريف طه يونس
+
+• للمزيد , تابعنا على قناة التيليجرام :
+https://t.me/islampodcast1
+</description>
+      <pubDate>Thu, 09 Apr 2026 02:47:30 Z</pubDate>
+      <enclosure url="http://archive.org/download/islampodcst-UCvelOcVWHNVG0qMds2N1E3A-PL7_Jp3gcxeGndUeYX8FRfzh56k6mt2u89/12_%D8%B1%D8%B3%D8%A7%D8%A6%D9%84%20%D8%A7%D9%84%D9%81%D8%AC%D8%B1%2013%20%D9%84%D8%AF.%D8%B4%D8%B1%D9%8A%D9%81%20%D8%B7%D9%87%20%D9%8A%D9%88%D9%86%D8%B3.mp3" type="audio/mpeg" length="21474093" />
+      <a10:updated>2026-04-09T02:47:30Z</a10:updated>
+      <itunes:duration>1342</itunes:duration>
+      <itunes:episode>12</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:title>12_رسائل الفجر 13 لد.شريف طه يونس</itunes:title>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+    </item>
+    <item>
+      <guid isPermaLink="false">رسائل الفجر - الموسم الأول - 13_رسائل الفجر 14 لد شريف طه يونس</guid>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+      <title>13_رسائل الفجر 14 لد شريف طه يونس</title>
+      <description>• سلسلة : رسائل الفجر - الموسم الأول
+
+• د. شريف طه يونس
+
+• للمزيد , تابعنا على قناة التيليجرام :
+https://t.me/islampodcast1
+</description>
+      <pubDate>Thu, 09 Apr 2026 02:47:32 Z</pubDate>
+      <enclosure url="http://archive.org/download/islampodcst-UCvelOcVWHNVG0qMds2N1E3A-PL7_Jp3gcxeGndUeYX8FRfzh56k6mt2u89/13_%D8%B1%D8%B3%D8%A7%D8%A6%D9%84%20%D8%A7%D9%84%D9%81%D8%AC%D8%B1%2014%20%D9%84%D8%AF%20%D8%B4%D8%B1%D9%8A%D9%81%20%D8%B7%D9%87%20%D9%8A%D9%88%D9%86%D8%B3.mp3" type="audio/mpeg" length="12593325" />
+      <a10:updated>2026-04-09T02:47:32Z</a10:updated>
+      <itunes:duration>787</itunes:duration>
+      <itunes:episode>13</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:title>13_رسائل الفجر 14 لد شريف طه يونس</itunes:title>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+    </item>
+    <item>
+      <guid isPermaLink="false">رسائل الفجر - الموسم الأول - 14_رسالة الفجر الحلقة 15</guid>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+      <title>14_رسالة الفجر الحلقة 15</title>
+      <description>• سلسلة : رسائل الفجر - الموسم الأول
+
+• د. شريف طه يونس
+
+• للمزيد , تابعنا على قناة التيليجرام :
+https://t.me/islampodcast1
+</description>
+      <pubDate>Thu, 09 Apr 2026 02:47:33 Z</pubDate>
+      <enclosure url="http://archive.org/download/islampodcst-UCvelOcVWHNVG0qMds2N1E3A-PL7_Jp3gcxeGndUeYX8FRfzh56k6mt2u89/14_%D8%B1%D8%B3%D8%A7%D9%84%D8%A9%20%D8%A7%D9%84%D9%81%D8%AC%D8%B1%20%D8%A7%D9%84%D8%AD%D9%84%D9%82%D8%A9%2015.mp3" type="audio/mpeg" length="18245421" />
+      <a10:updated>2026-04-09T02:47:33Z</a10:updated>
+      <itunes:duration>1140</itunes:duration>
+      <itunes:episode>14</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:title>14_رسالة الفجر الحلقة 15</itunes:title>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+    </item>
+    <item>
+      <guid isPermaLink="false">رسائل الفجر - الموسم الأول - 15_رسائل الفجر 16 لد شريف طه يونس</guid>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+      <title>15_رسائل الفجر 16 لد شريف طه يونس</title>
+      <description>• سلسلة : رسائل الفجر - الموسم الأول
+
+• د. شريف طه يونس
+
+• للمزيد , تابعنا على قناة التيليجرام :
+https://t.me/islampodcast1
+</description>
+      <pubDate>Thu, 09 Apr 2026 02:47:33 Z</pubDate>
+      <enclosure url="http://archive.org/download/islampodcst-UCvelOcVWHNVG0qMds2N1E3A-PL7_Jp3gcxeGndUeYX8FRfzh56k6mt2u89/15_%D8%B1%D8%B3%D8%A7%D8%A6%D9%84%20%D8%A7%D9%84%D9%81%D8%AC%D8%B1%2016%20%D9%84%D8%AF%20%D8%B4%D8%B1%D9%8A%D9%81%20%D8%B7%D9%87%20%D9%8A%D9%88%D9%86%D8%B3.mp3" type="audio/mpeg" length="18913632" />
+      <a10:updated>2026-04-09T02:47:33Z</a10:updated>
+      <itunes:duration>1182</itunes:duration>
+      <itunes:episode>15</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:title>15_رسائل الفجر 16 لد شريف طه يونس</itunes:title>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+    </item>
+    <item>
+      <guid isPermaLink="false">رسائل الفجر - الموسم الأول - 16_رسالة الفجر الحلقة 17 لد  شريف طه يونس</guid>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+      <title>16_رسالة الفجر الحلقة 17 لد  شريف طه يونس</title>
+      <description>• سلسلة : رسائل الفجر - الموسم الأول
+
+• د. شريف طه يونس
+
+• للمزيد , تابعنا على قناة التيليجرام :
+https://t.me/islampodcast1
+</description>
+      <pubDate>Thu, 09 Apr 2026 02:47:34 Z</pubDate>
+      <enclosure url="http://archive.org/download/islampodcst-UCvelOcVWHNVG0qMds2N1E3A-PL7_Jp3gcxeGndUeYX8FRfzh56k6mt2u89/16_%D8%B1%D8%B3%D8%A7%D9%84%D8%A9%20%D8%A7%D9%84%D9%81%D8%AC%D8%B1%20%D8%A7%D9%84%D8%AD%D9%84%D9%82%D8%A9%2017%20%D9%84%D8%AF%20%20%D8%B4%D8%B1%D9%8A%D9%81%20%D8%B7%D9%87%20%D9%8A%D9%88%D9%86%D8%B3.mp3" type="audio/mpeg" length="25602093" />
+      <a10:updated>2026-04-09T02:47:34Z</a10:updated>
+      <itunes:duration>1600</itunes:duration>
+      <itunes:episode>16</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:title>16_رسالة الفجر الحلقة 17 لد  شريف طه يونس</itunes:title>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+    </item>
+    <item>
+      <guid isPermaLink="false">رسائل الفجر - الموسم الأول - 17_رسائل الفجر 18</guid>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+      <title>17_رسائل الفجر 18</title>
+      <description>• سلسلة : رسائل الفجر - الموسم الأول
+
+• د. شريف طه يونس
+
+• للمزيد , تابعنا على قناة التيليجرام :
+https://t.me/islampodcast1
+</description>
+      <pubDate>Thu, 09 Apr 2026 02:47:36 Z</pubDate>
+      <enclosure url="http://archive.org/download/islampodcst-UCvelOcVWHNVG0qMds2N1E3A-PL7_Jp3gcxeGndUeYX8FRfzh56k6mt2u89/17_%D8%B1%D8%B3%D8%A7%D8%A6%D9%84%20%D8%A7%D9%84%D9%81%D8%AC%D8%B1%2018.mp3" type="audio/mpeg" length="13585581" />
+      <a10:updated>2026-04-09T02:47:36Z</a10:updated>
+      <itunes:duration>849</itunes:duration>
+      <itunes:episode>17</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:title>17_رسائل الفجر 18</itunes:title>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+    </item>
+    <item>
+      <guid isPermaLink="false">رسائل الفجر - الموسم الأول - 18_رسائل الفجر 19</guid>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+      <title>18_رسائل الفجر 19</title>
+      <description>• سلسلة : رسائل الفجر - الموسم الأول
+
+• د. شريف طه يونس
+
+• للمزيد , تابعنا على قناة التيليجرام :
+https://t.me/islampodcast1
+</description>
+      <pubDate>Thu, 09 Apr 2026 02:47:37 Z</pubDate>
+      <enclosure url="http://archive.org/download/islampodcst-UCvelOcVWHNVG0qMds2N1E3A-PL7_Jp3gcxeGndUeYX8FRfzh56k6mt2u89/18_%D8%B1%D8%B3%D8%A7%D8%A6%D9%84%20%D8%A7%D9%84%D9%81%D8%AC%D8%B1%2019.mp3" type="audio/mpeg" length="13246125" />
+      <a10:updated>2026-04-09T02:47:37Z</a10:updated>
+      <itunes:duration>827</itunes:duration>
+      <itunes:episode>18</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:title>18_رسائل الفجر 19</itunes:title>
+      <link>http://www.youtube.com/@BelWahinhya</link>
+    </item>
+  </channel>
+</rss>
