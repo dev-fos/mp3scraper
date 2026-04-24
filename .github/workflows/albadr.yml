@@ -2,8 +2,8 @@ name: HTML
 
 on:
   workflow_dispatch:        # تشغيل يدوي
-  schedule:
-    - cron: '0 6 * * *'    # تشغيل يومي (اختياري)
+  push:
+    branches: [ dev ]          # أو أي فرع تريد تشغيل الإجراء عليه
 
 jobs:
   fetch-and-extract:
