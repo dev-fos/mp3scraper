@@ -42,7 +42,7 @@ jobs:
       - name: Extract required lines
         id: extract
         run: |
-          grep -n "<h3" "${{ steps.download.outputs.file }}" > h3_lines.txt
+          grep -n "<h3>" "${{ steps.download.outputs.file }}" > h3_lines.txt
           grep -n "\.mp3" "${{ steps.download.outputs.file }}" > mp3_lines.txt
           cat h3_lines.txt mp3_lines.txt > result.txt
           echo "=== النتائج ==="
