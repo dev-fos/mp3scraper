@@ -5,25 +5,36 @@ on:
     branches: [ dev ] 
   workflow_dispatch:        # تشغيل يدوي
 
-
 jobs:
   fetch-and-extract:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ استرجاع رقم الصفحة الأخير من ملف التخزين (إن وجد)
+      # -------------------------------------------------
+      # 1️⃣ جلب نسخة من المستودع (مطلوب للـ git commit)
+      # -------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # احصل على التاريخ الكامل للسماح بالـ push
+          fetch-depth: 0
+
+      # -------------------------------------------------
+      # 2️⃣ قراءة رقم الصفحة الأخير (أو البدء من 360)
+      # -------------------------------------------------
       - name: Get last page number
         id: get_page
         run: |
-          # إذا كان ملف next_page.txt موجودًا في المستودع، استخدم قيمته
-          if [[ -f mp3scraper/bin/Release/podcasts/next_page.txt ]]; then
-            PAGE=$(cat mp3scraper/bin/Release/podcasts/next_page.txt)
+          if [[ -f data/next_page.txt ]]; then
+            PAGE=$(cat data/next_page.txt)
           else
-            PAGE=367                 # الصفحة الأولية إذا لم يوجد ملف
+            PAGE=360
           fi
           echo "page=${PAGE}" >> $GITHUB_OUTPUT
 
-      # 2️⃣ بناء الرابط مع رقم الصفحة الحالي
+      # -------------------------------------------------
+      # 3️⃣ بناء الرابط الكامل
+      # -------------------------------------------------
       - name: Build URL
         id: build_url
         run: |
@@ -32,14 +43,18 @@ jobs:
           echo "url=${URL}" >> $GITHUB_OUTPUT
           echo "Using page ${{ steps.get_page.outputs.page }} → $URL"
 
-      # 3️⃣ جلب الصفحة HTML
+      # -------------------------------------------------
+      # 4️⃣ تحميل الصفحة HTML
+      # -------------------------------------------------
       - name: Download HTML page
         id: download
         run: |
           curl -sSL "${{ steps.build_url.outputs.url }}" -o page.html
           echo "file=page.html" >> $GITHUB_OUTPUT
 
-      # 4️⃣ استخراج الأسطر المطلوبة
+      # -------------------------------------------------
+      # 5️⃣ استخراج الأسطر المطلوبة
+      # -------------------------------------------------
       - name: Extract required lines
         id: extract
         run: |
@@ -49,26 +64,35 @@ jobs:
           echo "=== النتائج ==="
           cat result.txt
 
-      # 5️⃣ رفع النتيجة كـ artifact
+      # -------------------------------------------------
+      # 6️⃣ رفع النتيجة كـ artifact (اختياري)
+      # -------------------------------------------------
       - name: Upload result
         uses: actions/upload-artifact@v4
         with:
           name: extraction-result
           path: result.txt
 
-      # 6️⃣ حساب رقم الصفحة التالي وتحديث الملف في المستودع
-      - name: Prepare next page file
+      # -------------------------------------------------
+      # 7️⃣ حساب رقم الصفحة التالي وكتابته في الملف
+      # -------------------------------------------------
+      - name: Prepare next_page.txt
         id: prep_next
         run: |
           NEXT=$(( ${{ steps.get_page.outputs.page }} + 1 ))
-          echo "$NEXT" > next_page.txt
+          mkdir -p data
+          echo "$NEXT" > data/next_page.txt
           echo "next=$NEXT" >> $GITHUB_OUTPUT
 
-      # 7️⃣ الالتزام بالملف المحدث (next_page.txt)
+      # -------------------------------------------------
+      # 8️⃣ الالتزام بالملف المحدث
+      # -------------------------------------------------
       - name: Commit next_page.txt
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Update next page to ${{ steps.prep_next.outputs.next }}"
-          branch: ${{ github.ref_name }}
-          file_pattern: "mp3scraper/bin/Release/podcasts/next_page.txt"
-          # نكتب الملف داخل .github لتجنب تأثيره على ملفات الكود الأخرى
+          # نمط الملف لتحديد ما سيتم الالتزام به
+          file_pattern: "data/next_page.txt"
+          # إذا كان المستودع خاصًا، تحتاج إلى صلاحيات دفع:
+          #   add `push: true` في إعدادات العمل أو
+          #   استخدم `permissions: contents: write` في أعلى الـ workflow
