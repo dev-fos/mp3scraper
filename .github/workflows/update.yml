@@ -30,10 +30,10 @@ jobs:
               <\?xml\s+version="1\.0"\s+encoding="utf-8"\?>
               .*?
               </image>
-              }{}gx;  
+              }{}gsx;  
             s{
              </channel>\s*</rss>\s*
-              }{}gx;  
+              }{}gsx;  
           ' "$FILE"
 
           # تحقق سريع من النتائج (اختياري)
