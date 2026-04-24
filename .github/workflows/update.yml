@@ -27,8 +27,8 @@ jobs:
         run: |
           perl -0777 -i -pe '
             s{
-               <?xml version="1.0" encoding="utf-8"?>
-              (.*?)
+              <\?xml\s+version="1\.0"\s+encoding="utf-8"\?>
+              .*?
               </image>
               }{}gx;  
             s{
