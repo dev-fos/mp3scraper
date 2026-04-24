@@ -1,4 +1,4 @@
-name: استخراج HTML مع زيادة رقم الصفحة
+name: HTML
 
 on:
   workflow_dispatch:        # تشغيل يدوي
