@@ -27,16 +27,13 @@ jobs:
         run: |
           perl -0777 -i -pe '
             s{
-               <\?xml\s+version="1\.0"\s+encoding="utf-8"\?> 
-              (.*?)            # أي محتوى غير جشع (نلتقطه لكن لا نحتاجه)
-                  </image>
-              }{
-               }gx;                # g = استبدال كل الظهورات، x = مسموح بالمسافات/التعليقات
+               <?xml version="1.0" encoding="utf-8"?>
+              (.*?)
+              </image>
+              }{}gx;  
             s{
-               </channel>
-             </rss>
-              }{
-               }gx;  
+             </channel>\s*</rss>\s*
+              }{}gx;  
           ' "$FILE"
 
           # تحقق سريع من النتائج (اختياري)
