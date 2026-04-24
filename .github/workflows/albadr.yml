@@ -1,6 +1,8 @@
 name: HTML
 
 on:
+  push:
+    branches: [ dev ] 
   workflow_dispatch:        # تشغيل يدوي
 
 jobs:
