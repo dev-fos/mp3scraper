@@ -39,12 +39,9 @@ jobs:
                }gx;  
           ' "$FILE"
 
-          # اختبار سريع للنتيجة
-          if grep -q "ttttt" "$FILE"; then
-            echo "✅ استبدال ناجح"
-          else
-            echo "⚠️ لم يتم العثور على <title> في $FILE"
-          fi
+          # تحقق سريع من النتائج (اختياري)
+          echo "=== عينة من الملف بعد الاستبدال ==="
+          head -n 20 "$FILE"
 
       # 4️⃣ رفع التغييرات (commit+push)
       - name: Commit and push changes
