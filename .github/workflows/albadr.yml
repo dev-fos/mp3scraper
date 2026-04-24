@@ -19,7 +19,7 @@ jobs:
           if [[ -f mp3scraper/bin/Release/podcasts/next_page.txt ]]; then
             PAGE=$(cat mp3scraper/bin/Release/podcasts/next_page.txt)
           else
-            PAGE=360                 # الصفحة الأولية إذا لم يوجد ملف
+            PAGE=367                 # الصفحة الأولية إذا لم يوجد ملف
           fi
           echo "page=${PAGE}" >> $GITHUB_OUTPUT
 
@@ -69,5 +69,6 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Update next page to ${{ steps.prep_next.outputs.next }}"
+          branch: ${{ github.ref_name }}
           file_pattern: "mp3scraper/bin/Release/podcasts/next_page.txt"
           # نكتب الملف داخل .github لتجنب تأثيره على ملفات الكود الأخرى
