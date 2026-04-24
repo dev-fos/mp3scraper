@@ -25,7 +25,7 @@ jobs:
         env:
           FILE: ${{ steps.vars.outputs.FILE }}
         run: |
-          perl -i -pe '
+          perl -0777 -i -pe '
             s{
               <?xml version="1.0" encoding="utf-8"?>
               (.*?)            # أي محتوى غير جشع (نلتقطه لكن لا نحتاجه)
