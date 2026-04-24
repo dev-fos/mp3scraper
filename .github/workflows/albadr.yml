@@ -1,0 +1,72 @@
+name: استخراج HTML مع زيادة رقم الصفحة
+
+on:
+  workflow_dispatch:        # تشغيل يدوي
+  schedule:
+    - cron: '0 6 * * *'    # تشغيل يومي (اختياري)
+
+jobs:
+  fetch-and-extract:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ استرجاع رقم الصفحة الأخير من ملف التخزين (إن وجد)
+      - name: Get last page number
+        id: get_page
+        run: |
+          # إذا كان ملف next_page.txt موجودًا في المستودع، استخدم قيمته
+          if [[ -f .github/next_page.txt ]]; then
+            PAGE=$(cat .github/next_page.txt)
+          else
+            PAGE=360                 # الصفحة الأولية إذا لم يوجد ملف
+          fi
+          echo "page=${PAGE}" >> $GITHUB_OUTPUT
+
+      # 2️⃣ بناء الرابط مع رقم الصفحة الحالي
+      - name: Build URL
+        id: build_url
+        run: |
+          BASE="https://www.al-badr.net/sub/456/?q=&page="
+          URL="${BASE}${{ steps.get_page.outputs.page }}"
+          echo "url=${URL}" >> $GITHUB_OUTPUT
+          echo "Using page ${{ steps.get_page.outputs.page }} → $URL"
+
+      # 3️⃣ جلب الصفحة HTML
+      - name: Download HTML page
+        id: download
+        run: |
+          curl -sSL "${{ steps.build_url.outputs.url }}" -o page.html
+          echo "file=page.html" >> $GITHUB_OUTPUT
+
+      # 4️⃣ استخراج الأسطر المطلوبة
+      - name: Extract required lines
+        id: extract
+        run: |
+          grep -n "<h3" "${{ steps.download.outputs.file }}" > h3_lines.txt
+          grep -n "\.mp3" "${{ steps.download.outputs.file }}" > mp3_lines.txt
+          cat h3_lines.txt mp3_lines.txt > result.txt
+          echo "=== النتائج ==="
+          cat result.txt
+
+      # 5️⃣ رفع النتيجة كـ artifact
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: extraction-result
+          path: result.txt
+
+      # 6️⃣ حساب رقم الصفحة التالي وتحديث الملف في المستودع
+      - name: Prepare next page file
+        id: prep_next
+        run: |
+          NEXT=$(( ${{ steps.get_page.outputs.page }} + 1 ))
+          echo "$NEXT" > next_page.txt
+          echo "next=$NEXT" >> $GITHUB_OUTPUT
+
+      # 7️⃣ الالتزام بالملف المحدث (next_page.txt)
+      - name: Commit next_page.txt
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update next page to ${{ steps.prep_next.outputs.next }}"
+          file_pattern: ".github/next_page.txt"
+          # نكتب الملف داخل .github لتجنب تأثيره على ملفات الكود الأخرى
