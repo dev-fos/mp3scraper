@@ -27,7 +27,7 @@ jobs:
       - name: Search & replace using sed
         run: |
           # ملف‑الهدف (عدّل المسار حسب الحاجة)
-          FILE=mp3scraper/bin/Release/podcasts/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml
+          FILE="mp3scraper/bin/Release/podcasts/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml"
 
           # استبدال كل ظهور للمعرف القديم بالمعرف الجديد
           sed -i "s/${{ env.TARGET_ID }}/${{ env.NEW_ID }}/g" "$FILE"
