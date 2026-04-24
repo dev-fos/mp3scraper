@@ -1,0 +1,46 @@
+name: Search and replace in file
+
+on:
+  push:
+    branches: [ dev ]          # أو أي فرع تريد تشغيل الإجراء عليه
+  workflow_dispatch:           # لتشغيله يدوياً من واجهة GitHub
+
+jobs:
+  replace:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ سحب الشيفرة
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ تعريف المتغيّر الذي يحتوي المعرف المراد استبداله
+      - name: Set variables
+        env:
+          TARGET_ID: "itunes"        # <-- المعرف الأصلي
+          NEW_ID: "its"           # <-- ما تريد استبداله به
+        run: |
+          echo "TARGET_ID=$TARGET_ID" >> $GITHUB_ENV
+          echo "NEW_ID=$NEW_ID" >> $GITHUB_ENV
+
+      # 3️⃣ البحث والاستبدال داخل الملف
+      - name: Search & replace using sed
+        run: |
+          # ملف‑الهدف (عدّل المسار حسب الحاجة)
+          FILE=mp3scraper/bin/Release/podcasts/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml
+
+          # استبدال كل ظهور للمعرف القديم بالمعرف الجديد
+          sed -i "s/${{ env.TARGET_ID }}/${{ env.NEW_ID }}/g" "$FILE"
+
+          # اختبار سريع: عرض السطر الذي تم تغييره
+          grep "${{ env.NEW_ID }}" -n "$FILE" || echo "No match found"
+
+      # 4️⃣ رفع التغييرات إلى الفرع
+      - name: Commit & push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "🔧 استبدال المعرف ${{ env.TARGET_ID }} بـ ${{ env.NEW_ID }}"
+          branch: ${{ github.ref_name }}
+          # إذا كان الفرع محمياً قد تحتاج لإضافة token:
+          # token: ${{ secrets.GITHUB_TOKEN }}
+
