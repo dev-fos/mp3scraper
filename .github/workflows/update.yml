@@ -14,33 +14,41 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ تعريف المتغيّر الذي يحتوي المعرف المراد استبداله
-      - name: Set variables
+      # 2️⃣ تعريف مسار الملف (احرص على وضعه داخل علامات اقتباس)
+      - name: Define file path
+        id: vars
+        run: |
+          echo "FILE=mp3scraper/bin/Release/podcasts/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml" >> $GITHUB_OUTPUT
+
+      # 3️⃣ البحث / الاستبدال باستخدام perl (regex مع وضع التعليقات)
+      - name: Replace <title>…</title> with ttttt
         env:
-          TARGET_ID: "itunes"        # <-- المعرف الأصلي
-          NEW_ID: "its"           # <-- ما تريد استبداله به
+          FILE: ${{ steps.vars.outputs.FILE }}
         run: |
-          echo "TARGET_ID=$TARGET_ID" >> $GITHUB_ENV
-          echo "NEW_ID=$NEW_ID" >> $GITHUB_ENV
+          perl -i -pe '
+            s{
+              <?xml version="1.0" encoding="utf-8"?>
+              (.*?)            # أي محتوى غير جشع (نلتقطه لكن لا نحتاجه)
+              </image>
+              }{
+               }gx;                # g = استبدال كل الظهورات، x = مسموح بالمسافات/التعليقات
+            s{
+             </channel>
+             </rss>
+              }{
+               }gx;  
+          ' "$FILE"
 
-      # 3️⃣ البحث والاستبدال داخل الملف
-      - name: Search & replace using sed
-        run: |
-          # ملف‑الهدف (عدّل المسار حسب الحاجة)
-          FILE="mp3scraper/bin/Release/podcasts/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml"
+          # اختبار سريع للنتيجة
+          if grep -q "ttttt" "$FILE"; then
+            echo "✅ استبدال ناجح"
+          else
+            echo "⚠️ لم يتم العثور على <title> في $FILE"
+          fi
 
-          # استبدال كل ظهور للمعرف القديم بالمعرف الجديد
-          sed -i "s/${{ env.TARGET_ID }}/${{ env.NEW_ID }}/g" "$FILE"
-
-          # اختبار سريع: عرض السطر الذي تم تغييره
-          grep "${{ env.NEW_ID }}" -n "$FILE" || echo "No match found"
-
-      # 4️⃣ رفع التغييرات إلى الفرع
-      - name: Commit & push changes
+      # 4️⃣ رفع التغييرات (commit+push)
+      - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "🔧 استبدال المعرف ${{ env.TARGET_ID }} بـ ${{ env.NEW_ID }}"
+          commit_message: "🔧 استبدال وسوم <title> بـ ttttt"
           branch: ${{ github.ref_name }}
-          # إذا كان الفرع محمياً قد تحتاج لإضافة token:
-          # token: ${{ secrets.GITHUB_TOKEN }}
-
