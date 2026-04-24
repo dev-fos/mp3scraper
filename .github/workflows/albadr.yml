@@ -2,8 +2,6 @@ name: HTML
 
 on:
   workflow_dispatch:        # تشغيل يدوي
-  push:
-    branches: [ dev ]          # أو أي فرع تريد تشغيل الإجراء عليه
 
 jobs:
   fetch-and-extract:
@@ -15,8 +13,8 @@ jobs:
         id: get_page
         run: |
           # إذا كان ملف next_page.txt موجودًا في المستودع، استخدم قيمته
-          if [[ -f .github/next_page.txt ]]; then
-            PAGE=$(cat .github/next_page.txt)
+          if [[ -f mp3scraper/bin/Release/podcasts/next_page.txt ]]; then
+            PAGE=$(cat mp3scraper/bin/Release/podcasts/next_page.txt)
           else
             PAGE=360                 # الصفحة الأولية إذا لم يوجد ملف
           fi
@@ -68,5 +66,5 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Update next page to ${{ steps.prep_next.outputs.next }}"
-          file_pattern: ".github/next_page.txt"
+          file_pattern: "mp3scraper/bin/Release/podcasts/next_page.txt"
           # نكتب الملف داخل .github لتجنب تأثيره على ملفات الكود الأخرى
