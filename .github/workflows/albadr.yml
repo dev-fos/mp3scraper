@@ -80,7 +80,7 @@ jobs:
             | perl -0777 -pe '
                 s{
                  <h3>(.*)</h3>
-                }{}gsx;
+                }{}gs;
               ' \
             | tee >(grep "<h3>" > h3_lines.txt) \
                   >(grep "\.mp3" > mp3_lines.txt) \
