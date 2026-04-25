@@ -131,7 +131,7 @@ jobs:
             data/last.txt
             data/next_page.txt
           # صلاحيات الكتابة لتدفع التغييرات
-          repository: ${{ github.repository }}
-          branch: ${{ github.ref_name }}
+          #repository: ${{ github.repository }}
+          #branch: ${{ github.ref_name }}
           # إذا كان المستودع خاصاً قد تحتاج إلى:
           #   push: true
