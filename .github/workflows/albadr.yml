@@ -83,7 +83,7 @@ jobs:
                 s{<span>(.*)<span>}{}g;
                 s{href="/}{href="https://www.al-badr.net/}g;     
                 s{<img(.*)</div>}{}g;
-                s{U+202C}{}g;
+                s{U+202C}{}gm;
                 s{^\s+}{}gm;               
               ' \
             | tee >(grep "eTitle" > h3_lines.txt) \
