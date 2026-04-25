@@ -80,6 +80,9 @@ jobs:
             | perl -0777 -pe '
                 s{<h3>(.*)">}{<add key="eTitle0001" value="}g;
                 s{</a></h3>}{" />}g;
+                s{<span>(.*)<span>}{}g;
+                s{<img(.*)</div>}{}g;
+                s{^\s+}{}g;               
               ' \
             | tee >(grep "eTitle" > h3_lines.txt) \
                   >(grep "\.mp3" > mp3_lines.txt) \
