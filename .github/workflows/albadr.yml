@@ -79,9 +79,7 @@ jobs:
           curl -sSL "$URL" \
             | perl -0777 -pe '
                 s{
-                  <\?xml\s+version="1\.0"\s+encoding="utf-8"\?>
-                  .*?
-                  </image>
+                   <h3>المادة الصوتية</h3>
                 }{}gsx;
                 s{
                   </channel>\s*</rss>\s*
