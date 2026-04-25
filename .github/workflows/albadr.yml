@@ -68,16 +68,19 @@ jobs:
       - name: Fail if no mp3 lines found
         id: check_mp3
         run: |
-          if [[ ! -s mp3_lines.txt ]]; then
+          if [[ -s mp3_lines.txt ]]; then
+            echo "has_mp3=true" >> $GITHUB_OUTPUT
+            echo "✅ تم العثور على سطر (أسطر) .mp3"
+          else
+            echo "has_mp3=false" >> $GITHUB_OUTPUT
             echo "⚠️ لا يوجد أي سطر يحتوي على .mp3"
-            exit 1   # ينتج خطأ ويوقف الـ workflow
           fi
-          echo "✅ تم العثور على سطر (أسطر) .mp3"
           
       # -------------------------------------------------
       # 6️⃣ رفع النتيجة كـ artifact (اختياري)
       # -------------------------------------------------
       - name: Upload result
+        if: steps.check_mp3.outputs.has_mp3 == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: extraction-result
@@ -87,6 +90,7 @@ jobs:
       # 7️⃣ مقارنة النتيجة مع data/last.txt
       # -------------------------------------------------
       - name: Compare with previous result
+        if: steps.check_mp3.outputs.has_mp3 == 'true'
         id: compare
         run: |
           # إذا كان الملف السابق غير موجود نعتبره فارغاً
@@ -105,7 +109,7 @@ jobs:
       # 8️⃣ إذا كان هناك اختلاف → تحديث data/last.txt
       # -------------------------------------------------
       - name: Update last.txt
-        if: steps.compare.outputs.changed == 'true'
+        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
         run: |
           cp result.txt data/last.txt
           echo "تم تحديث data/last.txt بالنتائج الجديدة"
@@ -115,7 +119,7 @@ jobs:
       # -------------------------------------------------
       - name: Prepare next_page.txt
         id: prep_next
-        if: steps.compare.outputs.changed == 'true'   # فقط إذا كان هناك تغيير
+        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'  # فقط إذا كان هناك تغيير
         run: |
           NEXT=$(( ${{ steps.get_page.outputs.page }} + 1 ))
           mkdir -p data
@@ -133,7 +137,7 @@ jobs:
       #    file_pattern: "data/next_page.txt"
 
       - name: Commit updates
-        if: steps.compare.outputs.changed == 'true'
+        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Update next page to ${{ steps.prep_next.outputs.next }} and refresh last.txt"
