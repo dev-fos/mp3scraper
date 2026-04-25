@@ -79,10 +79,16 @@ jobs:
           curl -sSL "$URL" \
             | perl -CSDA -0777 -pe '
                 s{
-                 <h3>المادة الصوتية</h3>
+                 <span>(.*)<span>
                 }{}gsx;
                 s{
-                  </channel>\s*</rss>\s*
+                  <img(.*)</div>
+                }{}gsx;
+                s{
+                  href=\"/
+                }{href=\"https://www.al-badr.net/}gsx;
+                 s{
+                  ^\\s+
                 }{}gsx;
               ' \
             | tee >(grep "<h3>" > h3_lines.txt) \
