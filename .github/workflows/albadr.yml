@@ -79,8 +79,9 @@ jobs:
           curl -sSL "$URL" \
             | perl -0777 -pe '
                 s{<h3>(.*)">}{<add key="eTitle0001" value="}g;
+                s{</a></h3>}{" />}g;
               ' \
-            | tee >(grep "h3" > h3_lines.txt) \
+            | tee >(grep "eTitle" > h3_lines.txt) \
                   >(grep "\.mp3" > mp3_lines.txt) \
                   > /dev/null
       
