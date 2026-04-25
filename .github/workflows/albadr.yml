@@ -83,7 +83,7 @@ jobs:
                 s{<span>(.*)<span>}{}g;
                 s{href="/}{href="https://www.al-badr.net/}g;     
                 s{<img(.*)</div>}{}g;
-                s{^\s+}{}g;               
+                s{^\s+}{}gm;               
               ' \
             | tee >(grep "eTitle" > h3_lines.txt) \
                   >(grep "\.mp3" > mp3_lines.txt) \
