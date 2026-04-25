@@ -24,8 +24,8 @@ jobs:
       - name: Get last page number
         id: get_page
         run: |
-          if [[ -f data/next_page.txt ]]; then
-            PAGE=$(cat data/next_page.txt)
+          if [[ -f al-badr/tafsir-assadi/next_mp3.txt ]]; then
+            PAGE=$(cat al-badr/tafsir-assadi/next_mp3.txt)
           else
             PAGE=360
           fi
@@ -87,64 +87,64 @@ jobs:
           path: result.txt
 
       # -------------------------------------------------
-      # 7️⃣ مقارنة النتيجة مع data/last.txt
+      # 7️⃣ مقارنة النتيجة مع al-badr/tafsir-assadi/last_mp3.txt
       # -------------------------------------------------
       - name: Compare with previous result
         if: steps.check_mp3.outputs.has_mp3 == 'true'
         id: compare
         run: |
           # إذا كان الملف السابق غير موجود نعتبره فارغاً
-          if [[ ! -f data/last.txt ]]; then
-            touch data/last.txt
+          if [[ ! -f al-badr/tafsir-assadi/last_mp3.txt ]]; then
+            touch al-badr/tafsir-assadi/last_mp3.txt
           fi
 
           # استخدم diff لإيجاد الاختلافات
-          if diff -q result.txt data/last.txt > /dev/null; then
+          if diff -q result.txt al-badr/tafsir-assadi/last_mp3.txt > /dev/null; then
             echo "changed=false" >> $GITHUB_OUTPUT
           else
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
       # -------------------------------------------------
-      # 8️⃣ إذا كان هناك اختلاف → تحديث data/last.txt
+      # 8️⃣ إذا كان هناك اختلاف → تحديث al-badr/tafsir-assadi/last_mp3.txt
       # -------------------------------------------------
-      - name: Update last.txt
+      - name: Update last_mp3.txt
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
         run: |
-          cp result.txt data/last.txt
-          echo "تم تحديث data/last.txt بالنتائج الجديدة"
+          cp result.txt al-badr/tafsir-assadi/last_mp3.txt
+          echo "تم تحديث al-badr/tafsir-assadi/last_mp3.txt بالنتائج الجديدة"
 
       # -------------------------------------------------
       # 9️⃣ حساب رقم الصفحة التالي وكتابته في الملف
       # -------------------------------------------------
-      - name: Prepare next_page.txt
+      - name: Prepare next_mp3.txt
         id: prep_next
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'  # فقط إذا كان هناك تغيير
         run: |
           NEXT=$(( ${{ steps.get_page.outputs.page }} + 1 ))
           mkdir -p data
-          echo "$NEXT" > data/next_page.txt
+          echo "$NEXT" > al-badr/tafsir-assadi/next_mp3.txt
           echo "next=$NEXT" >> $GITHUB_OUTPUT
 
       # -------------------------------------------------
       # 10️⃣ الالتزام بالملف المحدث
       # -------------------------------------------------
-      #- name: Commit next_page.txt
+      #- name: Commit next_mp3.txt
       #  if: steps.compare.outputs.changed == 'true'
       #  uses: stefanzweifel/git-auto-commit-action@v5
       #  with:
       #    commit_message: "Update next page to ${{ steps.prep_next.outputs.next }}"
-      #    file_pattern: "data/next_page.txt"
+      #    file_pattern: "al-badr/tafsir-assadi/next_mp3.txt"
 
       - name: Commit updates
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Update next page to ${{ steps.prep_next.outputs.next }} and refresh last.txt"
-          # نضمن إضافة كل من last.txt و next_page.txt
+          commit_message: "Update next page to ${{ steps.prep_next.outputs.next }} and refresh last_mp3.txt"
+          # نضمن إضافة كل من last_mp3.txt و next_mp3.txt
           file_pattern: |
-            data/last.txt
-            data/next_page.txt
+            al-badr/tafsir-assadi/last_mp3.txt
+            al-badr/tafsir-assadi/next_mp3.txt
           # صلاحيات الكتابة لتدفع التغييرات
           #repository: ${{ github.repository }}
           #branch: ${{ github.ref_name }}
