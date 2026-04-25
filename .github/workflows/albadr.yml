@@ -81,6 +81,7 @@ jobs:
                 s{<h3>(.*)">}{<add key="eTitle0001" value="}g;
                 s{</a></h3>}{" />}g;
                 s{<span>(.*)<span>}{}g;
+                s{href="/}{href="https://www.al-badr.net/}g;     
                 s{<img(.*)</div>}{}g;
                 s{^\s+}{}g;               
               ' \
