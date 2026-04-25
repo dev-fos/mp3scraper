@@ -84,9 +84,6 @@ jobs:
                 s{
                   <img(.*)</div>
                 }{}gsx;
-                s{
-                  ^\\s+
-                }{}gsx;
               ' \
             | tee >(grep "<h3>" > h3_lines.txt) \
                   >(grep "\.mp3" > mp3_lines.txt) \
