@@ -78,11 +78,9 @@ jobs:
           # 4️⃣ حفظ النتيجة المؤقتة في result.txt (يمكن إلغاؤها إذا لا تريد ملفاً نهائياً)
           curl -sSL "$URL" \
             | perl -0777 -pe '
-                s{
-                 <h3>(.*)</h3>
-                }{}gs;
+                s{<h3>(.*)</h3>}{}gs;
               ' \
-            | tee >(grep "<h3>" > h3_lines.txt) \
+            | tee >(grep "<h3" > h3_lines.txt) \
                   >(grep "\.mp3" > mp3_lines.txt) \
                   > /dev/null
       
