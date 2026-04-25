@@ -79,7 +79,7 @@ jobs:
           curl -sSL "$URL" \
             | perl -0777 -pe '
                 s{
-                 <h3 class(.*)</h3>
+                 <h3>(.*)</h3>
                 }{}gsx;
               ' \
             | tee >(grep "<h3>" > h3_lines.txt) \
