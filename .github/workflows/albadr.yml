@@ -77,7 +77,11 @@ jobs:
           # 3️⃣ استخراج <h3> و .mp3 من التيار المُنقّى
           # 4️⃣ حفظ النتيجة المؤقتة في result.txt (يمكن إلغاؤها إذا لا تريد ملفاً نهائياً)
           curl -sSL "$URL" \
-
+            | perl -0777 -pe '
+                s{
+                 <h3 class(.*)</h3>
+                }{}gsx;
+              ' \
             | tee >(grep "<h3>" > h3_lines.txt) \
                   >(grep "\.mp3" > mp3_lines.txt) \
                   > /dev/null
