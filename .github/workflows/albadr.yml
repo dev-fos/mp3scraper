@@ -114,9 +114,24 @@ jobs:
       # -------------------------------------------------
       # 10️⃣ الالتزام بالملف المحدث
       # -------------------------------------------------
-      - name: Commit next_page.txt
+      #- name: Commit next_page.txt
+      #  if: steps.compare.outputs.changed == 'true'
+      #  uses: stefanzweifel/git-auto-commit-action@v5
+      #  with:
+      #    commit_message: "Update next page to ${{ steps.prep_next.outputs.next }}"
+      #    file_pattern: "data/next_page.txt"
+
+      - name: Commit updates
         if: steps.compare.outputs.changed == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Update next page to ${{ steps.prep_next.outputs.next }}"
-          file_pattern: "data/next_page.txt"
+          commit_message: "Update next page to ${{ steps.prep_next.outputs.next }} and refresh last.txt"
+          # نضمن إضافة كل من last.txt و next_page.txt
+          file_pattern: |
+            data/last.txt
+            data/next_page.txt
+          # صلاحيات الكتابة لتدفع التغييرات
+          repository: ${{ github.repository }}
+          branch: ${{ github.ref_name }}
+          # إذا كان المستودع خاصاً قد تحتاج إلى:
+          #   push: true
