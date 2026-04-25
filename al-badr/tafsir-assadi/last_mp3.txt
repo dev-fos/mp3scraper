@@ -2,6 +2,7 @@
                 	<h3 class="widget-title-left" style="text-align:center">محاضرات مختارة</h3>
 					<h3 class="widget-title" style="text-align:center">القائمة البريدية</h3>
                                     <h3>المادة الصوتية</h3>
+                                        <add key="eTitle0001" value="368 تفسير سورة الأنعام: من الآية (١٠٥) ﴿وَكَذَلِكَ نُصَرِّفُ الآيَاتِ وَلِيَقُولُوا دَرَسْتَ…﴾ 06-11-1447</a></h3>
                 	<h3 class="widget-title-left" style="text-align:center">خطب مختارة</h3>
 		<h3 class="widget-title-left" style="text-align:center">مسابقة</h3>
                 	<h3 class="widget-title-left" style="text-align:center">برنامج الأدعية والأذكار</h3>
