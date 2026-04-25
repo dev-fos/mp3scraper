@@ -2,7 +2,7 @@ name: HTML
 
 on:
   push:
-    branches: [ dev ] 
+    branches: [dev]
   workflow_dispatch:        # تشغيل يدوي
 
 jobs:
@@ -16,8 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # احصل على التاريخ الكامل للسماح بالـ push
-          fetch-depth: 0
+          fetch-depth: 0   # احصل على التاريخ الكامل للسماح بالـ push
 
       # -------------------------------------------------
       # 2️⃣ قراءة رقم الصفحة الأخير (أو البدء من 360)
@@ -54,7 +53,6 @@ jobs:
 
       # -------------------------------------------------
       # 5️⃣ استخراج الأسطر المطلوبة
-      # -n  لزيادة رقم السطر
       # -------------------------------------------------
       - name: Extract required lines
         id: extract
@@ -62,7 +60,7 @@ jobs:
           grep "<h3>" "${{ steps.download.outputs.file }}" > h3_lines.txt
           grep "\.mp3" "${{ steps.download.outputs.file }}" > mp3_lines.txt
           cat h3_lines.txt mp3_lines.txt > result.txt
-          echo "=== النتائج ==="
+          echo "=== النتائج المستخرجة ==="
           cat result.txt
 
       # -------------------------------------------------
@@ -75,10 +73,38 @@ jobs:
           path: result.txt
 
       # -------------------------------------------------
-      # 7️⃣ حساب رقم الصفحة التالي وكتابته في الملف
+      # 7️⃣ مقارنة النتيجة مع data/last.txt
+      # -------------------------------------------------
+      - name: Compare with previous result
+        id: compare
+        run: |
+          # إذا كان الملف السابق غير موجود نعتبره فارغاً
+          if [[ ! -f data/last.txt ]]; then
+            touch data/last.txt
+          fi
+
+          # استخدم diff لإيجاد الاختلافات
+          if diff -q result.txt data/last.txt > /dev/null; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      # -------------------------------------------------
+      # 8️⃣ إذا كان هناك اختلاف → تحديث data/last.txt
+      # -------------------------------------------------
+      - name: Update last.txt
+        if: steps.compare.outputs.changed == 'true'
+        run: |
+          cp result.txt data/last.txt
+          echo "تم تحديث data/last.txt بالنتائج الجديدة"
+
+      # -------------------------------------------------
+      # 9️⃣ حساب رقم الصفحة التالي وكتابته في الملف
       # -------------------------------------------------
       - name: Prepare next_page.txt
         id: prep_next
+        if: steps.compare.outputs.changed == 'true'   # فقط إذا كان هناك تغيير
         run: |
           NEXT=$(( ${{ steps.get_page.outputs.page }} + 1 ))
           mkdir -p data
@@ -86,14 +112,11 @@ jobs:
           echo "next=$NEXT" >> $GITHUB_OUTPUT
 
       # -------------------------------------------------
-      # 8️⃣ الالتزام بالملف المحدث
+      # 10️⃣ الالتزام بالملف المحدث
       # -------------------------------------------------
       - name: Commit next_page.txt
+        if: steps.compare.outputs.changed == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Update next page to ${{ steps.prep_next.outputs.next }}"
-          # نمط الملف لتحديد ما سيتم الالتزام به
           file_pattern: "data/next_page.txt"
-          # إذا كان المستودع خاصًا، تحتاج إلى صلاحيات دفع:
-          #   add `push: true` في إعدادات العمل أو
-          #   استخدم `permissions: contents: write` في أعلى الـ workflow
