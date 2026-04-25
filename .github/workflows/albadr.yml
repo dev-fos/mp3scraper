@@ -85,8 +85,8 @@ jobs:
                   <img(.*)</div>
                 }{}gsx;
                 s{
-                  href=\"/
-                }{href=\"https://www.al-badr.net/}gsx;
+                  href="/
+                }{href="https://www.al-badr.net/}gsx;
                  s{
                   ^\\s+
                 }{}gsx;
