@@ -1,2 +1,2 @@
-                                        <add key="eTitle0001" value="368 تفسير سورة الأنعام: من الآية (١٠٥) ﴿وَكَذَلِكَ نُصَرِّفُ الآيَاتِ وَلِيَقُولُوا دَرَسْتَ…﴾ 06-11-1447" />
-                                          <a href="https://www.al-badr.net/download/esound/choroohat/tafsir-assidi/368.mp3">‬ 
+<add key="eTitle0001" value="368 تفسير سورة الأنعام: من الآية (١٠٥) ﴿وَكَذَلِكَ نُصَرِّفُ الآيَاتِ وَلِيَقُولُوا دَرَسْتَ…﴾ 06-11-1447" />
+<a href="https://www.al-badr.net/download/esound/choroohat/tafsir-assidi/368.mp3">‬ 
