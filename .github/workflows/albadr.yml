@@ -157,19 +157,18 @@ jobs:
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'  # فقط إذا كان هناك تغيير
         run: |
           NEXT=$(( ${{ steps.get_page.outputs.page }} + 1 ))
-          mkdir -p data
           echo "$NEXT" > al-badr/tafsir-assadi/next_mp3.txt
           echo "next=$NEXT" >> $GITHUB_OUTPUT
 
       # -------------------------------------------------
       # 10️⃣ الالتزام بالملف المحدث
       # -------------------------------------------------
-      #- name: Commit next_mp3.txt
-      #  if: steps.compare.outputs.changed == 'true'
-      #  uses: stefanzweifel/git-auto-commit-action@v5
-      #  with:
-      #    commit_message: "Update next page to ${{ steps.prep_next.outputs.next }}"
-      #    file_pattern: "al-badr/tafsir-assadi/next_mp3.txt"
+      - name: Commit next_mp3.txt
+        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update next page to ${{ steps.prep_next.outputs.next }}"
+          file_pattern: "al-badr/tafsir-assadi/next_mp3.txt"
 
       - name: Commit updates
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
