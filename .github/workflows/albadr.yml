@@ -18,6 +18,13 @@ jobs:
         with:
           fetch-depth: 0   # احصل على التاريخ الكامل للسماح بالـ push
 
+      - name: Checkout target repo
+        uses: actions/checkout@v4
+        with:
+          repository: dev-fos/islampodcast   # استبدل بـ <المنظمة>/<المستودع>
+          token: ${{ secrets.PAT_FOR_TARGET_REPO }}
+          path: target-repo
+          fetch-depth: 0
       # -------------------------------------------------
       # 2️⃣ قراءة رقم الصفحة الأخير (أو البدء من 360)
       # -------------------------------------------------
@@ -146,9 +153,17 @@ jobs:
       - name: Update last_mp3.txt
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
         run: |
-          cp result.txt al-badr/tafsir-assadi/last_mp3.txt
+          cp mp3_lines.txt dev-fos/islampodcast/mp3-url/al-badr-tafsir-assidi.html
           echo "تم تحديث al-badr/tafsir-assadi/last_mp3.txt بالنتائج الجديدة"
-
+      
+      - name: Commit & push changes
+        working-directory: target-repo
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add tafsir-assadi/last_mp3.txt
+          git commit -m "Update last_mp3.txt with new results"
+          git push origin HEAD:${{ github.ref_name }}
       # -------------------------------------------------
       # 9️⃣ حساب رقم الصفحة التالي وكتابته في الملف
       # -------------------------------------------------
