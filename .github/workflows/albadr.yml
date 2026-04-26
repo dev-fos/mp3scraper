@@ -8,7 +8,9 @@ on:
 jobs:
   fetch-and-extract:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
+      
     steps:
       # -------------------------------------------------
       # 1️⃣ جلب نسخة من المستودع (مطلوب للـ git commit)
