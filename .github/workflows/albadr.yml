@@ -28,16 +28,17 @@ jobs:
           path: target-repo
           fetch-depth: 0
           
-      - name: Show repository file tree
-        run: |
-          echo "📂 شجرة المستودع المستنسخ (target‑repo):"
-          # إذا كان الأمر tree مثبتًا فستظهر شجرة بألوان وتنسيق أفضل
-          if command -v tree >/dev/null; then
-            tree target-repo
-          else
-            # fallback إلى ls -R مع تنسيق واضح
-            ls -R target-repo | sed 's/^/   /'
-          fi          
+      #- name: Show repository file tree
+      #  run: |
+      #    echo "📂 شجرة المستودع المستنسخ (target‑repo):"
+      #    # إذا كان الأمر tree مثبتًا فستظهر شجرة بألوان وتنسيق أفضل
+      #    if command -v tree >/dev/null; then
+      #      tree target-repo
+      #    else
+      #      # fallback إلى ls -R مع تنسيق واضح
+      #      ls -R target-repo | sed 's/^/   /'
+      #    fi          
+      
       # -------------------------------------------------
       # 2️⃣ قراءة رقم الصفحة الأخير (أو البدء من 360)
       # -------------------------------------------------
@@ -134,12 +135,12 @@ jobs:
       # -------------------------------------------------
       # 6️⃣ رفع النتيجة كـ artifact (اختياري)
       # -------------------------------------------------
-      - name: Upload result
-        if: steps.check_mp3.outputs.has_mp3 == 'true'
-        uses: actions/upload-artifact@v4
-        with:
-          name: extraction-result
-          path: result.txt
+      #- name: Upload result
+      #  if: steps.check_mp3.outputs.has_mp3 == 'true'
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: extraction-result
+      #    path: result.txt
 
       # -------------------------------------------------
       # 7️⃣ مقارنة النتيجة مع al-badr/tafsir-assadi/last_mp3.txt
@@ -184,6 +185,32 @@ jobs:
           git add mp3-url/al-badr-tafsir-assidi.html
           git commit -m "Update last_mp3.txt with new results"
           git push origin HEAD:main
+
+      # 2️⃣ تعريف مسار الملف (احرص على وضعه داخل علامات اقتباس)
+      - name: Define file path
+        id: vars
+        run: |
+          echo "FILE=mp3scraper/bin/Release/mp3scraper.exe.config" >> $GITHUB_OUTPUT
+          
+      # 3️⃣ البحث / الاستبدال باستخدام perl (regex مع وضع التعليقات)
+      - name: Update mp3scraper.exe.config
+        env:
+          FILE: ${{ steps.vars.outputs.FILE }}
+        run: |
+          perl -0777 -i -pe '
+            s{<appSettings>.*?<add\s+key="episodesBeginning0001"[^>]*>}
+             {
+             cat result.txt
+             }gs;  
+            s{
+             </channel>\s*</rss>\s*
+              }{}gsx;  
+          ' "$FILE"
+
+          # تحقق سريع من النتائج (اختياري)
+          echo "=== عينة من الملف بعد الاستبدال ==="
+          head -n 20 "$FILE"
+          
       # -------------------------------------------------
       # 9️⃣ حساب رقم الصفحة التالي وكتابته في الملف
       # -------------------------------------------------
