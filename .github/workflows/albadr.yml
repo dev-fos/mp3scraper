@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: dev-fos/islampodcast   # استبدل بـ <المنظمة>/<المستودع>
-          token: ${{ secrets.PAT_FOR_TARGET_REPO }}
+          token: ${{ secrets.GITHUB_TOKEN }}   # لا تحتاج PAT
           path: target-repo
           fetch-depth: 0
       # -------------------------------------------------
