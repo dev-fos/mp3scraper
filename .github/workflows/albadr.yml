@@ -178,7 +178,8 @@ jobs:
       - name: Commit & push changes
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
         working-directory: target-repo
-        token: ${{ secrets.R_token }}
+        with:
+          token: ${{ secrets.R_token }}
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
