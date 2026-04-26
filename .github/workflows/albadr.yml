@@ -25,6 +25,17 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}   # لا تحتاج PAT
           path: target-repo
           fetch-depth: 0
+          
+      - name: Show repository file tree
+        run: |
+          echo "📂 شجرة المستودع المستنسخ (target‑repo):"
+          # إذا كان الأمر tree مثبتًا فستظهر شجرة بألوان وتنسيق أفضل
+          if command -v tree >/dev/null; then
+            tree target-repo
+          else
+            # fallback إلى ls -R مع تنسيق واضح
+            ls -R target-repo | sed 's/^/   /'
+          fi          
       # -------------------------------------------------
       # 2️⃣ قراءة رقم الصفحة الأخير (أو البدء من 360)
       # -------------------------------------------------
