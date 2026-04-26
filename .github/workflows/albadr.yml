@@ -153,9 +153,15 @@ jobs:
       - name: Update last_mp3.txt
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
         run: |
-          cp mp3_lines.txt dev-fos/islampodcast/mp3-url/al-badr-tafsir-assidi.html
+          cp mp3_lines.txt al-badr/tafsir-assadi/last_mp3.txt
           echo "تم تحديث al-badr/tafsir-assadi/last_mp3.txt بالنتائج الجديدة"
-      
+          
+      - name: Update last_mp3.txt in target repo
+        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
+        run: |
+          cp mp3_lines.txt target-repo/mp3-url/al-badr-tafsir-assidi.html
+          echo "تم تحديث al-badr/tafsir-assadi/last_mp3.txt بالنتائج الجديدة" >> target-repo/tafsir-assadi/last_mp3.tx
+          
       - name: Commit & push changes
         working-directory: target-repo
         run: |
