@@ -234,9 +234,13 @@ jobs:
           # هروب سطور جديدة لأن GitHub Actions يتعامل مع قيمة واحدة في السطر
           REPLACEMENT_ESCAPED="${REPLACEMENT//$'\n'/\\n}"
           
-          echo "replacement<<EOF" >> $GITHUB_OUTPUT
-          echo "$REPLACEMENT_ESCAPED" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          {
+            echo "replacement<<EOF"
+            echo "$REPLACEMENT_ESCAPED"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+        shell: bash
+        
         env:
           # نقل المتغيّر للخطوات اللاحقة
           REPLACEMENT: ${{ steps.build.outputs.replacement }}
