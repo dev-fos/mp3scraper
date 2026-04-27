@@ -221,7 +221,7 @@ jobs:
 
             read -r -d '' STATIC2 <<'EOF'
                 <add key="episodesBeginning0001" value="1"/>
-            EOF    
+            EOF
             
           # قراءة محتوى h3_lines.txt (يمكن أن يحتوي على عدة أسطر)
           RESULT=$(<h3_lines.txt)
