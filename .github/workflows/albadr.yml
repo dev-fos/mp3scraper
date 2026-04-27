@@ -217,12 +217,12 @@ jobs:
                 <add key="mp3Bitrat0001" value="48"/>
                 <add key="Title0001" value="true"/>
           TEXT_AFTER: |
-           <add key="episodesBeginning0001" value="1"/>
+           <add key="episodesBeginning0001" value="$(( ${{ steps.get_page.outputs.page }} + 1 ))"/>
         run: |
           # النص الثابت المطلوب وضعه في البداية
             
           # قراءة محتوى h3_lines.txt (يمكن أن يحتوي على عدة أسطر)
-          RESULT=$(<h3_lines.txt)
+          RESULT=$(cat h3_lines.txt)
 
           # دمج النص الثابت مع المحت
 
@@ -236,7 +236,7 @@ jobs:
           REPLACEMENT_ESCAPED="${REPLACEMENT//$'\n'/\\n}"
           
           echo "replacement<<EOF" >> $GITHUB_OUTPUT
-          echo "$REPLACEMENT_ESCAPED" >> $GITHUB_OUTPUT
+          echo "$REPLACEMENT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
         
  
