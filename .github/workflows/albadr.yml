@@ -235,9 +235,9 @@ jobs:
           REPLACEMENT_ESCAPED="${REPLACEMENT//$'\n'/\\n}"
           
           {
-          #  echo "replacement<<EOF"
+          
             echo "$REPLACEMENT_ESCAPED"
-          #  echo "EOF"
+          
           } >> "$GITHUB_OUTPUT"
         shell: bash
         
