@@ -186,11 +186,11 @@ jobs:
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
         run: |
           cp mp3_lines.txt target-repo/mp3-url/al-badr-tafsir-assidi.html
-          echo "تم تحديث al-badr/tafsir-assadi/last_mp3.txt بالنتائج الجديدة"
+          echo "تم تحديث target-repo/al-badr/tafsir-assadi/last_mp3.txt بالنتائج الجديدة"
           
       - name: Commit & push changes
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
-        working-directory: target-repo
+       # working-directory: target-repo
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
