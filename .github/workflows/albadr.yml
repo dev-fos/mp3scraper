@@ -234,11 +234,11 @@ jobs:
           # هروب سطور جديدة لأن GitHub Actions يتعامل مع قيمة واحدة في السطر
           REPLACEMENT_ESCAPED="${REPLACEMENT//$'\n'/\\n}"
           
-          cat <<'OUTPUT_EOF' >>"$GITHUB_OUTPUT"
-          replacement<<EOF
-          ${REPLACEMENT_ESCAPED}
-          EOF
-          OUTPUT_EOF
+          {
+          #  echo "replacement<<EOF"
+            echo "$REPLACEMENT_ESCAPED"
+          #  echo "EOF"
+          } >> "$GITHUB_OUTPUT"
         shell: bash
         
         env:
