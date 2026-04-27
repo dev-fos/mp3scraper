@@ -51,7 +51,16 @@ jobs:
             PAGE=360
           fi
           echo "page=${PAGE}" >> $GITHUB_OUTPUT
-
+          
+      - name: Set padded number
+        id: pad
+        run: |
+          # احصل على الرقم من الإدخال
+          raw="${{ steps.get_page.outputs.page }}"
+          # تنسيق إلى 4 أرقام مع أصفار من اليسار
+          printf -v padded "%04d" "$raw"
+          echo "padded=$padded" >> "$GITHUB_OUTPUT"
+          
       # -------------------------------------------------
       # 3️⃣ بناء الرابط الكامل
       # -------------------------------------------------
@@ -99,7 +108,7 @@ jobs:
           # 4️⃣ حفظ النتيجة المؤقتة في result.txt (يمكن إلغاؤها إذا لا تريد ملفاً نهائياً)
           curl -sSL "$URL" \
             | perl -0777 -pe '
-                s{<h3>(.*)">}{<add key="eTitle0001" value="}g;
+                s{<h3>(.*)">}{<add key="${title%????}${{ steps.pad.outputs.padded }}" value="}g;
                 s{</a></h3>}{" />}g;
                 s{<span>(.*)<span>}{}g;
                 s{href="/}{href="https://www.al-badr.net/}g;     
@@ -188,11 +197,13 @@ jobs:
 
       # 2️⃣ تعريف مسار الملف (احرص على وضعه داخل علامات اقتباس)
       - name: Define file path
+        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
         id: vars
         run: |
           echo "FILE=mp3scraper/bin/Release/mp3scraper.exe.config" >> $GITHUB_OUTPUT
           
       - name: Build replacement block
+        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
         id: build
         env:
           TEXT_BEFORE: |
@@ -242,6 +253,7 @@ jobs:
  
       # 3️⃣ البحث / الاستبدال باستخدام perl (regex مع وضع التعليقات)
       - name: Update mp3scraper.exe.config
+        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
         env:
           FILE: ${{ steps.vars.outputs.FILE }}
           REPLACEMENT: ${{ steps.build.outputs.replacement }}
@@ -274,22 +286,31 @@ jobs:
       # -------------------------------------------------
       # 10️⃣ الالتزام بالملف المحدث
       # -------------------------------------------------
+      - name: Commit mp3scraper.exe.config
+        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update mp3scraper.exe.config"
+          file_pattern: "mp3scraper/bin/Release/mp3scraper.exe.config"
+          
       - name: Commit next_mp3.txt
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Update next page to ${{ steps.prep_next.outputs.next }}"
+          commit_message: "Update next_mp3 to ${{ steps.prep_next.outputs.next }}"
           file_pattern: "al-badr/tafsir-assadi/next_mp3.txt"
 
-      - name: Commit updates
+      - name: Commit last_mp3
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Update next page to ${{ steps.prep_next.outputs.next }} and refresh last_mp3.txt"
+          commit_message: "Update last_mp3"
           # نضمن إضافة كل من last_mp3.txt و next_mp3.txt
-          file_pattern: |
-            al-badr/tafsir-assadi/last_mp3.txt
-            al-badr/tafsir-assadi/next_mp3.txt
+          file_pattern: "al-badr/tafsir-assadi/last_mp3.txt"
+           
+        #  file_pattern: |
+        #    al-badr/tafsir-assadi/last_mp3.txt
+        #    al-badr/tafsir-assadi/next_mp3.txt
           # صلاحيات الكتابة لتدفع التغييرات
           #repository: ${{ github.repository }}
           #branch: ${{ github.ref_name }}
