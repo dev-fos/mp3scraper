@@ -238,14 +238,12 @@ jobs:
           echo "$REPLACEMENT_ESCAPED" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
         
-        env:
-          # نقل المتغيّر للخطوات اللاحقة
-          REPLACEMENT: ${{ steps.build.outputs.replacement }}
  
       # 3️⃣ البحث / الاستبدال باستخدام perl (regex مع وضع التعليقات)
       - name: Update mp3scraper.exe.config
         env:
           FILE: ${{ steps.vars.outputs.FILE }}
+          REPLACEMENT: ${{ steps.build.outputs.replacement }}
         run: |
           perl -0777 -i -pe '
             s{<appSettings>.*?<add\s+key="episodesBeginning0001"[^>]*>}
