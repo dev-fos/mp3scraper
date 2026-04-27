@@ -194,9 +194,8 @@ jobs:
           
       - name: Build replacement block
         id: build
-        run: |
-          # النص الثابت المطلوب وضعه في البداية
-          read -r -d '' STATIC1 <<'EOF'
+        env:
+          TEXT_BEFORE: |
             <appSettings>
                 <add key="url0001" value="https://raw.githubusercontent.com/dev-fos/islampodcast/main/mp3-url/al-badr-tafsir-assidi.html"/>
                 <add key="destBase0001" value="شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml"/>    
@@ -217,20 +216,22 @@ jobs:
             "/>
                 <add key="mp3Bitrat0001" value="48"/>
                 <add key="Title0001" value="true"/>
-          EOF
-
-          read -r -d '' STATIC2 <<'EOF'
-                <add key="episodesBeginning0001" value="1"/>
-          EOF
+        TEXT_AFTER: |
+           <add key="episodesBeginning0001" value="1"/>
+        run: |
+          # النص الثابت المطلوب وضعه في البداية
             
           # قراءة محتوى h3_lines.txt (يمكن أن يحتوي على عدة أسطر)
           RESULT=$(<h3_lines.txt)
 
-          # دمج النص الثابت مع المحتوى المتغيّر
-          REPLACEMENT="${STATIC1}
-          ${RESULT}
-          ${STATIC2}"
+          # دمج النص الثابت مع المحت
 
+          REPLACEMENT="${TEXT_BEFORE}"$'\n'"${RESULT}"$'\n'"${TEXT_AFTER}"
+          
+          echo "merged<<EOF" >> $GITHUB_OUTPUT
+          echo "REPLACEMENT"      >> $GITHUB_OUTPUT
+          echo "EOF"          >> $GITHUB_OUTPUT
+          
           # هروب سطور جديدة لأن GitHub Actions يتعامل مع قيمة واحدة في السطر
           REPLACEMENT_ESCAPED="${REPLACEMENT//$'\n'/\\n}"
           
