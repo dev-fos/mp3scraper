@@ -111,7 +111,7 @@ jobs:
           # 4️⃣ حفظ النتيجة المؤقتة في result.txt (يمكن إلغاؤها إذا لا تريد ملفاً نهائياً)
           curl -sSL "$URL" \
             | perl -0777 -pe '
-                s{<h3>(.*)">}{<add key="$(( ${new_title} ))" value="}g;
+                s{<h3>(.*)">}{<add key="eTitle${{ steps.pad.outputs.padded }}" value="}g;
                 s{</a></h3>}{" />}g;
                 s{<span>(.*)<span>}{}g;
                 s{href="/}{href="https://www.al-badr.net/}g;     
