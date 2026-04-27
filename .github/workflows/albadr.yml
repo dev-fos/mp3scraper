@@ -216,7 +216,7 @@ jobs:
             "/>
                 <add key="mp3Bitrat0001" value="48"/>
                 <add key="Title0001" value="true"/>
-        TEXT_AFTER: |
+          TEXT_AFTER: |
            <add key="episodesBeginning0001" value="1"/>
         run: |
           # النص الثابت المطلوب وضعه في البداية
