@@ -200,6 +200,17 @@ jobs:
           git commit -m "Update last_mp3.txt with new results" || echo "Nothing to commit"
           git push origin HEAD:main
 
+      # -------------------------------------------------
+      # 9️⃣ حساب رقم الصفحة التالي وكتابته في الملف
+      # -------------------------------------------------
+      - name: Prepare next_mp3.txt
+        id: prep_next
+        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'  # فقط إذا كان هناك تغيير
+        run: |
+          NEXT=$(( ${{ steps.get_page.outputs.page }} + 1 ))
+          echo "$NEXT" > al-badr/tafsir-assadi/next_mp3.txt
+          echo "next=$NEXT" >> $GITHUB_OUTPUT
+          
       # 2️⃣ تعريف مسار الملف (احرص على وضعه داخل علامات اقتباس)
       - name: Define file path
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
@@ -233,7 +244,7 @@ jobs:
                 <add key="mp3Bitrat0001" value="48"/>
                 <add key="Title0001" value="true"/>
           TEXT_AFTER: |
-           <add key="episodesBeginning0001" value="$(( ${{ steps.get_page.outputs.page }} + 1 ))"/>
+           <add key="episodesBeginning0001" value="${{ steps.prep_next.outputs.next }}"/>
         run: |
           # النص الثابت المطلوب وضعه في البداية
             
@@ -242,7 +253,7 @@ jobs:
 
           # دمج النص الثابت مع المحت
 
-          REPLACEMENT="${TEXT_BEFORE}"$'\n'"${RESULT}"$'\n'"${TEXT_AFTER}"
+          REPLACEMENT="${TEXT_BEFORE}""${RESULT}""${TEXT_AFTER}"
           
           echo "merged<<EOF" >> $GITHUB_OUTPUT
           echo "REPLACEMENT"      >> $GITHUB_OUTPUT
@@ -277,16 +288,6 @@ jobs:
           echo "=== عينة من الملف بعد الاستبدال ==="
           head -n 20 "$FILE"
           
-      # -------------------------------------------------
-      # 9️⃣ حساب رقم الصفحة التالي وكتابته في الملف
-      # -------------------------------------------------
-      - name: Prepare next_mp3.txt
-        id: prep_next
-        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'  # فقط إذا كان هناك تغيير
-        run: |
-          NEXT=$(( ${{ steps.get_page.outputs.page }} + 1 ))
-          echo "$NEXT" > al-badr/tafsir-assadi/next_mp3.txt
-          echo "next=$NEXT" >> $GITHUB_OUTPUT
 
       # -------------------------------------------------
       # 10️⃣ الالتزام بالملف المحدث
