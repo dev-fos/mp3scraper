@@ -20,6 +20,7 @@ jobs:
         with: 
           fetch-depth: 0   # احصل على التاريخ الكامل للسماح بالـ push
           persist-credentials: true
+          token: ${{ secrets.R_token }}  
 
       - name: Checkout target repo
         uses: actions/checkout@v6
@@ -313,7 +314,8 @@ jobs:
       - name: Commit mp3scraper.exe.config
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
-        with:
+        with: 
+          token: ${{ secrets.R_token }}  
           commit_message: "Update mp3scraper.exe.config"
           file_pattern: "mp3scraper/bin/Release/mp3scraper.exe.config"
           
