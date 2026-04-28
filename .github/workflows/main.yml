@@ -9,6 +9,7 @@ on:
     workflows: ["HTML"]
     types:
       - completed
+  workflow_call:
 
 
 jobs:
