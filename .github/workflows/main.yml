@@ -1,17 +1,18 @@
 name: Run Windows Executable
 
 on:
+  workflow_run:
+    workflows: ["HTML"]
+    types: [completed]
   #workflow_call:
   push:
     branches: [ dev ]
     paths:
       - mp3scraper/bin/Release/mp3scraper.exe.config   # تشغيل فقط عند تعديل هذا الملف         
-  workflow_dispatch:   # تشغيل يدوي إذا لزم
-  workflow_run:
-    workflows: ["HTML"]
-    types: [completed]
+  workflow_dispatch:
+
 permissions:
-  actions: read   # ضروري لتلقي حدث workflow_run
+  actions: read
 
 
 
