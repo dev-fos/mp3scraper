@@ -3,7 +3,8 @@ name: Run Windows Executable
 on:
   push:
     paths:
-      - 'mp3scraper/bin/Release/mp3scraper.exe.config'   # تشغيل فقط عند تعديل هذا الملف
+      - mp3scraper/bin/Release/mp3scraper.exe.config   # تشغيل فقط عند تعديل هذا الملف
+         
   workflow_dispatch:   # تشغيل يدوي إذا لزم
 
 jobs:
