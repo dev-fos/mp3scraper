@@ -1,10 +1,6 @@
 name: Run Windows Executable
 
 on:
-  workflow_run:
-    workflows: ["HTML"]
-    types: [completed]
-  #workflow_call:
   push:
    # branches: [ dev ]
     paths:
@@ -27,15 +23,6 @@ jobs:
           persist-credentials: true
           fetch-depth: 0
           
-      - name: تحقق من وجود تعديل للملف
-        id: check
-        run: |
-          git fetch origin
-          if git diff --name-only ${{ github.event.workflow_run.head_commit.id }}..HEAD | grep -q '^mp3scraper/bin/Release/mp3scraper.exe.config$'; then
-            echo "changed=true" >> $GITHUB_OUTPUT
-          else
-            echo "changed=false" >> $GITHUB_OUTPUT
-          fi
           
       - name: Run the executable
         run: .\mp3scraper\bin\Release\mp3scraper.exe
