@@ -16,17 +16,19 @@ jobs:
       # 1️⃣ جلب نسخة من المستودع (مطلوب للـ git commit)
       # -------------------------------------------------
       - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
+        uses: actions/checkout@v6
+        with: 
           fetch-depth: 0   # احصل على التاريخ الكامل للسماح بالـ push
+          persist-credentials: true
 
       - name: Checkout target repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: dev-fos/islampodcast   # استبدل بـ <المنظمة>/<المستودع>
           token: ${{ secrets.R_token }}   # لا تحتاج PAT
           path: target-repo
           fetch-depth: 0
+          persist-credentials: true
           
       #- name: Show repository file tree
       #  run: |
