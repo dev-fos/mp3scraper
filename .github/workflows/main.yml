@@ -9,8 +9,7 @@ on:
   workflow_dispatch:   # تشغيل يدوي إذا لزم
   workflow_run:
     workflows: ["HTML"]
-    types:
-      - completed
+    types: [completed]
 permissions:
   actions: read   # ضروري لتلقي حدث workflow_run
 
