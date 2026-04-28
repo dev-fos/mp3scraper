@@ -1,8 +1,8 @@
 name: HTML
 
 on:
-  push:
-    branches: [dev]
+  schedule:
+    - cron: '0 */3 * * *'
   workflow_dispatch:        # تشغيل يدوي
 
 jobs:
@@ -75,27 +75,6 @@ jobs:
           echo "url=${URL}" >> $GITHUB_OUTPUT
           echo "Using page ${{ steps.get_page.outputs.page }} → $URL"
 
-      # # -------------------------------------------------
-      # # 4️⃣ تحميل الصفحة HTML
-      # # -------------------------------------------------
-      # - name: Download HTML page
-      #   id: download
-      #   run: |
-      #     curl -sSL "${{ steps.build_url.outputs.url }}" -o page.html
-      #     echo "file=page.html" >> $GITHUB_OUTPUT
-
-      # # -------------------------------------------------
-      # # 5️⃣ استخراج الأسطر المطلوبة
-      # # -------------------------------------------------
-      # - name: Extract required lines
-      #   id: extract
-      #   run: |
-      #     grep "<3>" "${{ steps.download.outputs.file }}" > h3_lines.txt || true
-      #     grep "\.mp3" "${{ steps.download.outputs.file }}" > mp3_lines.txt || true
-      #     cat h3_lines.txt mp3_lines.txt > result.txt
-      #     echo "=== النتائج المستخرجة ==="
-      #     cat result.txt
-          
       # -------------------------------------------------
       # 4️⃣ تحميل → تنظيف بـ perl → استخراج الأسطر المطلوبة
       # -------------------------------------------------
@@ -147,16 +126,6 @@ jobs:
             echo "⚠️ لا يوجد أي سطر يحتوي على .mp3"
           fi
           
-      # -------------------------------------------------
-      # 6️⃣ رفع النتيجة كـ artifact (اختياري)
-      # -------------------------------------------------
-      #- name: Upload result
-      #  if: steps.check_mp3.outputs.has_mp3 == 'true'
-      #  uses: actions/upload-artifact@v4
-      #  with:
-      #    name: extraction-result
-      #    path: result.txt
-
       # -------------------------------------------------
       # 7️⃣ مقارنة النتيجة مع al-badr/tafsir-assadi/last_mp3.txt
       # -------------------------------------------------
@@ -318,16 +287,3 @@ jobs:
           token: ${{ secrets.R_token }}  
           commit_message: "Update mp3scraper.exe.config"
           file_pattern: "mp3scraper/bin/Release/mp3scraper.exe.config"
-          
-      #- name: Run second workflow
-    #    if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
-  #      uses: ./.github/workflows/main.yml
-        
-        #  file_pattern: |
-        #    al-badr/tafsir-assadi/last_mp3.txt
-        #    al-badr/tafsir-assadi/next_mp3.txt
-          # صلاحيات الكتابة لتدفع التغييرات
-          #repository: ${{ github.repository }}
-          #branch: ${{ github.ref_name }}
-          # إذا كان المستودع خاصاً قد تحتاج إلى:
-          #   push: true
