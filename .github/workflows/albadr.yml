@@ -315,8 +315,12 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Update mp3scraper.exe.config"
-          file_pattern: "mp3scraper/bin/Release/mp3scraper.exe.config"     
+          file_pattern: "mp3scraper/bin/Release/mp3scraper.exe.config"
           
+      - name: Run second workflow
+        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
+        uses: ./.github/workflows/main.yml
+        
         #  file_pattern: |
         #    al-badr/tafsir-assadi/last_mp3.txt
         #    al-badr/tafsir-assadi/next_mp3.txt
