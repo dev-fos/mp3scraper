@@ -181,6 +181,8 @@ jobs:
         run: |
           cp mp3_lines.txt al-badr/tafsir-assadi/last_mp3.txt
           echo "تم تحديث al-badr/tafsir-assadi/last_mp3.txt بالنتائج الجديدة"
+          cat mp3_lines.txt
+          cat al-badr/tafsir-assadi/last_mp3.txt
           
       - name: Update last_mp3.txt in target repo
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
@@ -190,11 +192,11 @@ jobs:
           
       - name: Commit & push changes
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
-       # working-directory: target-repo
+        working-directory: target-repo
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add target-repo/mp3-url/al-badr-tafsir-assidi.html
+          git add mp3-url/al-badr-tafsir-assidi.html
           git commit -m "Update last_mp3.txt with new results"
           git push origin HEAD:main
 
