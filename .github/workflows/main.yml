@@ -5,10 +5,10 @@ on:
     paths:
       - mp3scraper/bin/Release/mp3scraper.exe.config   # تشغيل فقط عند تعديل هذا الملف         
   workflow_dispatch:   # تشغيل يدوي إذا لزم
-  workflow_run:
-    workflows: ["HTML"]
-    types:
-      - completed
+  #workflow_run:
+  #  workflows: ["HTML"]
+  #  types:
+  #    - completed
   workflow_call:
 
 
