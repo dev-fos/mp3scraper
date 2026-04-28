@@ -253,7 +253,7 @@ jobs:
 
           # دمج النص الثابت مع المحت
 
-          REPLACEMENT="${TEXT_BEFORE}""${RESULT}""${TEXT_AFTER}"
+          REPLACEMENT="${TEXT_BEFORE}""${RESULT}"$'\n'"${TEXT_AFTER}"
           
           echo "merged<<EOF" >> $GITHUB_OUTPUT
           echo "REPLACEMENT"      >> $GITHUB_OUTPUT
@@ -292,12 +292,6 @@ jobs:
       # -------------------------------------------------
       # 10️⃣ الالتزام بالملف المحدث
       # -------------------------------------------------
-      - name: Commit mp3scraper.exe.config
-        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "Update mp3scraper.exe.config"
-          file_pattern: "mp3scraper/bin/Release/mp3scraper.exe.config"
           
       - name: Commit next_mp3.txt
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
@@ -313,7 +307,14 @@ jobs:
           commit_message: "Update last_mp3"
           # نضمن إضافة كل من last_mp3.txt و next_mp3.txt
           file_pattern: "al-badr/tafsir-assadi/last_mp3.txt"
-           
+          
+      - name: Commit mp3scraper.exe.config
+        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update mp3scraper.exe.config"
+          file_pattern: "mp3scraper/bin/Release/mp3scraper.exe.config"     
+          
         #  file_pattern: |
         #    al-badr/tafsir-assadi/last_mp3.txt
         #    al-badr/tafsir-assadi/next_mp3.txt
