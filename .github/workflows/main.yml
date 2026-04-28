@@ -1,6 +1,7 @@
 name: Run Windows Executable
 
 on:
+  workflow_call:
   push:
     paths:
       - mp3scraper/bin/Release/mp3scraper.exe.config   # تشغيل فقط عند تعديل هذا الملف         
@@ -9,7 +10,7 @@ on:
   #  workflows: ["HTML"]
   #  types:
   #    - completed
-  workflow_call:
+  
 
 
 jobs:
