@@ -11,7 +11,9 @@ on:
     workflows: ["HTML"]
     types:
       - completed
-  
+permissions:
+  actions: read   # ضروري لتلقي حدث workflow_run
+
 
 
 jobs:
