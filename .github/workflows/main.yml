@@ -3,9 +3,13 @@ name: Run Windows Executable
 on:
   push:
     paths:
-      - mp3scraper/bin/Release/mp3scraper.exe.config   # تشغيل فقط عند تعديل هذا الملف
-         
+      - mp3scraper/bin/Release/mp3scraper.exe.config   # تشغيل فقط عند تعديل هذا الملف         
   workflow_dispatch:   # تشغيل يدوي إذا لزم
+  workflow_run:
+    workflows: ["HTML"]
+    types:
+      - completed
+
 
 jobs:
   run-exe:
@@ -17,7 +21,17 @@ jobs:
         with:
           persist-credentials: true
           fetch-depth: 0
-
+          
+      - name: تحقق من وجود تعديل للملف
+        id: check
+        run: |
+          git fetch origin
+          if git diff --name-only ${{ github.event.workflow_run.head_commit.id }}..HEAD | grep -q '^mp3scraper/bin/Release/mp3scraper.exe.config$'; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+          
       - name: Run the executable
         run: .\mp3scraper\bin\Release\mp3scraper.exe
 
