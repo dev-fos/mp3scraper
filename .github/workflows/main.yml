@@ -6,7 +6,7 @@ on:
     types: [completed]
   #workflow_call:
   push:
-    branches: [ dev ]
+   # branches: [ dev ]
     paths:
       - mp3scraper/bin/Release/mp3scraper.exe.config   # تشغيل فقط عند تعديل هذا الملف         
   workflow_dispatch:
