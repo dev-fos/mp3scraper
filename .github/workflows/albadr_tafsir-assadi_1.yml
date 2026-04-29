@@ -1,9 +1,9 @@
 name: albadr tafsir-assadi grab and build
-run-name:  شرح تفسير السعدي | الشيخ د. عبد الرزاق بن عبد المحسن البدر
+run-name:  البحث عن درس جديد من - شرح تفسير السعدي | الشيخ د. عبد البدر
 
 on:
   schedule:
-    - cron: "0 */3 * * *"
+    - cron: "0 */4 * * *"
   workflow_dispatch:
 
 permissions:
