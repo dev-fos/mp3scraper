@@ -1,5 +1,5 @@
 name: albadr tafsir-assadi grab and build
-run-name:  البحث عن درس جديد من - شرح تفسير السعدي | الشيخ د. عبد البدر
+run-name:  البحث عن درس جديد من - شرح تفسير السعدي | الشيخ د. عبدالرزاق البدر
 
 on:
   schedule:
