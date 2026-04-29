@@ -48,7 +48,9 @@ jobs:
           ' "$FILE" > lines.txt
           echo "=== عينة من الملف بعد الاستبدال ==="
           head -n 50 "$FILE"
-
+          
+          echo "LINES=lines.txt" >> "$GITHUB_OUTPUT"
+          
       - name: Checkout target repo
         uses: actions/checkout@v6
         with:
@@ -71,7 +73,7 @@ jobs:
             s{
              </channel>\s*</rss>\s*
               }{
-              `cat ../lines.xml`
+              cat "$ENV{LINES_FILE}"
                 </channel>
               </rss>
               }gsx;  
