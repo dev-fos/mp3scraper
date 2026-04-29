@@ -58,17 +58,6 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
           
-      - name: Show repository file tree
-        run: |
-          echo "📂 شجرة المستودع المستنسخ (target‑repo):"
-          # إذا كان الأمر tree مثبتًا فستظهر شجرة بألوان وتنسيق أفضل
-          if command -v tree >/dev/null; then
-            tree target-repo
-          else
-            # fallback إلى ls -R مع تنسيق واضح
-            ls -R target-repo | sed 's/^/   /'
-          fi  
-      
       - name: Define target file path
         id: vars2
         run: |
@@ -88,7 +77,7 @@ jobs:
               }gsx;  
           ' "$FILE" > lines2.txt
           echo "=== عينة من الملف بعد الاستبدال ==="
-          head -n 50 "$FILE"
+          head -n 9000 "$FILE"
           
      # - name: Commit & push changes
      #   working-directory: target-repo
