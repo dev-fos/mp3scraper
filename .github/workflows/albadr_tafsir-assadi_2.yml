@@ -13,13 +13,17 @@ permissions:
 jobs:
   replace:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
+      
     steps:
       # 1️⃣ سحب الشيفرة
       - name: Checkout repository
-        uses: actions/checkout@v4
-        with :
-          token: ${{ secrets.R_token }}   # لا تحتاج PAT
+        uses: actions/checkout@v6
+        with: 
+          fetch-depth: 0   # احصل على التاريخ الكامل للسماح بالـ push
+          persist-credentials: true
+          token: ${{ secrets.R_token }}  
 
       # 2️⃣ تعريف مسار الملف (احرص على وضعه داخل علامات اقتباس)
       - name: Define file path
