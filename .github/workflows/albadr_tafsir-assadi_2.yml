@@ -1,0 +1,77 @@
+name: albadr tafsir-assadi update
+run-name:  إضافة درس - شرح تفسير السعدي | الشيخ د. عبدالرزاق البدر
+
+on:
+  push:
+    paths:
+      - mp3scraper/bin/Release/podcasts/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml  # تشغيل فقط عند تعديل هذا الملف         
+  workflow_dispatch:
+  
+jobs:
+  replace:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ سحب الشيفرة
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ تعريف مسار الملف (احرص على وضعه داخل علامات اقتباس)
+      - name: Define file path
+        id: vars
+        run: |
+          echo "FILE=mp3scraper/bin/Release/podcasts/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml" >> $GITHUB_OUTPUT
+
+      # 3️⃣ البحث / الاستبدال باستخدام perl (regex مع وضع التعليقات)
+      - name: Get new item
+        env:
+          FILE: ${{ steps.vars.outputs.FILE }}
+        run: |
+          perl -0777 -i -pe '
+            s{
+              <\?xml\s+version="1\.0"\s+encoding="utf-8"\?>
+              .*?
+              </image>
+              }{}gsx;  
+            s{
+             </channel>\s*</rss>\s*
+              }{}gsx;  
+          ' "$FILE" > lines.txt
+
+      - name: Checkout target repo
+        uses: actions/checkout@v6
+        with:
+          repository: dev-fos/islampodcast   # استبدل بـ <المنظمة>/<المستودع>
+          token: ${{ secrets.R_token }}   # لا تحتاج PAT
+          path: target-repo
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Define target file path
+        id: vars2
+        run: |
+          echo "FILE=target-repo/عبدالرزاق-البدر/التفسير-وعلوم-القرآن/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml" >> $GITHUB_OUTPUT
+
+      - name: Update podcast in target repo
+        env:
+          FILE: ${{ steps.vars2.outputs.FILE }}
+        run: |
+          perl -0777 -i -pe ' 
+            s{
+             </channel>\s*</rss>\s*
+              }{
+              'cat ../lines.xml'
+                </channel>
+              </rss>
+              }gsx;  
+          ' "$FILE"
+          echo "الدرس الجديد"
+          
+     # - name: Commit & push changes
+     #   working-directory: target-repo
+     #   run: |
+     #     git config user.name  "github-actions[bot]"
+     #     git config user.email "github-actions[bot]@users.noreply.github.com"
+     #     git add mp3-url/al-badr-tafsir-assidi.html
+     #     git commit -m "Update last_mp3.txt with new results" || echo "Nothing to commit"
+     #     git push origin HEAD:main
