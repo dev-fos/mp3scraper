@@ -18,6 +18,8 @@ jobs:
       # 1️⃣ سحب الشيفرة
       - name: Checkout repository
         uses: actions/checkout@v4
+        with :
+          token: ${{ secrets.R_token }}   # لا تحتاج PAT
 
       # 2️⃣ تعريف مسار الملف (احرص على وضعه داخل علامات اقتباس)
       - name: Define file path
