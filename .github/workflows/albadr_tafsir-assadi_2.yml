@@ -67,41 +67,41 @@ jobs:
         run: |
           echo "FILE=target-repo/عبدالرزاق-البدر/التفسير-وعلوم-القرآن/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml" >> $GITHUB_OUTPUT
 
-  #    - name: Update podcast in target repo
-  #      env:
-  #        FILE: ${{ steps.vars2.outputs.FILE }}
-  #        LINES_FILE: ${{ steps.get_item.outputs.FILE }}
-  #      run: |
-  #        perl -0777 -i -pe ' 
-  #          s{
-  #           </channel>\s*</rss>\s*
-  #            }{
-  #            $ENV{LINES_FILE}
-  #              </channel>
-  #            </rss>
-  #            }gsx;  
-  #        ' "$FILE" > lines2.txt
-  #        echo "=== عينة من الملف بعد الاستبدال ==="
-  #        tail -n 50 "$FILE"
-          
       - name: Update podcast in target repo
         env:
-          SRC: ${{ steps.get_item.outputs.FILE }}      # الملف المعدل من الخطوة 1
-          DST: ${{ steps.vars2.outputs.FILE }}    # الملف النهائي في المستودع الهدف
+          FILE: ${{ steps.vars2.outputs.FILE }}
+          LINES_FILE: ${{ steps.get_item.outputs.FILE }}
         run: |
-          # احتفظ بنهاية </channel></rss> من الملف الأصلي
-          tail -n 2 "$SRC" > /tmp/ending.xml
+          perl -0777 -i -pe ' 
+            s{
+             </channel>\s*</rss>\s*
+              }{
+              ${LINES_FILE}
+                </channel>
+              </rss>
+              }gsx;  
+          ' "$FILE" > lines2.txt
+          echo "=== عينة من الملف بعد الاستبدال ==="
+          tail -n 50 "$FILE"
+          
+  #    - name: Update podcast in target repo
+  #      env:
+  #        SRC: ${{ steps.get_item.outputs.FILE }}      # الملف المعدل من الخطوة 1
+  #        DST: ${{ steps.vars2.outputs.FILE }}    # الملف النهائي في المستودع الهدف
+  #      run: |
+  #        # احتفظ بنهاية </channel></rss> من الملف الأصلي
+  #        tail -n 2 "$SRC" > /tmp/ending.xml
 
           # احذف آخر سطرين من الملف المستهدف (الذي يحتوي على </channel></rss>)
-          sed -i '$d' "$DST"
-          sed -i '$d' "$DST"
+  #        sed -i '$d' "$DST"
+  #        sed -i '$d' "$DST"
 
           # أضف المحتوى المعدل ثم النهاية القديمة
-          cat "$SRC" >> "$DST"
-          cat /tmp/ending.xml >> "$DST"
+  #        cat "$SRC" >> "$DST"
+  #        cat /tmp/ending.xml >> "$DST"
 
-          echo "=== عينة من الملف بعد الدمج ==="
-          tail -n 30 "$DST"
+  #        echo "=== عينة من الملف بعد الدمج ==="
+  #        tail -n 30 "$DST"
           
      # - name: Commit & push changes
      #   working-directory: target-repo
