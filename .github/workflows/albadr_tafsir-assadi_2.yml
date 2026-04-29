@@ -76,7 +76,7 @@ jobs:
             s{
              </channel>\s*</rss>\s*
               }{
-              $ENV{LINES_FILE}
+              $ENV{LINES}
                 </channel>
               </rss>
               }gsx;  
