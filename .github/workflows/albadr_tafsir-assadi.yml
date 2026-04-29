@@ -1,4 +1,6 @@
-name: شرح تفسير السعدي | الشيخ د. عبد الرزاق بن عبد المحسن البدر
+name: albadr tafsir-assadi grab amd build
+run-name:  شرح تفسير السعدي | الشيخ د. عبد الرزاق بن عبد المحسن البدر
+
 on:
   schedule:
     - cron: "0 */3 * * *"
