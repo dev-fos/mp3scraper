@@ -48,7 +48,7 @@ jobs:
               }{}gsx;  
           ' "$FILE" > lines.txt
 
-          echo "LINES=lines.txt" >> "$GITHUB_OUTPUT"
+          echo "LINES=$FILE" >> "$GITHUB_OUTPUT"
                     
           echo "=== عينة من الملف بعد الاستبدال ==="
           head -n 50 "$FILE"    
