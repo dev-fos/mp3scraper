@@ -60,7 +60,7 @@ jobs:
             s{
              </channel>\s*</rss>\s*
               }{
-              'cat ../lines.xml'
+              `cat ../lines.xml`
                 </channel>
               </rss>
               }gsx;  
