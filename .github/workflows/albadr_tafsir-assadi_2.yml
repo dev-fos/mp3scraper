@@ -77,7 +77,7 @@ jobs:
               }gsx;  
           ' "$FILE" > lines2.txt
           echo "=== عينة من الملف بعد الاستبدال ==="
-          head -n 9000 "$FILE"
+          tail -n 50 "$FILE"
           
      # - name: Commit & push changes
      #   working-directory: target-repo
