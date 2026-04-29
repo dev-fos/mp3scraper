@@ -46,6 +46,7 @@ jobs:
              </channel>\s*</rss>\s*
               }{}gsx;  
           ' "$FILE" > lines.txt
+          cat lines.txt
 
       - name: Checkout target repo
         uses: actions/checkout@v6
