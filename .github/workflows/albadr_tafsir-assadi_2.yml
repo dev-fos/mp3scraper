@@ -70,13 +70,13 @@ jobs:
       - name: Update podcast in target repo
         env:
           FILE: ${{ steps.vars2.outputs.FILE }}
-          LINES_FILE: ${{ steps.get_item.outputs.LINES }}
+          LINES_FILE: ${{ steps.get_item.outputs.FILE }}
         run: |
           perl -0777 -i -pe ' 
             s{
              </channel>\s*</rss>\s*
               }{
-              $ENV{LINES}
+              $ENV{LINES_FILE}
                 </channel>
               </rss>
               }gsx;  
