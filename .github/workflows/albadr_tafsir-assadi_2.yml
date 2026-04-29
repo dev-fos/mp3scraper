@@ -73,9 +73,9 @@ jobs:
                 </channel>
               </rss>
               }gsx;  
-          ' "$FILE"
+          ' "$FILE2" > lines2.txt
           echo "الدرس الجديد"
-          $FILE
+          cat lines2.txt
           
      # - name: Commit & push changes
      #   working-directory: target-repo
