@@ -33,6 +33,7 @@ jobs:
 
       # 3️⃣ البحث / الاستبدال باستخدام perl (regex مع وضع التعليقات)
       - name: Get new item
+        id: get_item
         env:
           FILE: ${{ steps.vars.outputs.FILE }}
         run: |
@@ -46,10 +47,11 @@ jobs:
              </channel>\s*</rss>\s*
               }{}gsx;  
           ' "$FILE" > lines.txt
-          echo "=== عينة من الملف بعد الاستبدال ==="
-          head -n 50 "$FILE"
-          
+
           echo "LINES=lines.txt" >> "$GITHUB_OUTPUT"
+                    
+          echo "=== عينة من الملف بعد الاستبدال ==="
+          head -n 50 "$FILE"    
           
       - name: Checkout target repo
         uses: actions/checkout@v6
@@ -68,12 +70,13 @@ jobs:
       - name: Update podcast in target repo
         env:
           FILE: ${{ steps.vars2.outputs.FILE }}
+          LINES_FILE: ${{ steps.get_item.outputs.LINES }}
         run: |
           perl -0777 -i -pe ' 
             s{
              </channel>\s*</rss>\s*
               }{
-              cat "$ENV{LINES_FILE}"
+              $ENV{LINES_FILE}
                 </channel>
               </rss>
               }gsx;  
