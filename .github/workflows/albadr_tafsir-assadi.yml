@@ -1,9 +1,8 @@
 name: شرح تفسير السعدي | الشيخ د. عبد الرزاق بن عبد المحسن البدر
-
 on:
   schedule:
     - cron: '0 */3 * * *'
-  workflow_dispatch:        # تشغيل يدوي
+  workflow_dispatch:
 
 jobs:
   fetch-and-extract:
