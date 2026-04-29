@@ -4,7 +4,7 @@ run-name:  إضافة درس - شرح تفسير السعدي | الشيخ د. �
 on:
   push:
     paths:
-      - mp3scraper/bin/Release/podcasts/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml  # تشغيل فقط عند تعديل هذا الملف         
+      - "mp3scraper/bin/Release/podcasts/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml"  # تشغيل فقط عند تعديل هذا الملف         
   workflow_dispatch:
 
 permissions:
@@ -46,8 +46,8 @@ jobs:
              </channel>\s*</rss>\s*
               }{}gsx;  
           ' "$FILE" > lines.txt
-           echo "الدرس الجديد"
-           cat lines.txt
+          echo "=== عينة من الملف بعد الاستبدال ==="
+          head -n 50 "$FILE"
 
       - name: Checkout target repo
         uses: actions/checkout@v6
@@ -76,8 +76,8 @@ jobs:
               </rss>
               }gsx;  
           ' "$FILE2" > lines2.txt
-          echo "الدرس الجديد"
-          cat lines2.txt
+          echo "=== عينة من الملف بعد الاستبدال ==="
+          head -n 50 "$FILE2"
           
      # - name: Commit & push changes
      #   working-directory: target-repo
