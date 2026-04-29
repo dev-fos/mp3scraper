@@ -86,9 +86,9 @@ jobs:
                 </channel>
               </rss>
               }gsx;  
-          ' "$FILE2" > lines2.txt
+          ' "$FILE" > lines2.txt
           echo "=== عينة من الملف بعد الاستبدال ==="
-          head -n 50 "$FILE2"
+          head -n 50 "$FILE"
           
      # - name: Commit & push changes
      #   working-directory: target-repo
