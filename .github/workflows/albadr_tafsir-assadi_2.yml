@@ -6,6 +6,9 @@ on:
     paths:
       - mp3scraper/bin/Release/podcasts/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml  # تشغيل فقط عند تعديل هذا الملف         
   workflow_dispatch:
+
+permissions:
+  contents: write
   
 jobs:
   replace:
