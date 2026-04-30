@@ -84,13 +84,14 @@ jobs:
           cat  item.txt
 
           # قراءة محتوى LINES_FILE في متغيّر Bash
-          INSERT=$(cat "$item.txt")
+          INSERT=$(cat item.txt)
           
           perl -0777 -i -pe ' 
             s{
              </channel>\s*</rss>\s*
               }{
                 ${item.txt}
+                ${INSERT}
                 </channel>
               </rss>
               }gsx;  
