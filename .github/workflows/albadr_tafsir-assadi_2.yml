@@ -46,7 +46,7 @@ jobs:
             s{
              </channel>\s*</rss>\s*
               }{}gsx;  
-          '"$FILE" item.txt
+          '"$FILE" > item.txt
 
           cat item.txt
           
