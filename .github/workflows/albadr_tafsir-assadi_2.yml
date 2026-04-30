@@ -85,8 +85,6 @@ jobs:
 
           # قراءة محتوى LINES_FILE في متغيّر Bash
           INSERT=$(cat item.txt)
-
-          ${INSERT}
           
           perl -0777 -pe ' 
             s{
