@@ -79,7 +79,7 @@ jobs:
       - name: Update podcast in target repo
         env:
           FILE: ${{ steps.vars2.outputs.FILE }}
-         # LINES_FILE: ${{ steps.get_item.outputs.line }}
+          LINES_FILE: ${{ steps.get_item.outputs.line }}
         run: |
           cat  item.txt
 
@@ -87,7 +87,7 @@ jobs:
           INSERT=$(cat item.txt)
     
  
-          sed -i "s#</channel>[[:space:]]*</rss>#${ESCAPED_INSERT}\
+          sed -i "s#</channel>[[:space:]]*</rss>#${LINES_FILE}\
           </channel>\
           </rss>#" "$FILE"
           tail -n 50 "$FILE"
