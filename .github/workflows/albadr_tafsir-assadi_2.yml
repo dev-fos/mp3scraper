@@ -48,7 +48,7 @@ jobs:
               }{}gsx;  
           ' "$FILE" > lines.txt
 
-          echo "LINES=$FILE" >> "$GITHUB_OUTPUT"
+          echo "FILE=$FILE" >> "$GITHUB_OUTPUT"
                     
           echo "=== عينة من الملف بعد الاستبدال ==="
           head -n 50 "$FILE"    
@@ -72,15 +72,11 @@ jobs:
           FILE: ${{ steps.vars2.outputs.FILE }}
           LINES_FILE: ${{ steps.get_item.outputs.FILE }}
         run: |
-          # احفظ محتوى الملف المعدل في متغيّر بيئي
-          export CONTENT="$(cat "$LINES_FILE")"
-            cat "$LINES_FILE"
-            
           perl -0777 -i -pe ' 
             s{
              </channel>\s*</rss>\s*
               }{
-                $ENV{CONTENT}
+                $LINES_FILE
                 </channel>
               </rss>
               }gsx;  
