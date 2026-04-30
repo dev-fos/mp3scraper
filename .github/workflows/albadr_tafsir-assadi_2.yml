@@ -74,6 +74,7 @@ jobs:
         run: |
           # احفظ محتوى الملف المعدل في متغيّر بيئي
           export CONTENT="$(cat "$LINES_FILE")"
+            cat "$LINES_FILE"
             
           perl -0777 -i -pe ' 
             s{
