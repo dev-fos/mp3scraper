@@ -48,7 +48,7 @@ jobs:
               }{}gsx;  
           ' "$FILE"
 
-          echo "FILE=$FILE" >> "$GITHUB_OUTPUT"
+          echo "line=$FILE" >> "$GITHUB_OUTPUT"
                     
           echo "=== عينة من الملف بعد الاستبدال ==="
           head -n 50 "$FILE"    
@@ -70,7 +70,7 @@ jobs:
       - name: Update podcast in target repo
         env:
           FILE: ${{ steps.vars2.outputs.FILE }}
-          LINES_FILE: ${{ steps.get_item.outputs.FILE }}
+          LINES_FILE: ${{ steps.get_item.outputs.line }}
         run: |
           cat  $LINES_FILE
 
@@ -83,7 +83,7 @@ jobs:
              </channel>\s*</rss>\s*
               }{
                 ${INSERT}
-                ${{ steps.get_item.outputs.FILE }}
+                ${{ steps.get_item.outputs.line }}
                 </channel>
               </rss>
               }gsx;  
