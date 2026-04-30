@@ -99,6 +99,9 @@ jobs:
           echo "=== عينة من الملف بعد الاستبدال ==="
           tail -n 50 "$FILE"
           
+          echo "99999"
+            ${INSERT}
+          
   #    - name: Update podcast in target repo
   #      env:
   #        SRC: ${{ steps.get_item.outputs.FILE }}      # الملف المعدل من الخطوة 1
