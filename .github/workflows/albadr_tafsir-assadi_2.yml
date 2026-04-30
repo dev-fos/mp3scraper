@@ -78,7 +78,7 @@ jobs:
             s{
              </channel>\s*</rss>\s*
               }{
-                $LINES_FILE
+                ${LINES_FILE}
                 </channel>
               </rss>
               }gsx;  
