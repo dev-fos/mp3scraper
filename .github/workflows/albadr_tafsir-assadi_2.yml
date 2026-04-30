@@ -86,7 +86,7 @@ jobs:
           # قراءة محتوى LINES_FILE في متغيّر Bash
           INSERT=$(cat item.txt)
           
-          perl -0777 -pe ' 
+          perl -0777 -i -pe ' 
             s{
              </channel>\s*</rss>\s*
               }{
