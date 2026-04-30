@@ -96,6 +96,8 @@ jobs:
               }gsx;  
           ' "$FILE" 
  # 
+            tail -n 50 "$FILE"
+ 
 #           sed -i "s#</channel>[[:space:]]*</rss>#${INSERT}\
 #           </channel>\
 #           </rss>#" "$FILE"
