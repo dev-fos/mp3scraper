@@ -74,12 +74,14 @@ jobs:
           echo "$CONTENT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
+          cat item.txt
           $file_content
+          $CONTENT
           
       - name: Update podcast in target repo
         env:
           FILE: ${{ steps.vars2.outputs.FILE }}
-          LINES_FILE: ${{ steps.get_item.outputs.line }}
+         # LINES_FILE: ${{ steps.get_item.outputs.line }}
         run: |
           cat  $LINES_FILE
 
