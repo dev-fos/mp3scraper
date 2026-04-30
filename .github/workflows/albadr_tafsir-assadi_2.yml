@@ -81,10 +81,10 @@ jobs:
           FILE: ${{ steps.vars2.outputs.FILE }}
          # LINES_FILE: ${{ steps.get_item.outputs.line }}
         run: |
-          cat  $LINES_FILE
+          cat  item.txt
 
           # قراءة محتوى LINES_FILE في متغيّر Bash
-          INSERT=$(cat "$LINES_FILE")
+          INSERT=$(cat "$item.txt")
 
           
           perl -0777 -i -pe ' 
