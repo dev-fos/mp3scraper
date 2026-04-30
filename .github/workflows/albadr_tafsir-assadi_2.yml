@@ -85,14 +85,13 @@ jobs:
 
           # قراءة محتوى LINES_FILE في متغيّر Bash
           INSERT=$(cat "$item.txt")
-
           
           perl -0777 -i -pe ' 
             s{
              </channel>\s*</rss>\s*
               }{
                 ${INSERT}
-                ${{ steps.get_item.outputs.line }} 
+
                 ${{ steps.file_data.outputs.file_content }}
                 item.txt
                 $item.txt
