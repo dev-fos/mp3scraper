@@ -85,23 +85,37 @@ jobs:
 
           # قراءة محتوى LINES_FILE في متغيّر Bash
           INSERT=$(cat item.txt)
+    
+          sed -i -e "/<\/channel>[[:space:]]*<\/rss>/{
+              r /dev/stdin
+              a\\
+          </channel>
+          </rss>
+          }" -e "s|</channel>[[:space:]]*</rss>|$ESCAPED_INSERT\
+          </channel>\
+          </rss>|" "$FILE" <<<"$INSERT"
           
-          perl -0777 -i -pe ' 
-            s{
-             </channel>\s*</rss>\s*
-              }{
-                ${INSERT}
-                $ENV{INSERT}
-                </channel>
-              </rss>
-              }gsx;  
-          ' "$FILE"
-          
-          echo "=== عينة من الملف بعد الاستبدال ==="
           tail -n 50 "$FILE"
           
-          echo "99999"
-            $ENV{{ INSERT }}
+   #        perl -0777 -i -pe ' 
+#             s{
+#              </channel>\s*</rss>\s*
+#               }{
+#                 ${INSERT}
+#                 $ENV{INSERT}
+#                 </channel>
+#               </rss>
+#               }gsx;  
+#           ' "$FILE"
+#           
+#           echo "=== عينة من الملف بعد الاستبدال ==="
+#           tail -n 50 "$FILE"
+#           
+#           echo "99999"
+#             $ENV{{ INSERT }}
+
+        
+          
           
   #    - name: Update podcast in target repo
   #      env:
