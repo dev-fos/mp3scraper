@@ -70,7 +70,7 @@ jobs:
           # قراءة محتوى الملف وتخزينه في متغير
           CONTENT=$(cat item.txt)
           # إرسال المحتوى إلى مخرجات GitHub Action
-          echo "file_content<<EOF" >> $GITHUB_OUTPUT
+          echo "content<<EOF" >> $GITHUB_OUTPUT
           echo "$CONTENT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
@@ -91,6 +91,7 @@ jobs:
               }{
                 ${INSERT}
                 $ENV{INSERT}
+                ${{ steps.file_data.outputs.content }}
                 </channel>
               </rss>
               }gsx;  
