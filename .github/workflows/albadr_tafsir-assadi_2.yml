@@ -90,13 +90,12 @@ jobs:
             s{
              </channel>\s*</rss>\s*
               }{
-                item.txt
                 $item.txt
-                ${item.txt}
                 </channel>
               </rss>
               }gsx;  
           ' "$FILE"
+          
           echo "=== عينة من الملف بعد الاستبدال ==="
           tail -n 50 "$FILE"
           
