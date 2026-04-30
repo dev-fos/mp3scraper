@@ -73,12 +73,15 @@ jobs:
           LINES_FILE: ${{ steps.get_item.outputs.FILE }}
         run: |
           cat  $LINES_FILE
-          
+
+          # قراءة محتوى LINES_FILE في متغيّر Bash
+          INSERT=$(cat "$LINES_FILE")
+    
           perl -0777 -i -pe ' 
             s{
              </channel>\s*</rss>\s*
               }{
-                ${LINES_FILE}
+                ${INSERT}
                 </channel>
               </rss>
               }gsx;  
