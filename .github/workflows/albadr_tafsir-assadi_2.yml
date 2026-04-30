@@ -43,10 +43,10 @@ jobs:
               .*?
               </image>
               }{}gsx;  
-            s{
-             </channel>\s*</rss>\s*
-              }{}gsx;  
-          ' "$FILE" > item.txt
+        #    s{
+        #     </channel>\s*</rss>\s*
+        #      }{}gsx;  
+        #  ' "$FILE" > item.txt
           
       - name: Checkout target repo
         uses: actions/checkout@v6
@@ -84,12 +84,9 @@ jobs:
              </channel>\s*</rss>\s*
               }{
                 ${{ steps.file_data.outputs.content }}
-                </channel>
-              </rss>
               }gsx;  
           ' "$FILE" 
-            tail -n 100 "$FILE"
-          
+            tail -n 80 "$FILE"
           
      # - name: Commit & push changes
      #   working-directory: target-repo
