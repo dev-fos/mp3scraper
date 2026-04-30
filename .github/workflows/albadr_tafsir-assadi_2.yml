@@ -46,12 +46,13 @@ jobs:
             s{
              </channel>\s*</rss>\s*
               }{}gsx;  
-          ' "$FILE"
+          ' item.txt
 
-          echo "line=$FILE" >> "$GITHUB_OUTPUT"
+          echo "cat item.txt" >> "$GITHUB_OUTPUT"
                     
           echo "=== عينة من الملف بعد الاستبدال ==="
-          head -n 50 "$FILE"    
+          head -n 50 "$FILE"
+          cat item.txt
           
       - name: Checkout target repo
         uses: actions/checkout@v6
@@ -83,7 +84,8 @@ jobs:
              </channel>\s*</rss>\s*
               }{
                 ${INSERT}
-                ${{ steps.get_item.outputs.line }}
+                ${{ steps.get_item.outputs.line }} 
+                
                 </channel>
               </rss>
               }gsx;  
