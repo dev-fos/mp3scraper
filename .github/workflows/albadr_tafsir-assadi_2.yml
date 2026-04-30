@@ -90,9 +90,6 @@ jobs:
             s{
              </channel>\s*</rss>\s*
               }{
-                ${INSERT}
-
-                ${{ steps.file_data.outputs.file_content }}
                 item.txt
                 $item.txt
                 ${item.txt}
