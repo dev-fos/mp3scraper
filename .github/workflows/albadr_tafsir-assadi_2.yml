@@ -88,7 +88,7 @@ jobs:
 
           ${INSERT}
           
-          perl -0777 -i -pe ' 
+          perl -0777 -pe ' 
             s{
              </channel>\s*</rss>\s*
               }{
