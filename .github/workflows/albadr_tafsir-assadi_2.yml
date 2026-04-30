@@ -48,6 +48,7 @@ jobs:
               }{}gsx;  
           ' item.txt
 
+          cat item.txt
           
       - name: Checkout target repo
         uses: actions/checkout@v6
