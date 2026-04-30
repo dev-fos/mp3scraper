@@ -85,7 +85,16 @@ jobs:
 
           # قراءة محتوى LINES_FILE في متغيّر Bash
           INSERT=$(cat item.txt)
-    
+              perl -0777 -i -pe ' 
+            s{
+             </channel>\s*</rss>\s*
+              }{
+                ${INSERT}
+                $ENV{INSERT}
+                </channel>
+              </rss>
+              }gsx;  
+          ' "$FILE" 
  # 
 #           sed -i "s#</channel>[[:space:]]*</rss>#${INSERT}\
 #           </channel>\
@@ -102,17 +111,6 @@ jobs:
 #           </rss>|" "$FILE" <<<"$INSERT"
           
  # 
-#           
-          perl -0777 -i -pe ' 
-            s{
-             </channel>\s*</rss>\s*
-              }{
-                ${INSERT}
-                $ENV{INSERT}
-                </channel>
-              </rss>
-              }gsx;  
-          ' "$FILE"
 #           
 #           echo "=== عينة من الملف بعد الاستبدال ==="
 #           tail -n 50 "$FILE"
