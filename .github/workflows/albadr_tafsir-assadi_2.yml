@@ -75,8 +75,6 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
           cat item.txt
-          $file_content
-          $CONTENT
           
       - name: Update podcast in target repo
         env:
