@@ -37,7 +37,7 @@ jobs:
         env:
           FILE: ${{ steps.vars.outputs.FILE }}
         run: |
-          perl -0777 -i -pe '
+          perl -0777 -pe '
             s{
               <\?xml\s+version="1\.0"\s+encoding="utf-8"\?>
               .*?
@@ -46,7 +46,7 @@ jobs:
             s{
              </channel>\s*</rss>\s*
               }{}gsx;  
-          '"$FILE" > item.txt
+          ' "$FILE" > item.txt
 
           cat item.txt
           
