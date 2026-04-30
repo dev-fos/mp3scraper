@@ -47,8 +47,6 @@ jobs:
              </channel>\s*</rss>\s*
               }{}gsx;  
           ' "$FILE" > item.txt
-
-          cat item.txt
           
       - name: Checkout target repo
         uses: actions/checkout@v6
@@ -73,16 +71,12 @@ jobs:
           echo "content<<EOF" >> $GITHUB_OUTPUT
           echo "$CONTENT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
-
-          cat item.txt
           
       - name: Update podcast in target repo
         env:
           FILE: ${{ steps.vars2.outputs.FILE }}
           LINES_FILE: ${{ steps.get_item.outputs.line }}
         run: |
-          cat  item.txt
-
           # قراءة محتوى LINES_FILE في متغيّر Bash
           INSERT=$(cat item.txt)
               perl -0777 -i -pe ' 
@@ -94,51 +88,8 @@ jobs:
               </rss>
               }gsx;  
           ' "$FILE" 
-            tail -n 50 "$FILE"
- 
-#           sed -i "s#</channel>[[:space:]]*</rss>#${INSERT}\
-#           </channel>\
-#           </rss>#" "$FILE"
-#           tail -n 50 "$FILE"
+            tail -n 100 "$FILE"
           
-  #         sed -i -e "/<\/channel>[[:space:]]*<\/rss>/{
-#               r /dev/stdin
-#               a\\
-#           </channel>
-#           </rss>
-#           }" -e "s|</channel>[[:space:]]*</rss>|$ESCAPED_INSERT\
-#           </channel>\
-#           </rss>|" "$FILE" <<<"$INSERT"
-          
- # 
-#           
-#           echo "=== عينة من الملف بعد الاستبدال ==="
-#           tail -n 50 "$FILE"
-#           
-#           echo "99999"
-#             $ENV{{ INSERT }}
-
-        
-          
-          
-  #    - name: Update podcast in target repo
-  #      env:
-  #        SRC: ${{ steps.get_item.outputs.FILE }}      # الملف المعدل من الخطوة 1
-  #        DST: ${{ steps.vars2.outputs.FILE }}    # الملف النهائي في المستودع الهدف
-  #      run: |
-  #        # احتفظ بنهاية </channel></rss> من الملف الأصلي
-  #        tail -n 2 "$SRC" > /tmp/ending.xml
-
-          # احذف آخر سطرين من الملف المستهدف (الذي يحتوي على </channel></rss>)
-  #        sed -i '$d' "$DST"
-  #        sed -i '$d' "$DST"
-
-          # أضف المحتوى المعدل ثم النهاية القديمة
-  #        cat "$SRC" >> "$DST"
-  #        cat /tmp/ending.xml >> "$DST"
-
-  #        echo "=== عينة من الملف بعد الدمج ==="
-  #        tail -n 30 "$DST"
           
      # - name: Commit & push changes
      #   working-directory: target-repo
