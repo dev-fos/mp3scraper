@@ -73,6 +73,8 @@ jobs:
           echo "file_content<<EOF" >> $GITHUB_OUTPUT
           echo "$CONTENT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
+
+          $file_content
           
       - name: Update podcast in target repo
         env:
@@ -92,6 +94,9 @@ jobs:
                 ${INSERT}
                 ${{ steps.get_item.outputs.line }} 
                 ${{ steps.file_data.outputs.file_content }}
+                item.txt
+                $item.txt
+                ${item.txt}
                 </channel>
               </rss>
               }gsx;  
