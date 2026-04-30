@@ -101,7 +101,7 @@ jobs:
           tail -n 50 "$FILE"
           
           echo "99999"
-            $ENV{INSERT}
+            $ENV{{ INSERT }}
           
   #    - name: Update podcast in target repo
   #      env:
