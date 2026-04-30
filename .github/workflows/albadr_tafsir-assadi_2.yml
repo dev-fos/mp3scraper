@@ -89,8 +89,6 @@ jobs:
             s{
              </channel>\s*</rss>\s*
               }{
-                ${INSERT}
-                $ENV{INSERT}
                 ${{ steps.file_data.outputs.content }}
                 </channel>
               </rss>
