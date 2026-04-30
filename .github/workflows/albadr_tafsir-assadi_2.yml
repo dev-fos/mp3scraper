@@ -86,16 +86,21 @@ jobs:
           # قراءة محتوى LINES_FILE في متغيّر Bash
           INSERT=$(cat item.txt)
     
-          sed -i -e "/<\/channel>[[:space:]]*<\/rss>/{
-              r /dev/stdin
-              a\\
+               sed -i "s#</channel>[[:space:]]*</rss>#${ESCAPED_INSERT}
           </channel>
-          </rss>
-          }" -e "s|</channel>[[:space:]]*</rss>|$ESCAPED_INSERT\
-          </channel>\
-          </rss>|" "$FILE" <<<"$INSERT"
-          
+          </rss>#" "$FILE"
           tail -n 50 "$FILE"
+          
+  #         sed -i -e "/<\/channel>[[:space:]]*<\/rss>/{
+#               r /dev/stdin
+#               a\\
+#           </channel>
+#           </rss>
+#           }" -e "s|</channel>[[:space:]]*</rss>|$ESCAPED_INSERT\
+#           </channel>\
+#           </rss>|" "$FILE" <<<"$INSERT"
+          
+ 
           
    #        perl -0777 -i -pe ' 
 #             s{
