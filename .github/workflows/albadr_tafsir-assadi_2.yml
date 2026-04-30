@@ -73,7 +73,7 @@ jobs:
           LINES_FILE: ${{ steps.get_item.outputs.FILE }}
         run: |
           # احفظ محتوى الملف المعدل في متغيّر بيئي
-          export CONTENT="$(cat "$SRC")"
+          export CONTENT="$(cat "$LINES_FILE")"
             
           perl -0777 -i -pe ' 
             s{
