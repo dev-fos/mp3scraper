@@ -87,7 +87,7 @@ jobs:
           INSERT=$(cat item.txt)
     
  
-          sed -i "s#</channel>[[:space:]]*</rss>#${LINES_FILE}\
+          sed -i "s#</channel>[[:space:]]*</rss>#${INSERT}\
           </channel>\
           </rss>#" "$FILE"
           tail -n 50 "$FILE"
