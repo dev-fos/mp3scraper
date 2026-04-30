@@ -73,7 +73,6 @@ jobs:
           LINES_FILE: ${{ steps.get_item.outputs.FILE }}
         run: |
           cat  $LINES_FILE
-          ${{ steps.get_item.outputs.FILE }}
           
           perl -0777 -i -pe ' 
             s{
