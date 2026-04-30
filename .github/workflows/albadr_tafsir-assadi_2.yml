@@ -43,10 +43,12 @@ jobs:
               .*?
               </image>
               }{}gsx;  
+            ' "$FILE" > item.txt
+            
         #    s{
         #     </channel>\s*</rss>\s*
         #      }{}gsx;  
-        #  ' "$FILE" > item.txt
+
           
       - name: Checkout target repo
         uses: actions/checkout@v6
