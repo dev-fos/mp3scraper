@@ -90,7 +90,7 @@ jobs:
             s{
              </channel>\s*</rss>\s*
               }{
-                $item.txt
+                ${item.txt}
                 </channel>
               </rss>
               }gsx;  
