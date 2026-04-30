@@ -48,11 +48,6 @@ jobs:
               }{}gsx;  
           ' item.txt
 
-          echo "cat item.txt" >> "$GITHUB_OUTPUT"
-                    
-          echo "=== عينة من الملف بعد الاستبدال ==="
-          head -n 50 "$FILE"
-          cat item.txt
           
       - name: Checkout target repo
         uses: actions/checkout@v6
@@ -68,6 +63,16 @@ jobs:
         run: |
           echo "FILE=target-repo/عبدالرزاق-البدر/التفسير-وعلوم-القرآن/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml" >> $GITHUB_OUTPUT
 
+      - name: Read config file into output
+        id: file_data
+        run: |
+          # قراءة محتوى الملف وتخزينه في متغير
+          CONTENT=$(cat config.txt)
+          # إرسال المحتوى إلى مخرجات GitHub Action
+          echo "file_content<<EOF" >> $GITHUB_OUTPUT
+          echo "$CONTENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          
       - name: Update podcast in target repo
         env:
           FILE: ${{ steps.vars2.outputs.FILE }}
@@ -85,7 +90,7 @@ jobs:
               }{
                 ${INSERT}
                 ${{ steps.get_item.outputs.line }} 
-                
+                ${{ steps.file_data.outputs.file_content }}
                 </channel>
               </rss>
               }gsx;  
