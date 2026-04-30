@@ -63,11 +63,11 @@ jobs:
         run: |
           echo "FILE=target-repo/عبدالرزاق-البدر/التفسير-وعلوم-القرآن/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml" >> $GITHUB_OUTPUT
 
-      - name: Read config file into output
+      - name: Read item file into output
         id: file_data
         run: |
           # قراءة محتوى الملف وتخزينه في متغير
-          CONTENT=$(cat config.txt)
+          CONTENT=$(cat item.txt)
           # إرسال المحتوى إلى مخرجات GitHub Action
           echo "file_content<<EOF" >> $GITHUB_OUTPUT
           echo "$CONTENT" >> $GITHUB_OUTPUT
