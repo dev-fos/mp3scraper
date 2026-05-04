@@ -4,7 +4,7 @@ run-name:  إضافة درس - شرح تفسير السعدي | الشيخ د. �
 on:
   push:
     paths:
-      - mp3scraper/bin/Release/podcasts/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml  # تشغيل فقط عند تعديل هذا الملف         
+      - "mp3scraper/bin/Release/podcasts/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml"  # تشغيل فقط عند تعديل هذا الملف         
   workflow_dispatch:
 
 permissions:
