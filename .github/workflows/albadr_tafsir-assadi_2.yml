@@ -68,7 +68,7 @@ jobs:
         id: file_data
         run: |
           # قراءة محتوى الملف وتخزينه في متغير
-          CONTENT=$(cat item.txt | tr -d '\n')
+          CONTENT=$(cat item.txt)
           # إرسال المحتوى إلى مخرجات GitHub Action
           echo "content<<EOF" >> $GITHUB_OUTPUT
           echo "$CONTENT" >> $GITHUB_OUTPUT
