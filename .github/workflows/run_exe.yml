@@ -6,6 +6,9 @@ on:
       - mp3scraper/bin/Release/mp3scraper.exe.config   # تشغيل فقط عند تعديل هذا الملف         
   workflow_dispatch:
 
+permissions:
+  contents: write   
+
 jobs:
   run-exe:
     runs-on: windows-latest
@@ -16,7 +19,7 @@ jobs:
         with:
           persist-credentials: true
           fetch-depth: 0
-          
+          token: ${{ secrets.R_token }}
           
       - name: Run the executable
         run: .\mp3scraper\bin\Release\mp3scraper.exe
