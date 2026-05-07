@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - mp3scraper/bin/Release/mp3scraper.exe.config   # تشغيل فقط عند تعديل هذا الملف         
+      - mp3scraper/al-badr/تفسير-السعدي/mp3scraper.exe.config
   workflow_dispatch:
 
 permissions:
@@ -21,9 +22,32 @@ jobs:
           persist-credentials: true
           fetch-depth: 0
           token: ${{ secrets.R_token }}
+
+      - name: Determine which trigger fired
+        id: which
+        run: |
+          # احصل على القائمة الكاملة للملفات التي تغيرت
+          MODIFIED=$(jq -r '.head_commit.modified[]' "$GITHUB_EVENT_PATH")
+          
+          # تحقق من وجود كل مسار
+          if echo "$MODIFIED" | grep -q '^mp3scraper/bin/Release/mp3scraper.exe.config$'; then
+            echo "trigger=Release" >> "$GITHUB_OUTPUT"
+          elif echo "$MODIFIED" | grep -q '^mp3scraper/al-badr/تفسير-السعدي/mp3scraper.exe.config$'; then
+            echo "trigger=al-badr" >> "$GITHUB_OUTPUT"
+          else
+            echo "trigger=none" >> "$GITHUB_OUTPUT"
+          fi
           
       - name: Run the executable
-        run: .\mp3scraper\bin\Release\mp3scraper.exe
+        run: |
+          if [[ "${{ steps.which.outputs.trigger }}" == "Release" ]]; then
+            .\mp3scraper\bin\Release\mp3scraper.exe
+            # ضع أمر exe_config هنا
+          elif [[ "${{ steps.which.outputs.trigger }}" == "al-badr" ]]; then
+            .\al-badr/تفسير-السعدي/mp3scraper.exe.config
+            # ضع أمر src_changes هنا
+          fi
+
 
       - name: Upload generated file
         uses: actions/upload-artifact@v7
