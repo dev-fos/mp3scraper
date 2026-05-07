@@ -1,4 +1,4 @@
-name: albadr tafsir-assadi grab and build
+name: albadr تفسير-السعدي grab and build
 run-name:  البحث عن درس جديد من - شرح تفسير السعدي | الشيخ د. عبدالرزاق البدر
 
 on:
@@ -52,8 +52,8 @@ jobs:
       - name: Get last page number
         id: get_page
         run: |
-          if [[ -f al-badr/tafsir-assadi/next_mp3.txt ]]; then
-            PAGE=$(cat al-badr/tafsir-assadi/next_mp3.txt)
+          if [[ -f al-badr/تفسير-السعدي/next_mp3.txt ]]; then
+            PAGE=$(cat al-badr/تفسير-السعدي/next_mp3.txt)
           else
             PAGE=360
           fi
@@ -131,40 +131,40 @@ jobs:
           fi
           
       # -------------------------------------------------
-      # 7️⃣ مقارنة النتيجة مع al-badr/tafsir-assadi/last_mp3.txt
+      # 7️⃣ مقارنة النتيجة مع al-badr/تفسير-السعدي/last_mp3.txt
       # -------------------------------------------------
       - name: Compare with previous result
         if: steps.check_mp3.outputs.has_mp3 == 'true'
         id: compare
         run: |
           # إذا كان الملف السابق غير موجود نعتبره فارغاً
-          if [[ ! -f al-badr/tafsir-assadi/last_mp3.txt ]]; then
-            touch al-badr/tafsir-assadi/last_mp3.txt
+          if [[ ! -f al-badr/تفسير-السعدي/last_mp3.txt ]]; then
+            touch al-badr/تفسير-السعدي/last_mp3.txt
           fi
 
           # استخدم diff لإيجاد الاختلافات
-          if diff -q result.txt al-badr/tafsir-assadi/last_mp3.txt > /dev/null; then
+          if diff -q result.txt al-badr/تفسير-السعدي/last_mp3.txt > /dev/null; then
             echo "changed=false" >> $GITHUB_OUTPUT
           else
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
       # -------------------------------------------------
-      # 8️⃣ إذا كان هناك اختلاف → تحديث al-badr/tafsir-assadi/last_mp3.txt
+      # 8️⃣ إذا كان هناك اختلاف → تحديث al-badr/تفسير-السعدي/last_mp3.txt
       # -------------------------------------------------
       - name: Update last_mp3.txt
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
         run: |
-          cp mp3_lines.txt al-badr/tafsir-assadi/last_mp3.txt
-          echo "تم تحديث al-badr/tafsir-assadi/last_mp3.txt بالنتائج الجديدة"
+          cp mp3_lines.txt al-badr/تفسير-السعدي/last_mp3.txt
+          echo "تم تحديث al-badr/تفسير-السعدي/last_mp3.txt بالنتائج الجديدة"
           cat mp3_lines.txt
-          cat al-badr/tafsir-assadi/last_mp3.txt
+          cat al-badr/تفسير-السعدي/last_mp3.txt
           
       - name: Update last_mp3.txt in target repo
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
         run: |
           cp mp3_lines.txt target-repo/mp3-url/al-badr-tafsir-assidi.html
-          echo "تم تحديث target-repo/al-badr/tafsir-assadi/last_mp3.txt بالنتائج الجديدة"
+          echo "تم تحديث target-repo/al-badr/تفسير-السعدي/last_mp3.txt بالنتائج الجديدة"
           
       - name: Commit & push changes
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
@@ -184,7 +184,7 @@ jobs:
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'  # فقط إذا كان هناك تغيير
         run: |
           NEXT=$(( ${{ steps.get_page.outputs.page }} + 1 ))
-          echo "$NEXT" > al-badr/tafsir-assadi/next_mp3.txt
+          echo "$NEXT" > al-badr/تفسير-السعدي/next_mp3.txt
           echo "next=$NEXT" >> $GITHUB_OUTPUT
           
       # 2️⃣ تعريف مسار الملف (احرص على وضعه داخل علامات اقتباس)
@@ -274,7 +274,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Update next_mp3 to ${{ steps.prep_next.outputs.next }}"
-          file_pattern: "al-badr/tafsir-assadi/next_mp3.txt"
+          file_pattern: "al-badr/تفسير-السعدي/next_mp3.txt"
 
       - name: Commit last_mp3
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
@@ -282,7 +282,7 @@ jobs:
         with:
           commit_message: "Update last_mp3"
           # نضمن إضافة كل من last_mp3.txt و next_mp3.txt
-          file_pattern: "al-badr/tafsir-assadi/last_mp3.txt"
+          file_pattern: "al-badr/تفسير-السعدي/last_mp3.txt"
           
       - name: Commit mp3scraper.exe.config
         if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
