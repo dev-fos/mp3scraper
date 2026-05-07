@@ -26,14 +26,14 @@ jobs:
           persist-credentials: true
           token: ${{ secrets.R_token }}  
 
-      - name: Checkout target repo
-        uses: actions/checkout@v6
-        with:
-          repository: dev-fos/islampodcast   # استبدل بـ <المنظمة>/<المستودع>
-          token: ${{ secrets.R_token }}   # لا تحتاج PAT
-          path: target-repo
-          fetch-depth: 0
-          persist-credentials: true
+     # - name: Checkout target repo
+     #   uses: actions/checkout@v6
+     #   with:
+     #     repository: dev-fos/islampodcast   # استبدل بـ <المنظمة>/<المستودع>
+     #     token: ${{ secrets.R_token }}   # لا تحتاج PAT
+     #     path: target-repo
+     #     fetch-depth: 0
+     #     persist-credentials: true
           
       #- name: Show repository file tree
       #  run: |
@@ -131,57 +131,58 @@ jobs:
           fi
           
       # -------------------------------------------------
-      # 7️⃣ مقارنة النتيجة مع al-badr/تفسير-السعدي/last_mp3.txt
+      # 7️⃣ مقارنة النتيجة مع al-badr/تفسير-السعدي/last_mp3.html
       # -------------------------------------------------
-      - name: Compare with previous result
+     # - name: Compare with previous result
+     #   if: steps.check_mp3.outputs.has_mp3 == 'true'
+     #   id: compare
+     #   run: |
+     #     # إذا كان الملف السابق غير موجود نعتبره فارغاً
+     #     if [[ ! -f al-badr/تفسير-السعدي/last_mp3.html ]]; then
+     #       touch al-badr/تفسير-السعدي/last_mp3.html
+     #     fi
+
+     #     # استخدم diff لإيجاد الاختلافات
+     #     if diff -q result.txt al-badr/تفسير-السعدي/last_mp3.html > /dev/null; then
+     #       echo "changed=false" >> $GITHUB_OUTPUT
+     #     else
+     #       echo "changed=true" >> $GITHUB_OUTPUT
+     #     fi
+
+      # -------------------------------------------------
+      # 8️⃣ إذا كان هناك اختلاف → تحديث al-badr/تفسير-السعدي/last_mp3.html
+      # -------------------------------------------------
+      - name: Update last_mp3.html
+      #  if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
         if: steps.check_mp3.outputs.has_mp3 == 'true'
-        id: compare
         run: |
-          # إذا كان الملف السابق غير موجود نعتبره فارغاً
-          if [[ ! -f al-badr/تفسير-السعدي/last_mp3.txt ]]; then
-            touch al-badr/تفسير-السعدي/last_mp3.txt
-          fi
-
-          # استخدم diff لإيجاد الاختلافات
-          if diff -q result.txt al-badr/تفسير-السعدي/last_mp3.txt > /dev/null; then
-            echo "changed=false" >> $GITHUB_OUTPUT
-          else
-            echo "changed=true" >> $GITHUB_OUTPUT
-          fi
-
-      # -------------------------------------------------
-      # 8️⃣ إذا كان هناك اختلاف → تحديث al-badr/تفسير-السعدي/last_mp3.txt
-      # -------------------------------------------------
-      - name: Update last_mp3.txt
-        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
-        run: |
-          cp mp3_lines.txt al-badr/تفسير-السعدي/last_mp3.txt
-          echo "تم تحديث al-badr/تفسير-السعدي/last_mp3.txt بالنتائج الجديدة"
+          cp mp3_lines.txt al-badr/تفسير-السعدي/last_mp3.html
+          echo "تم تحديث al-badr/تفسير-السعدي/last_mp3.html بالنتائج الجديدة"
           cat mp3_lines.txt
-          cat al-badr/تفسير-السعدي/last_mp3.txt
+          cat al-badr/تفسير-السعدي/last_mp3.html
           
-      - name: Update last_mp3.txt in target repo
-        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
-        run: |
-          cp mp3_lines.txt target-repo/mp3-url/al-badr-tafsir-assidi.html
-          echo "تم تحديث target-repo/al-badr/تفسير-السعدي/last_mp3.txt بالنتائج الجديدة"
+     # - name: Update last_mp3.html in target repo
+     #   if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
+     #   run: |
+     #     cp mp3_lines.txt target-repo/mp3-url/al-badr-tafsir-assidi.html
+     #     echo "تم تحديث target-repo/al-badr/تفسير-السعدي/last_mp3.html بالنتائج الجديدة"
           
-      - name: Commit & push changes
-        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
-        working-directory: target-repo
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add mp3-url/al-badr-tafsir-assidi.html
-          git commit -m "Update last_mp3.txt with new results" || echo "Nothing to commit"
-          git push origin HEAD:main
+     # - name: Commit & push changes
+     #   if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
+     #   working-directory: target-repo
+     #   run: |
+     #     git config user.name  "github-actions[bot]"
+     #     git config user.email "github-actions[bot]@users.noreply.github.com"
+     #     git add mp3-url/al-badr-tafsir-assidi.html
+     #     git commit -m "Update last_mp3.html with new results" || echo "Nothing to commit"
+     #     git push origin HEAD:main
 
       # -------------------------------------------------
       # 9️⃣ حساب رقم الصفحة التالي وكتابته في الملف
       # -------------------------------------------------
       - name: Prepare next_mp3.txt
         id: prep_next
-        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'  # فقط إذا كان هناك تغيير
+        if: steps.check_mp3.outputs.has_mp3 == 'true'
         run: |
           NEXT=$(( ${{ steps.get_page.outputs.page }} + 1 ))
           echo "$NEXT" > al-badr/تفسير-السعدي/next_mp3.txt
@@ -189,36 +190,15 @@ jobs:
           
       # 2️⃣ تعريف مسار الملف (احرص على وضعه داخل علامات اقتباس)
       - name: Define file path
-        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
+        if: steps.check_mp3.outputs.has_mp3 == 'true'
         id: vars
         run: |
-          echo "FILE=mp3scraper/bin/Release/mp3scraper.exe.config" >> $GITHUB_OUTPUT
+          echo "FILE=mp3scraper/al-badr/تفسير-السعدي/mp3scraper.exe.config" >> $GITHUB_OUTPUT
           
       - name: Build replacement block
-        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
+        if: steps.check_mp3.outputs.has_mp3 == 'true'
         id: build
         env:
-          TEXT_BEFORE: |
-            <appSettings>
-                <add key="url0001" value="https://raw.githubusercontent.com/dev-fos/islampodcast/main/mp3-url/al-badr-tafsir-assidi.html"/>
-                <add key="destBase0001" value="شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml"/>    
-                <add key="guidPrefix0001" value="شرح تفسير السعدي (تيسير الكريم الرحمن في تفسير كلام المنان) - "/>   
-                <add key="channelTitle0001" value="شرح تفسير السعدي | الشيخ د. عبد الرزاق بن عبد المحسن البدر"/>    
-                <add key="channelUrl0001" value="https://www.al-badr.net/sub/456"/>
-                <add key="channelLogo0001" value="https://d3wo5wojvuv7l.cloudfront.net/t_rss_itunes_square_1400/images.spreaker.com/original/8f275333de429c9ced6128a8dff756e3.jpg"/>   
-                <add key="channelDescription0001" value="يقول الشيخ العثيمين  في التعريف بهذا التفسير، في تقديمه له: انه من أحسن التفاسير حيث كان له ميزات كثيرة :- منها: سهولة العبارة ووضوحها. ومنها: تجنب الحشو والتطويل الذي لا فائدة منه. ومنها: تجنب ذكر الخلاف، إلا أن يكون الخلاف قويًّا تدعو الحاجة إلى ذكره. ومنها: السير على منهج السلف في آيات الصفات، فلا تحريف ولا تأويل يخالف مراد الله بكلامه. ومنها: دقة الاستنباط فيما تدل عليه الآيات من الفوائد والأحكام والحكم. ومنها: أنه كتاب تفسير وتربية على الأخلاق الفاضلة.
-            (لمؤلفه عبد الرحمن بن ناصر السعدي) ."/>
-                <add key="itemDescription0001" value="• كتاب : تفسير السعدي (تيسير الكريم الرحمن في تفسير كلام المنان) 
-            
-            • المؤلف : عبد الرحمن بن ناصر السعدي
-            
-            • تعليق : الشيخ / د. عبدالرزاق بن عبد المحسن البدر
-            
-            • للمزيد , تابعنا على قناة التيليجرام :
-            https://t.me/islampodcast1
-            "/>
-                <add key="mp3Bitrat0001" value="48"/>
-                <add key="Title0001" value="true"/>
           TEXT_AFTER: |
            <add key="episodesBeginning0001" value="${{ steps.prep_next.outputs.next }}"/>
         run: |
@@ -229,7 +209,7 @@ jobs:
 
           # دمج النص الثابت مع المحت
 
-          REPLACEMENT="${TEXT_BEFORE}""${RESULT}"$'\n'"${TEXT_AFTER}"
+          REPLACEMENT="${RESULT}"$'\n'"${TEXT_AFTER}"
           
           echo "merged<<EOF" >> $GITHUB_OUTPUT
           echo "REPLACEMENT"      >> $GITHUB_OUTPUT
@@ -245,13 +225,13 @@ jobs:
  
       # 3️⃣ البحث / الاستبدال باستخدام perl (regex مع وضع التعليقات)
       - name: Update mp3scraper.exe.config
-        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
+        if: steps.check_mp3.outputs.has_mp3 == 'true'
         env:
           FILE: ${{ steps.vars.outputs.FILE }}
           REPLACEMENT: ${{ steps.build.outputs.replacement }}
         run: |
           perl -0777 -i -pe '
-            s{<appSettings>.*?<add\s+key="episodesBeginning0001"[^>]*>}
+            s{<add\s+key="episodesBeginning0001"[^>]*>}
              {
              $ENV{REPLACEMENT}
              }gs;  
@@ -270,24 +250,24 @@ jobs:
       # -------------------------------------------------
           
       - name: Commit next_mp3.txt
-        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
+        if: steps.check_mp3.outputs.has_mp3 == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Update next_mp3 to ${{ steps.prep_next.outputs.next }}"
           file_pattern: "al-badr/تفسير-السعدي/next_mp3.txt"
 
       - name: Commit last_mp3
-        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
+        if: steps.check_mp3.outputs.has_mp3 == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Update last_mp3"
-          # نضمن إضافة كل من last_mp3.txt و next_mp3.txt
-          file_pattern: "al-badr/تفسير-السعدي/last_mp3.txt"
+          # نضمن إضافة كل من last_mp3.html و next_mp3.txt
+          file_pattern: "al-badr/تفسير-السعدي/last_mp3.html"
           
       - name: Commit mp3scraper.exe.config
-        if: steps.compare.outputs.changed == 'true' && steps.check_mp3.outputs.has_mp3 == 'true'
+        if: steps.check_mp3.outputs.has_mp3 == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with: 
           token: ${{ secrets.R_token }}  
           commit_message: "Update mp3scraper.exe.config"
-          file_pattern: "mp3scraper/bin/Release/mp3scraper.exe.config"
+          file_pattern: "mp3scraper/al-badr/تفسير-السعدي/mp3scraper.exe.config"
