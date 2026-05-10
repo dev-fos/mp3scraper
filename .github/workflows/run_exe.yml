@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - mp3scraper/bin/Release/mp3scraper.exe.config   # تشغيل فقط عند تعديل هذا الملف         
-      - mp3scraper/al-badr/تفسير-السعدي/mp3scraper.exe.config
+      - al-badr/تفسير-السعدي/mp3scraper.exe.config
   workflow_dispatch:
 
 permissions:
@@ -32,7 +32,7 @@ jobs:
           # تحقق من وجود كل مسار
           if echo "$MODIFIED" | grep -q '^mp3scraper/bin/Release/mp3scraper.exe.config$'; then
             echo "trigger=Release" >> "$GITHUB_OUTPUT"
-          elif echo "$MODIFIED" | grep -q '^mp3scraper/al-badr/تفسير-السعدي/mp3scraper.exe.config$'; then
+          elif echo "$MODIFIED" | grep -q '^al-badr/تفسير-السعدي/mp3scraper.exe.config$'; then
             echo "trigger=al-badr" >> "$GITHUB_OUTPUT"
           else
             echo "trigger=none" >> "$GITHUB_OUTPUT"
