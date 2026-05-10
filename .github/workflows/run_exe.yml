@@ -50,6 +50,7 @@ jobs:
           else {
             "trigger=none" >> $env:GITHUB_OUTPUT
           }
+          echo "تم اختيار trigger = ${{ steps.which.outputs.trigger }}"
 
          
       
