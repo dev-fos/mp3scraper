@@ -118,7 +118,6 @@ jobs:
         
             # طباعة النتيجة لتظهر في logs
             Write-Host "تم اختيار trigger = $trigger"
-
       
       - name: Run appropriate exe
         if: steps.which.outputs.trigger != 'none'   # (اختياري)
