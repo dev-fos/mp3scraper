@@ -23,21 +23,25 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.R_token }}
 
-      - name: Determine which trigger fired
-        id: which
-        shell: bash
-        run: |
-          # احصل على القائمة الكاملة للملفات التي تغيرت
-          MODIFIED=$(jq -r '.head_commit.modified[]' "$GITHUB_EVENT_PATH")
-          
-          # تحقق من وجود كل مسار
-          if echo "$MODIFIED" | grep -q '^mp3scraper/bin/Release/mp3scraper.exe.config$'; then
-            echo "trigger=Release" >> "$GITHUB_OUTPUT"
-          elif echo "$MODIFIED" | grep -q '^al-badr/تفسير-السعدي/mp3scraper.exe.config$'; then
-            echo "trigger=al-badr" >> "$GITHUB_OUTPUT"
-          else
-            echo "trigger=none" >> "$GITHUB_OUTPUT"
-          fi
+   - name: Determine which trigger fired
+     id: which
+     run: |
+        # احصل على القائمة الكاملة للملفات التي تغيرت
+        $modified = (Get-Content $env:GITHUB_EVENT_PATH | ConvertFrom-Json).head_commit.modified
+    
+        # تحويل المصفوفة إلى نص واحد لكل سطر
+        $modifiedText = $modified -join "`n"
+    
+        if ($modifiedText -match '^mp3scraper/bin/Release/mp3scraper\.exe\.config$') {
+          "trigger=Release" >> $env:GITHUB_OUTPUT
+        }
+        elseif ($modifiedText -match '^al-badr/تفسير-السعدي/mp3scraper\.exe\.config$') {
+          "trigger=al-badr" >> $env:GITHUB_OUTPUT
+        }
+        else {
+          "trigger=none" >> $env:GITHUB_OUTPUT
+        }
+
           
       - name: Run the executable
         run: |
