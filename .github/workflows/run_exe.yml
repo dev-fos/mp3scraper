@@ -90,34 +90,34 @@ jobs:
       - name: Determine which trigger fired
         id: which
         run: |
-          $event = Get-Content $env:GITHUB_EVENT_PATH -Raw | ConvertFrom-Json
-      
-          # استخراج قائمة الملفات المعدّلة (إن وجدت)
-          $modified = @()
-          if ($event.head_commit?.modified) {
-            $modified = $event.head_commit.modified
-          }
-      
-          # الافتراضية: لا يوجد trigger
-          $trigger = 'none'
-      
-          # فحص كل ملف في القائمة
-          foreach ($file in $modified) {
-            if ($file -eq 'mp3scraper/bin/Release/mp3scraper.exe.config') {
-              $trigger = 'Release'
-              break
+            $event = Get-Content $env:GITHUB_EVENT_PATH -Raw | ConvertFrom-Json
+        
+            # استخراج قائمة الملفات المعدّلة (إن وجدت)
+            $modified = @()
+            if ($event.head_commit?.modified) {
+              $modified = $event.head_commit.modified
             }
-            elseif ($file -eq 'al-badr/تفسير-السعدي/mp3scraper.exe.config') {
-              $trigger = 'al-badr'
-              break
+        
+            # الافتراضية: لا يوجد trigger
+            $trigger = 'none'
+        
+            # فحص كل ملف في القائمة
+            foreach ($file in $modified) {
+              if ($file -eq 'mp3scraper/bin/Release/mp3scraper.exe.config') {
+                $trigger = 'Release'
+                break
+              }
+              elseif ($file -eq 'al-badr/تفسير-السعدي/mp3scraper.exe.config') {
+                $trigger = 'al-badr'
+                break
+              }
             }
-          }
-      
-          # إرسال القيمة إلى GitHub Outputs
-          "trigger=$trigger" >> $env:GITHUB_OUTPUT
-      
-          # طباعة النتيجة لتظهر في logs
-          Write-Host "تم اختيار trigger = $trigger"
+        
+            # إرسال القيمة إلى GitHub Outputs
+            "trigger=$trigger" >> $env:GITHUB_OUTPUT
+        
+            # طباعة النتيجة لتظهر في logs
+            Write-Host "تم اختيار trigger = $trigger"
 
       
       - name: Run appropriate exe
