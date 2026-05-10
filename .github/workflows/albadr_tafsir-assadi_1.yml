@@ -199,6 +199,8 @@ jobs:
         if: steps.check_mp3.outputs.has_mp3 == 'true'
         id: build
         env:
+          TEXT_BEFORE: |
+            <add key="mp3Bitrat0001" value="48"/>
           TEXT_AFTER: |
            <add key="episodesBeginning0001" value="${{ steps.prep_next.outputs.next }}"/>
         run: |
@@ -209,7 +211,7 @@ jobs:
 
           # دمج النص الثابت مع المحت
 
-          REPLACEMENT="${RESULT}"$'\n'"${TEXT_AFTER}"
+          REPLACEMENT="${TEXT_BEFORE}"$'\n'"${RESULT}"$'\n'"${TEXT_AFTER}"
           
           echo "merged<<EOF" >> $GITHUB_OUTPUT
           echo "REPLACEMENT"      >> $GITHUB_OUTPUT
@@ -231,7 +233,7 @@ jobs:
           REPLACEMENT: ${{ steps.build.outputs.replacement }}
         run: |
           perl -0777 -i -pe '
-            s{<add\s+key="episodesBeginning0001"[^>]*>}
+            s{<add\s+key="mp3Bitrat0001" [^>]*>.*?<add\s+key="episodesBeginning0001"[^>]*>}
              {
              $ENV{REPLACEMENT}
              }gs;  
