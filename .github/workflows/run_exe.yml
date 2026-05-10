@@ -22,6 +22,24 @@ jobs:
           persist-credentials: true
           fetch-depth: 0
           token: ${{ secrets.R_token }}
+
+      - name: Debug event payload
+        run: |
+          $event = Get-Content $env:GITHUB_EVENT_PATH -Raw | ConvertFrom-Json
+          Write-Host "Event name: ${{ github.event_name }}"
+          Write-Host "head_commit exists? $($event.head_commit -ne $null)"
+          if ($event.head_commit) {
+            Write-Host "head_commit.modified:" 
+            $event.head_commit.modified | ForEach-Object { Write-Host "  $_" }
+          }
+          # إذا كان حدث push قد لا يأتي بـ head_commit، جرب قراءة commits array
+          if ($event.commits) {
+            Write-Host "commits array contains:" 
+            $event.commits | ForEach-Object {
+              $_.modified | ForEach-Object { Write-Host "  $_" }
+            }
+          }
+
           
       - name: Determine which trigger fired
         id: which
