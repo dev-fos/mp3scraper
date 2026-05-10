@@ -40,38 +40,22 @@ jobs:
             }
           }
 
+          
       - name: Determine which trigger fired
         id: which
         run: |
-          # قراءة payload الكامل
           $event = Get-Content $env:GITHUB_EVENT_PATH -Raw | ConvertFrom-Json
       
-          # ---------- تجميع أسماء الملفات ----------
+          # استخراج قائمة الملفات المعدّلة (إن وجدت)
           $modified = @()
-      
-          # ① حالة push بف commit واحد (حقل head_commit موجود)
           if ($event.head_commit?.modified) {
-            $modified += $event.head_commit.modified
+            $modified = $event.head_commit.modified
           }
       
-          # ② حالة push بأكثر من commit (مصفوفة commits)
-          if ($event.commits) {
-            foreach ($c in $event.commits) {
-              if ($c.modified) {
-                $modified += $c.modified
-              }
-              # إذا أردت أيضاً الملفات المضافة/المزالة يمكن إضافتها:
-              # $modified += $c.added
-              # $modified += $c.removed
-            }
-          }
-      
-          # إظهار القوائم لتصحيح الأخطاء (يمكن حذفها لاحقاً)
-          Write-Host "الملفات التي تم جمعها:"
-          $modified | ForEach-Object { Write-Host "  $_" }
-      
-          # ---------- تحديد الـ trigger ----------
+          # الافتراضية: لا يوجد trigger
           $trigger = 'none'
+      
+          # فحص كل ملف في القائمة
           foreach ($file in $modified) {
             if ($file -eq 'mp3scraper/bin/Release/mp3scraper.exe.config') {
               $trigger = 'Release'
@@ -83,41 +67,12 @@ jobs:
             }
           }
       
-          # ---------- إخراج النتيجة ----------
+          # إرسال القيمة إلى GitHub Outputs
           "trigger=$trigger" >> $env:GITHUB_OUTPUT
+      
+          # طباعة النتيجة لتظهر في logs
           Write-Host "تم اختيار trigger = $trigger"
-           
-      - name: Determine which trigger fired
-        id: which
-        run: |
-            $event = Get-Content $env:GITHUB_EVENT_PATH -Raw | ConvertFrom-Json
-        
-            # استخراج قائمة الملفات المعدّلة (إن وجدت)
-            $modified = @()
-            if ($event.head_commit?.modified) {
-              $modified = $event.head_commit.modified
-            }
-        
-            # الافتراضية: لا يوجد trigger
-            $trigger = 'none'
-        
-            # فحص كل ملف في القائمة
-            foreach ($file in $modified) {
-              if ($file -eq 'mp3scraper/bin/Release/mp3scraper.exe.config') {
-                $trigger = 'Release'
-                break
-              }
-              elseif ($file -eq 'al-badr/تفسير-السعدي/mp3scraper.exe.config') {
-                $trigger = 'al-badr'
-                break
-              }
-            }
-        
-            # إرسال القيمة إلى GitHub Outputs
-            "trigger=$trigger" >> $env:GITHUB_OUTPUT
-        
-            # طباعة النتيجة لتظهر في logs
-            Write-Host "تم اختيار trigger = $trigger"
+
       
       - name: Run appropriate exe
         if: steps.which.outputs.trigger != 'none'   # (اختياري)
