@@ -85,7 +85,7 @@ jobs:
         
             # ---------- إخراج النتيجة ----------
             "trigger=$trigger" >> $env:GITHUB_OUTPUT
-            Write-Host "تم اختيار trigger = $trigger"
+            Write-Host "تم اختيار trigger = $trigger & $event.head_commit.modified"
         
      
       - name: Determine which trigger fired
@@ -118,7 +118,7 @@ jobs:
           "trigger=$trigger" >> $env:GITHUB_OUTPUT
       
           # طباعة النتيجة لتظهر في logs
-          Write-Host "تم اختيار trigger = $trigger"
+          Write-Host "تم اختيار trigger = $trigger & $event.head_commit.modified"
 
       
       - name: Run appropriate exe
