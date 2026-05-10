@@ -46,11 +46,11 @@ jobs:
         run: |
           $trigger = "${{ steps.which.outputs.trigger }}"
       
-          if (steps.filter.outputs.release -eq 'true') {
+          if (${{ steps.filter.outputs.release}} -eq 'true') {
               & ".\mp3scraper\bin\Release\mp3scraper.exe"
               # ضع أمر exe_config هنا إذا لزم
           }
-          elseif (steps.filter.outputs.albadr -eq 'true') {
+          elseif (${{ steps.filter.outputs.albadr }} -eq 'true') {
               & ".\al-badr\تفسير-السعدي\mp3scraper.exe"
               # ضع أمر src_changes هنا إذا لزم
           }
