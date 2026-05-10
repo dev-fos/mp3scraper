@@ -40,9 +40,9 @@ jobs:
             }
           }
 
-     - name: Determine which trigger fired
-       id: which
-       run: |
+      - name: Determine which trigger fired
+        id: which
+        run: |
           # قراءة payload الكامل
           $event = Get-Content $env:GITHUB_EVENT_PATH -Raw | ConvertFrom-Json
       
