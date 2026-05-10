@@ -193,7 +193,7 @@ jobs:
         if: steps.check_mp3.outputs.has_mp3 == 'true'
         id: vars
         run: |
-          echo "FILE=mp3scraper/al-badr/تفسير-السعدي/mp3scraper.exe.config" >> $GITHUB_OUTPUT
+          echo "FILE=al-badr/تفسير-السعدي/mp3scraper.exe.config" >> $GITHUB_OUTPUT
           
       - name: Build replacement block
         if: steps.check_mp3.outputs.has_mp3 == 'true'
