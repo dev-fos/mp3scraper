@@ -22,37 +22,39 @@ jobs:
           persist-credentials: true
           fetch-depth: 0
           token: ${{ secrets.R_token }}
-
+          
       - name: Determine which trigger fired
         id: which
         run: |
           $event = Get-Content $env:GITHUB_EVENT_PATH -Raw | ConvertFrom-Json
       
-          # الحصول على المصفوفة إذا وجدت
-          $modified = $null
-          if ($event.head_commit -and $event.head_commit.modified) {
+          # استخراج قائمة الملفات المعدّلة (إن وجدت)
+          $modified = @()
+          if ($event.head_commit?.modified) {
             $modified = $event.head_commit.modified
           }
       
-          if (-not $modified) {
-            "trigger=none" >> $env:GITHUB_OUTPUT
-            exit 0
+          # الافتراضية: لا يوجد trigger
+          $trigger = 'none'
+      
+          # فحص كل ملف في القائمة
+          foreach ($file in $modified) {
+            if ($file -eq 'mp3scraper/bin/Release/mp3scraper.exe.config') {
+              $trigger = 'Release'
+              break
+            }
+            elseif ($file -eq 'al-badr/تفسير-السعدي/mp3scraper.exe.config') {
+              $trigger = 'al-badr'
+              break
+            }
           }
       
-          $text = $modified -join "`n"
+          # إرسال القيمة إلى GitHub Outputs
+          "trigger=$trigger" >> $env:GITHUB_OUTPUT
       
-          if ($text -match '^mp3scraper/bin/Release/mp3scraper\.exe\.config$') {
-            "trigger=Release" >> $env:GITHUB_OUTPUT
-          }
-          elseif ($text -match '^al-badr/تفسير-السعدي/mp3scraper\.exe\.config$') {
-            "trigger=al-badr" >> $env:GITHUB_OUTPUT
-          }
-          else {
-            "trigger=none" >> $env:GITHUB_OUTPUT
-          }
-          echo "تم اختيار trigger = ${{ steps.which.outputs.trigger }}"
+          # طباعة النتيجة لتظهر في logs
+          Write-Host "تم اختيار trigger = $trigger"
 
-         
       
       - name: Run appropriate exe
         if: steps.which.outputs.trigger != 'none'   # (اختياري)
