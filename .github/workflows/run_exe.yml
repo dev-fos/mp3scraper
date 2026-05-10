@@ -25,6 +25,7 @@ jobs:
 
       - name: Determine which trigger fired
         id: which
+        shell: bash
         run: |
           # احصل على القائمة الكاملة للملفات التي تغيرت
           MODIFIED=$(jq -r '.head_commit.modified[]' "$GITHUB_EVENT_PATH")
