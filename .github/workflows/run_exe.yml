@@ -84,8 +84,6 @@ jobs:
         # ---------- إخراج النتيجة ----------
         "trigger=$trigger" >> $env:GITHUB_OUTPUT
         Write-Host "تم اختيار trigger = $trigger &  $event.head_commit.modified"
-
-        
      
       - name: Determine which trigger fired
         id: which
