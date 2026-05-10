@@ -270,4 +270,4 @@ jobs:
         with: 
           token: ${{ secrets.R_token }}  
           commit_message: "Update mp3scraper.exe.config"
-          file_pattern: "mp3scraper/al-badr/تفسير-السعدي/mp3scraper.exe.config"
+          file_pattern: "al-badr/تفسير-السعدي/mp3scraper.exe.config"
