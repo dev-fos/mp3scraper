@@ -51,20 +51,21 @@ jobs:
             "trigger=none" >> $env:GITHUB_OUTPUT
           }
 
-          
+         
+      
       - name: Run appropriate exe
         if: steps.which.outputs.trigger != 'none'   # (اختياري)
         run: |
-        $trigger = "${{ steps.which.outputs.trigger }}"
+          $trigger = "${{ steps.which.outputs.trigger }}"
       
-        if ($trigger -eq 'Release') {
-             & ".\mp3scraper\bin\Release\mp3scraper.exe"
-            # ضع أمر exe_config هنا إذا لزم
-         }
-         elseif ($trigger -eq 'al-badr') {
-             & ".\al-badr\تفسير-السعدي\mp3scraper.exe"
-            # ضع أمر src_changes هنا إذا لزم
-        }
+          if ($trigger -eq 'Release') {
+              & ".\mp3scraper\bin\Release\mp3scraper.exe"
+              # ضع أمر exe_config هنا إذا لزم
+          }
+          elseif ($trigger -eq 'al-badr') {
+              & ".\al-badr\تفسير-السعدي\mp3scraper.exe"
+              # ضع أمر src_changes هنا إذا لزم
+          }
 
 
 
