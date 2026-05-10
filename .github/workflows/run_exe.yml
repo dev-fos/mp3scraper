@@ -25,65 +25,64 @@ jobs:
 
       - name: Debug event payload
         run: |
+            $event = Get-Content $env:GITHUB_EVENT_PATH -Raw | ConvertFrom-Json
+            Write-Host "Event name: ${{ github.event_name }}"
+            Write-Host "head_commit exists? $($event.head_commit -ne $null)"
+            if ($event.head_commit) {
+              Write-Host "head_commit.modified:" 
+              $event.head_commit.modified | ForEach-Object { Write-Host "  $_" }
+            }
+            # إذا كان حدث push قد لا يأتي بـ head_commit، جرب قراءة commits array
+            if ($event.commits) {
+              Write-Host "commits array contains:" 
+              $event.commits | ForEach-Object {
+                $_.modified | ForEach-Object { Write-Host "  $_" }
+              }
+            }
+  
+      - name: Determine which trigger fired
+        id: which2
+        run: |
+          # قراءة محتوى event.json
           $event = Get-Content $env:GITHUB_EVENT_PATH -Raw | ConvertFrom-Json
-          Write-Host "Event name: ${{ github.event_name }}"
-          Write-Host "head_commit exists? $($event.head_commit -ne $null)"
-          if ($event.head_commit) {
-            Write-Host "head_commit.modified:" 
-            $event.head_commit.modified | ForEach-Object { Write-Host "  $_" }
+      
+          # ---------- تجميع أسماء الملفات ----------
+          $modified = @()
+      
+          # 1️⃣ إذا كان هناك commit واحد (head_commit موجود)
+          if ($event.head_commit?.modified) {
+            $modified += $event.head_commit.modified
           }
-          # إذا كان حدث push قد لا يأتي بـ head_commit، جرب قراءة commits array
+          # 2️⃣ إذا كان هناك أكثر من commit (مصفوفة commits)
           if ($event.commits) {
-            Write-Host "commits array contains:" 
-            $event.commits | ForEach-Object {
-              $_.modified | ForEach-Object { Write-Host "  $_" }
+            foreach ($c in $event.commits) {
+              if ($c.modified) { $modified += $c.modified }
+              # إذا تريد أن تدمج الملفات المضافة أو المزالة أيضاً:
+              # if ($c.added)   { $modified += $c.added }
+              # if ($c.removed) { $modified += $c.removed }
             }
           }
-
-    - name: Determine which trigger fired
-      id: which2
-      run: |
-        # قراءة محتوى event.json
-        $event = Get-Content $env:GITHUB_EVENT_PATH -Raw | ConvertFrom-Json
-    
-        # ---------- تجميع أسماء الملفات ----------
-        $modified = @()
-    
-        # 1️⃣ إذا كان هناك commit واحد (head_commit موجود)
-        if ($event.head_commit?.modified) {
-          $modified += $event.head_commit.modified
-        }
-    
-        # 2️⃣ إذا كان هناك أكثر من commit (مصفوفة commits)
-        if ($event.commits) {
-          foreach ($c in $event.commits) {
-            if ($c.modified) { $modified += $c.modified }
-            # إذا تريد أن تدمج الملفات المضافة أو المزالة أيضاً:
-            # if ($c.added)   { $modified += $c.added }
-            # if ($c.removed) { $modified += $c.removed }
+      
+          # إظهار ما تم جمعه (للتصحيح)
+          Write-Host "الملفات التي تم جمعها:"
+          $modified | ForEach-Object { Write-Host "  $_" }
+      
+          # ---------- تحديد الـ trigger ----------
+          $trigger = 'none'
+          foreach ($file in $modified) {
+            if ($file -eq 'mp3scraper/bin/Release/mp3scraper.exe.config') {
+              $trigger = 'Release'
+              break
+            }
+            elseif ($file -eq 'al-badr/تفسير-السعدي/mp3scraper.exe.config') {
+              $trigger = 'al-badr'
+              break
+            }
           }
-        }
-    
-        # إظهار ما تم جمعه (للتصحيح)
-        Write-Host "الملفات التي تم جمعها:"
-        $modified | ForEach-Object { Write-Host "  $_" }
-    
-        # ---------- تحديد الـ trigger ----------
-        $trigger = 'none'
-        foreach ($file in $modified) {
-          if ($file -eq 'mp3scraper/bin/Release/mp3scraper.exe.config') {
-            $trigger = 'Release'
-            break
-          }
-          elseif ($file -eq 'al-badr/تفسير-السعدي/mp3scraper.exe.config') {
-            $trigger = 'al-badr'
-            break
-          }
-        }
-    
-        # ---------- إخراج النتيجة ----------
-        "trigger=$trigger" >> $env:GITHUB_OUTPUT
-        Write-Host "تم اختيار trigger = $trigger &  $event.head_commit.modified"
+      
+          # ---------- إخراج النتيجة ----------
+          "trigger=$trigger" >> $env:GITHUB_OUTPUT
+          Write-Host "تم اختيار trigger = $trigger &  $event.head_commit.modified"
      
       - name: Determine which trigger fired
         id: which
