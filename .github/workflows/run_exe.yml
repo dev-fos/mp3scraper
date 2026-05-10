@@ -40,20 +40,28 @@ jobs:
         run: |
           echo "release  = ${{ steps.filter.outputs.release }}"
           echo "albadr   = ${{ steps.filter.outputs.albadr }}"
-      
+          
       - name: Run appropriate exe
-        if: steps.which.outputs.trigger != 'none'   # (اختياري)
+        # لا نحتاج الشرط `if:` هنا لأننا سنتحقق داخل السكريبت نفسه
+        env:
+          RELEASE_CHANGED: ${{ steps.filter.outputs.release }}   # “true” أو “false”
+          ALBADR_CHANGED: ${{ steps.filter.outputs.albadr }}
         run: |
-          $trigger = "${{ steps.filter.outputs.trigger }}"
-      
-          if (${{ steps.filter.outputs.release}} -eq 'true') {
-              & ".\mp3scraper\bin\Release\mp3scraper.exe"
-              # ضع أمر exe_config هنا إذا لزم
+          # PowerShell يبدأ هنا
+          if ($env:RELEASE_CHANGED -eq 'true') {
+            Write-Host "تم تعديل ملف Release → تشغيل exe الخاص بـ Release"
+            & ".\mp3scraper\bin\Release\mp3scraper.exe"
+            # إذا احتجت تمرير ملف config أو بارامتر آخر أضفه بعد البرنامج
           }
-          elseif (${{ steps.filter.outputs.albadr }} -eq 'true') {
-              & ".\al-badr\تفسير-السعدي\mp3scraper.exe"
-              # ضع أمر src_changes هنا إذا لزم
+          elseif ($env:ALBADR_CHANGED -eq 'true') {
+            Write-Host "تم تعديل ملف al‑badr → تشغيل exe الخاص بـ al‑badr"
+            & ".\al-badr\تفسير-السعدي\mp3scraper.exe"
           }
+          else {
+            Write-Host "لا توجد تغييرات في المسارات التي نراقبها – لا تشغيل تنفيذ."
+          }
+        shell: pwsh
+
 
       - name: Upload generated file
         uses: actions/upload-artifact@v7
