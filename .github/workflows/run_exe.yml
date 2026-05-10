@@ -52,15 +52,20 @@ jobs:
           }
 
           
-      - name: Run the executable
+      - name: Run appropriate exe
+        if: steps.which.outputs.trigger != 'none'   # (اختياري)
         run: |
-          if [[ "${{ steps.which.outputs.trigger }}" == "Release" ]]; then
-            .\mp3scraper\bin\Release\mp3scraper.exe
-            # ضع أمر exe_config هنا
-          elif [[ "${{ steps.which.outputs.trigger }}" == "al-badr" ]]; then
-            .\al-badr/تفسير-السعدي/mp3scraper.exe.config
-            # ضع أمر src_changes هنا
-          fi
+        $trigger = "${{ steps.which.outputs.trigger }}"
+      
+        if ($trigger -eq 'Release') {
+             & ".\mp3scraper\bin\Release\mp3scraper.exe"
+            # ضع أمر exe_config هنا إذا لزم
+         }
+         elseif ($trigger -eq 'al-badr') {
+             & ".\al-badr\تفسير-السعدي\mp3scraper.exe"
+            # ضع أمر src_changes هنا إذا لزم
+        }
+
 
 
       - name: Upload generated file
