@@ -1,8 +1,8 @@
 name: Search and replace in file
 
 on:
-  push:
-    branches: [ dev ]          # أو أي فرع تريد تشغيل الإجراء عليه
+#  push:
+#    branches: [ dev ]          # أو أي فرع تريد تشغيل الإجراء عليه
   workflow_dispatch:           # لتشغيله يدوياً من واجهة GitHub
 
 jobs:
