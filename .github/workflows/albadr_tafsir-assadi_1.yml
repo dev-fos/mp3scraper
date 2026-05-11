@@ -248,6 +248,34 @@ jobs:
           
 
       # -------------------------------------------------
+      # 10️⃣ الالتزام بالملف المحدث
+      # -------------------------------------------------
+          
+      - name: Commit next_mp3.txt
+        if: steps.check_mp3.outputs.has_mp3 == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update next_mp3 to ${{ steps.prep_next.outputs.next }}"
+          file_pattern: "al-badr/تفسير-السعدي/next_mp3.txt"
+
+      - name: Commit last_mp3
+        if: steps.check_mp3.outputs.has_mp3 == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update last_mp3"
+          # نضمن إضافة كل من last_mp3.html و next_mp3.txt
+          file_pattern: "al-badr/تفسير-السعدي/last_mp3.html"
+          
+      - name: Commit mp3scraper.exe.config
+        if: steps.check_mp3.outputs.has_mp3 == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with: 
+          token: ${{ secrets.R_token }}  
+          commit_message: "Update mp3scraper.exe.config"
+          file_pattern: "al-badr/تفسير-السعدي/mp3scraper.exe.config"
+
+
+      # -------------------------------------------------
       # 2️⃣ قراءة رقم الصفحة الأخير (أو البدء من 360)
       # -------------------------------------------------
       - name: Get last page number
@@ -440,30 +468,3 @@ jobs:
           commit_message: "Update mp3scraper.exe.config"
           file_pattern: "al-badr/الأدب-المفرد-في-قناة-السنة/mp3scraper.exe.config"
 
-
-      # -------------------------------------------------
-      # 10️⃣ الالتزام بالملف المحدث
-      # -------------------------------------------------
-          
-      - name: Commit next_mp3.txt
-        if: steps.check_mp3.outputs.has_mp3 == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "Update next_mp3 to ${{ steps.prep_next.outputs.next }}"
-          file_pattern: "al-badr/تفسير-السعدي/next_mp3.txt"
-
-      - name: Commit last_mp3
-        if: steps.check_mp3.outputs.has_mp3 == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "Update last_mp3"
-          # نضمن إضافة كل من last_mp3.html و next_mp3.txt
-          file_pattern: "al-badr/تفسير-السعدي/last_mp3.html"
-          
-      - name: Commit mp3scraper.exe.config
-        if: steps.check_mp3.outputs.has_mp3 == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with: 
-          token: ${{ secrets.R_token }}  
-          commit_message: "Update mp3scraper.exe.config"
-          file_pattern: "al-badr/تفسير-السعدي/mp3scraper.exe.config"
