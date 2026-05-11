@@ -5,6 +5,7 @@ on:
     paths:
       - mp3scraper/bin/Release/mp3scraper.exe.config   # تشغيل فقط عند تعديل هذا الملف         
       - al-badr/تفسير-السعدي/mp3scraper.exe.config
+      - al-badr/الأدب-المفرد-في-قناة-السنة/mp3scraper.exe.config
   workflow_dispatch:
 
 permissions:
@@ -34,18 +35,21 @@ jobs:
               - 'mp3scraper/bin/Release/mp3scraper.exe.config'
             albadr:
               - 'al-badr/تفسير-السعدي/mp3scraper.exe.config'
-
+            albadr_2:
+              - 'al-badr/الأدب-المفرد-في-قناة-السنة/mp3scraper.exe.config'
       # 3️⃣ إظهار ما تم اكتشافه (للتصحيح)
       - name: Debug – show filter results
         run: |
           echo "release  = ${{ steps.filter.outputs.release }}"
           echo "albadr   = ${{ steps.filter.outputs.albadr }}"
+          echo "albadr_2   = ${{ steps.filter.outputs.albadr_2 }}"
           
       - name: Run appropriate exe
         # لا نحتاج الشرط `if:` هنا لأننا سنتحقق داخل السكريبت نفسه
         env:
           RELEASE_CHANGED: ${{ steps.filter.outputs.release }}   # “true” أو “false”
           ALBADR_CHANGED: ${{ steps.filter.outputs.albadr }}
+          ALBADR_2_CHANGED: ${{ steps.filter.outputs.albadr_2 }}          
         run: |
           # PowerShell يبدأ هنا
           if ($env:RELEASE_CHANGED -eq 'true') {
@@ -57,6 +61,10 @@ jobs:
             Write-Host "تم تعديل ملف al‑badr → تشغيل exe الخاص بـ al‑badr"
             & ".\al-badr\تفسير-السعدي\mp3scraper.exe"
           }
+          elseif ($env:ALBADR_2_CHANGED -eq 'true') {
+            Write-Host "تم تعديل ملف al‑badr → تشغيل exe الخاص بـ al‑badr"
+            & ".\al-badr\الأدب-المفرد-في-قناة-السنة\mp3scraper.exe"
+          }          
           else {
             Write-Host "لا توجد تغييرات في المسارات التي نراقبها – لا تشغيل تنفيذ."
           }
