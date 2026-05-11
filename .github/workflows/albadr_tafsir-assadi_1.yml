@@ -200,7 +200,7 @@ jobs:
         id: build
         env:
           TEXT_BEFORE: |
-            <add key="mp3Bitrat0001" value="48"/>
+           <add key="Title0001" value="true"/>
           TEXT_AFTER: |
            <add key="episodesBeginning0001" value="${{ steps.prep_next.outputs.next }}"/>
         run: |
@@ -233,7 +233,7 @@ jobs:
           REPLACEMENT: ${{ steps.build.outputs.replacement }}
         run: |
           perl -0777 -i -pe '
-            s{<add\s+key="mp3Bitrat0001" [^>]*>.*?<add\s+key="episodesBeginning0001"[^>]*>}
+            s{<add\s+key="Title0001"\s+value="true"/>.*?<add\s+key="episodesBeginning0001"[^>]*>}
              {
              $ENV{REPLACEMENT}
              }gs;  
