@@ -1,10 +1,11 @@
 name: albadr تفسير-السعدي update
-run-name:  إضافة درس - شرح تفسير السعدي | الشيخ د. عبدالرزاق البدر
+run-name:  إضافة درس | الشيخ د. عبدالرزاق البدر
 
 on:
   push:
     paths:
-      - "mp3scraper/bin/Release/podcasts/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml"  # تشغيل فقط عند تعديل هذا الملف         
+      - "mp3scraper/bin/Release/podcasts/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml"  # تشغيل فقط عند تعديل هذا الملف
+      - "mp3scraper/bin/Release/podcasts/شرح-الأدب-المفرد-(في-قناة-السنة).xml"
   workflow_dispatch:
 
 permissions:
@@ -25,11 +26,33 @@ jobs:
           persist-credentials: true
           token: ${{ secrets.R_token }}  
 
+
+      # 2️⃣ فلترة المسارات المتغيرة
+      - name: Filter changed paths
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          # تعريف مجموعات الفلترة
+          filters: |
+            albadr:
+              - 'mp3scraper/bin/Release/podcasts/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml'
+            albadr_2:
+              - 'mp3scraper/bin/Release/podcasts/شرح-الأدب-المفرد-(في-قناة-السنة).xml'
+      
+      # 3️⃣ إظهار نتائج الفلترة (للتصحيح)
+      - name: Debug – show filter results
+        run: |
+          echo "albadr   = ${{ steps.filter.outputs.albadr }}"
+          echo "albadr_2 = ${{ steps.filter.outputs.albadr_2 }}"
+          
       # 2️⃣ تعريف مسار الملف (احرص على وضعه داخل علامات اقتباس)
       - name: Define file path
         id: vars
         run: |
+          if [[ "${{ steps.filter.outputs.albadr }}" == "true" ]]; then
           echo "FILE=mp3scraper/bin/Release/podcasts/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml" >> $GITHUB_OUTPUT
+          elif [[ "${{ steps.filter.outputs.albadr_2 }}" == "true" ]]; then
+          echo "FILE=mp3scraper/bin/Release/podcasts/شرح-الأدب-المفرد-(في-قناة-السنة).xml" >> $GITHUB_OUTPUT
 
       # 3️⃣ البحث / الاستبدال باستخدام perl (regex مع وضع التعليقات)
       - name: Get new item
@@ -58,12 +81,15 @@ jobs:
           path: target-repo
           fetch-depth: 0
           persist-credentials: true
-          
+
       - name: Define target file path
         id: vars2
         run: |
+          if [[ "${{ steps.filter.outputs.albadr }}" == "true" ]]; then
           echo "FILE=target-repo/عبدالرزاق-البدر/التفسير-وعلوم-القرآن/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml" >> $GITHUB_OUTPUT
-
+          elif [[ "${{ steps.filter.outputs.albadr_2 }}" == "true" ]]; then
+          echo "FILE=target-repo/عبدالرزاق-البدر/الآداب-والأخلاق/شرح-الأدب-المفرد-(في-قناة-السنة).xml" >> $GITHUB_OUTPUT
+          
       - name: Read item file into output
         id: file_data
         run: |
@@ -90,10 +116,21 @@ jobs:
        #    tail -n 80 "$FILE"
           
       - name: Commit & push changes
-        working-directory: target-repo
+        working-directory: target-rep
+        if : steps.filter.outputs.albadr == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add 'عبدالرزاق-البدر/التفسير-وعلوم-القرآن/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml'
           git commit -m "إضافة درس جديد بقائمة التشغيل - شرح تفسير السعدي | الشيخ د. عبد الرزاق بن عبد المحسن البدر" || echo "Nothing to commit"
+          git push origin HEAD:main
+
+      - name: Commit & push changes
+        working-directory: target-rep
+        if : steps.filter.outputs.albadr_2 == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add 'عبدالرزاق-البدر/الآداب-والأخلاق/شرح-الأدب-المفرد-(في-قناة-السنة).xml'
+          git commit -m "إضافة درس جديد بقائمة التشغيل - شرح الأدب المفرد (في قناة السنة) | الشيخ د. عبد الرزاق بن عبد المحسن البدر" || echo "Nothing to commit"
           git push origin HEAD:main
