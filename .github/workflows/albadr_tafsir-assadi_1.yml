@@ -248,6 +248,200 @@ jobs:
           
 
       # -------------------------------------------------
+      # 2️⃣ قراءة رقم الصفحة الأخير (أو البدء من 360)
+      # -------------------------------------------------
+      - name: Get last page number
+        id: get_page_2
+        run: |
+          if [[ -f al-badr/الأدب-المفرد-في-قناة-السنة/next_mp3.txt ]]; then
+            PAGE=$(cat al-badr/الأدب-المفرد-في-قناة-السنة/next_mp3.txt)
+          else
+            PAGE=360
+          fi
+          echo "page=${PAGE}" >> $GITHUB_OUTPUT
+          
+      - name: Set padded number
+        id: pad_2
+        run: |
+          # احصل على الرقم من الإدخال
+          raw="$(( ${{ steps.get_page_2.outputs.page }} + 1 ))"
+          # تنسيق إلى 4 أرقام مع أصفار من اليسار
+          printf -v padded "%04d" "$raw"
+          echo "padded=$padded" >> "$GITHUB_OUTPUT"
+          
+      # -------------------------------------------------
+      # 3️⃣ بناء الرابط الكامل
+      # -------------------------------------------------
+      - name: Build URL
+        id: build_url_2
+        run: |
+          BASE="https://www.al-badr.net/sub/459/?q=&page="
+          URL="${BASE}${{ steps.get_page_2.outputs.page }}"
+          echo "url=${URL}" >> $GITHUB_OUTPUT
+          echo "Using page ${{ steps.get_page_2.outputs.page }} → $URL"
+
+      # -------------------------------------------------
+      # 4️⃣ تحميل → تنظيف بـ perl → استخراج الأسطر المطلوبة
+      # -------------------------------------------------
+      - name: Download, clean with Perl, and extract required lines
+        id: extract_2
+        run: |
+          # عنوان الصفحة
+          URL="${{ steps.build_url_2.outputs.url }}"
+
+          title="eTitle0001"
+          new_title="${title%????}${{ steps.pad_2.outputs.padded }}"
+          
+          # 1️⃣ تحميل الصفحة
+          # 2️⃣ تطبيق قاعدة الاستبدال بـ perl (‑0777 يقرأ كل النص ككتلة واحدة)
+          # 3️⃣ استخراج <h3> و .mp3 من التيار المُنقّى
+          # 4️⃣ حفظ النتيجة المؤقتة في result.txt (يمكن إلغاؤها إذا لا تريد ملفاً نهائياً)
+          curl -sSL "$URL" \
+            | perl -0777 -pe '
+                s{<h3>(.*)">}{<add key="eTitle${{ steps.pad_2.outputs.padded }}" value="}g;
+                s{</a></h3>}{" />}g;
+                s{<span>(.*)<span>}{}g;
+                s{href="/}{href="https://www.al-badr.net/}g;     
+                s{<img(.*)</div>}{}g;
+                s{U+202C}{}gm;
+                s{^\s+}{}gm;               
+              ' \
+            | tee >(grep "eTitle" > h3_lines_2.txt) \
+                  >(grep "\.mp3" > Mp3_lines_2.txt) \
+                  > /dev/null
+      
+          # دمج النتائج في ملف واحد (إذا أردت الاحتفاظ به)
+          cat h3_lines_2.txt Mp3_lines_2.txt > result_2.txt
+      
+          echo "=== النتائج المستخرجة بعد تنظيف perl ==="
+          cat result_2.txt
+
+          
+      # -------------------------------------------------
+      # 6️⃣ **تحقق من وجود سطر ‎*.mp3*‎ – إذا لم يوجد → إيقاف**
+      # -------------------------------------------------
+      - name: Fail if no mp3 lines found
+        id: check_mp3_2
+        run: |
+          if [[ -s Mp3_lines_2.txt ]]; then
+            echo "has_mp3=true" >> $GITHUB_OUTPUT
+            echo "✅ تم العثور على سطر (أسطر) .mp3"
+          else
+            echo "has_mp3=false" >> $GITHUB_OUTPUT
+            echo "⚠️ لا يوجد أي سطر يحتوي على .mp3"
+          fi
+       
+      # -------------------------------------------------
+      # 8️⃣ إذا كان هناك اختلاف → تحديث al-badr/الأدب-المفرد-في-قناة-السنة/last_mp3.html
+      # -------------------------------------------------
+      - name: Update last_mp3.html
+      #  if: steps.compare.outputs.changed == 'true' && steps.check_mp3_2.outputs.has_mp3 == 'true'
+        if: steps.check_mp3_2.outputs.has_mp3 == 'true'
+        run: |
+          cp Mp3_lines_2.txt al-badr/الأدب-المفرد-في-قناة-السنة/last_mp3.html
+          echo "تم تحديث al-badr/الأدب-المفرد-في-قناة-السنة/last_mp3.html بالنتائج الجديدة"
+          cat Mp3_lines_2.txt
+          cat al-badr/الأدب-المفرد-في-قناة-السنة/last_mp3.html
+       
+      # -------------------------------------------------
+      # 9️⃣ حساب رقم الصفحة التالي وكتابته في الملف
+      # -------------------------------------------------
+      - name: Prepare next_mp3.txt
+        id: prep_next_2
+        if: steps.check_mp3_2.outputs.has_mp3 == 'true'
+        run: |
+          NEXT=$(( ${{ steps.get_page_2.outputs.page }} + 1 ))
+          echo "$NEXT" > al-badr/الأدب-المفرد-في-قناة-السنة/next_mp3.txt
+          echo "next=$NEXT" >> $GITHUB_OUTPUT
+          
+      # 2️⃣ تعريف مسار الملف (احرص على وضعه داخل علامات اقتباس)
+      - name: Define file path
+        if: steps.check_mp3_2.outputs.has_mp3 == 'true'
+        id: vars_2
+        run: |
+          echo "FILE=al-badr/الأدب-المفرد-في-قناة-السنة/mp3scraper.exe.config" >> $GITHUB_OUTPUT
+          
+      - name: Build replacement block
+        if: steps.check_mp3_2.outputs.has_mp3 == 'true'
+        id: build_2
+        env:
+          TEXT_BEFORE: |
+           <add key="Title0001" value="true"/>
+          TEXT_AFTER: |
+           <add key="episodesBeginning0001" value="${{ steps.prep_next_2.outputs.next }}"/>
+        run: |
+          # النص الثابت المطلوب وضعه في البداية
+            
+          # قراءة محتوى .txt (يمكن أن يحتوي على عدة أسطر)
+          RESULT=$(cat h3_lines_2.txt)
+
+          # دمج النص الثابت مع المحت
+
+          REPLACEMENT="${TEXT_BEFORE}"$'\n'"${RESULT}"$'\n'"${TEXT_AFTER}"
+          
+          echo "merged<<EOF" >> $GITHUB_OUTPUT
+          echo "REPLACEMENT"      >> $GITHUB_OUTPUT
+          echo "EOF4"          >> $GITHUB_OUTPUT
+          
+          # هروب سطور جديدة لأن GitHub Actions يتعامل مع قيمة واحدة في السطر
+          REPLACEMENT_ESCAPED="${REPLACEMENT//$'\n'/\\n}"
+          
+          echo "replacement<<EOF" >> $GITHUB_OUTPUT
+          echo "$REPLACEMENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+        
+ 
+      # 3️⃣ البحث / الاستبدال باستخدام perl (regex مع وضع التعليقات)
+      - name: Update mp3scraper.exe.config
+        if: steps.check_mp3_2.outputs.has_mp3 == 'true'
+        env:
+          FILE: ${{ steps.vars_2.outputs.FILE }}
+          REPLACEMENT: ${{ steps.build_2.outputs.replacement }}
+        run: |
+          perl -0777 -i -pe '
+            s{<add\s+key="Title0001"\s+value="true"/>.*?<add\s+key="episodesBeginning0001"[^>]*>}
+             {
+             $ENV{REPLACEMENT}
+             }gs;  
+            s{
+             </channel>\s*</rss>\s*
+              }{}gsx;  
+          ' "$FILE"
+
+          # تحقق سريع من النتائج (اختياري)
+          echo "=== عينة من الملف بعد الاستبدال ==="
+          head -n 20 "$FILE"
+          
+
+      # -------------------------------------------------
+      # 10️⃣ الالتزام بالملف المحدث
+      # -------------------------------------------------
+          
+      - name: Commit next_mp3.txt
+        if: steps.check_mp3_2.outputs.has_mp3 == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update next_mp3 to ${{ steps.prep_next_2.outputs.next }}"
+          file_pattern: "al-badr/الأدب-المفرد-في-قناة-السنة/next_mp3.txt"
+
+      - name: Commit last_mp3
+        if: steps.check_mp3_2.outputs.has_mp3 == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update last_mp3"
+          # نضمن إضافة كل من last_mp3.html و next_mp3.txt
+          file_pattern: "al-badr/الأدب-المفرد-في-قناة-السنة/last_mp3.html"
+          
+      - name: Commit mp3scraper.exe.config
+        if: steps.check_mp3_2.outputs.has_mp3 == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with: 
+          token: ${{ secrets.R_token }}  
+          commit_message: "Update mp3scraper.exe.config"
+          file_pattern: "al-badr/الأدب-المفرد-في-قناة-السنة/mp3scraper.exe.config"
+
+
+      # -------------------------------------------------
       # 10️⃣ الالتزام بالملف المحدث
       # -------------------------------------------------
           
