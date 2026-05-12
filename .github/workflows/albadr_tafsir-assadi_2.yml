@@ -124,7 +124,7 @@ jobs:
        #    tail -n 80 "$FILE"
           
       - name: Commit & push changes
-        working-directory: target-rep
+        working-directory: target-repo
         if : steps.filter.outputs.albadr == 'true'
         run: |
           git config user.name  "github-actions[bot]"
@@ -134,7 +134,7 @@ jobs:
           git push origin HEAD:main
 
       - name: Commit & push changes
-        working-directory: target-rep
+        working-directory: target-repo
         if : steps.filter.outputs.albadr_2 == 'true'
         run: |
           git config user.name  "github-actions[bot]"
