@@ -53,6 +53,10 @@ jobs:
           echo "FILE=mp3scraper/bin/Release/podcasts/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml" >> $GITHUB_OUTPUT
           elif [[ "${{ steps.filter.outputs.albadr_2 }}" == "true" ]]; then
           echo "FILE=mp3scraper/bin/Release/podcasts/شرح-الأدب-المفرد-(في-قناة-السنة).xml" >> $GITHUB_OUTPUT
+          else
+            # لا تغيير يطابق أي من الشروط
+            echo "FILE=" >> $GITHUB_OUTPUT
+           fi
 
       # 3️⃣ البحث / الاستبدال باستخدام perl (regex مع وضع التعليقات)
       - name: Get new item
@@ -89,7 +93,11 @@ jobs:
           echo "FILE=target-repo/عبدالرزاق-البدر/التفسير-وعلوم-القرآن/شرح-تفسير-السعدي-(تيسير-الكريم-الرحمن-في-تفسير-كلام-المنان).xml" >> $GITHUB_OUTPUT
           elif [[ "${{ steps.filter.outputs.albadr_2 }}" == "true" ]]; then
           echo "FILE=target-repo/عبدالرزاق-البدر/الآداب-والأخلاق/شرح-الأدب-المفرد-(في-قناة-السنة).xml" >> $GITHUB_OUTPUT
-          
+          else
+            # لا تغيير يطابق أي من الشروط
+            echo "FILE=" >> $GITHUB_OUTPUT
+           fi
+           
       - name: Read item file into output
         id: file_data
         run: |
