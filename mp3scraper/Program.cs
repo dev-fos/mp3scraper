@@ -448,6 +448,8 @@ namespace mp3scraper
                 XmlElement newElement7 = doc.CreateElement("itunescategory");
                 XmlElement newElement8 = doc.CreateElement("itunesimage");
 
+                XmlElement newElement9 = doc.CreateElement("podcastlocked");
+
                 newElement.InnerText = "Serial";
                 newElement2.InnerText = "Yes";
                 newElement3.InnerText = ConfigurationManager.AppSettings["channelAuthor0001"];
@@ -458,6 +460,8 @@ namespace mp3scraper
                 newElement6.AppendChild(newElement7);
                 newElement8.SetAttribute("href", "http://www.gocek.org/podcasts/mp3scraper-logo.jpg");
 
+                newElement9.InnerText = "no";
+
                 node.ParentNode.InsertAfter(newElement, node);
                 node.ParentNode.InsertAfter(newElement2, node);
                 node.ParentNode.InsertAfter(newElement3, node);
@@ -465,6 +469,7 @@ namespace mp3scraper
                 node.ParentNode.InsertAfter(newElement5, node);
                 node.ParentNode.InsertAfter(newElement6, node);
                 node.ParentNode.InsertAfter(newElement8, node);
+                node.ParentNode.InsertAfter(newElement9, node);
             }
 
             XmlNodeList iElement = doc.GetElementsByTagName("item");
@@ -497,9 +502,13 @@ namespace mp3scraper
 
                 //Console.WriteLine(dataSize);
 
-               // double seconds = (dataSize / 1024.0) / 32 ;
+                 double seconds = 1 ;
 
-                double seconds = fileSizeInBits / (int.Parse(ConfigurationManager.AppSettings["mp3Bitrat0001"]) * 1000);
+                if (int.Parse(ConfigurationManager.AppSettings["mp3Bitrat0001"]) > 0)
+                {
+
+                     seconds = fileSizeInBits / (int.Parse(ConfigurationManager.AppSettings["mp3Bitrat0001"]) * 1000);
+                }
 
                 //return TimeSpan.FromSeconds(seconds);
 
@@ -526,7 +535,13 @@ namespace mp3scraper
                     newElement4.InnerText = ConfigurationManager.AppSettings["eTitle" + ii.ToString("d4")];
                 }
 
-               // Console.WriteLine("Title0001: "  + ii);
+                if (ConfigurationManager.AppSettings["mp3Bitrat0001"].ToString() == "0")
+                {
+                    ii = ii--;
+                    newElement.InnerText = ConfigurationManager.AppSettings["duration" + ii.ToString("d4")];
+                }
+
+                // Console.WriteLine("Title0001: "  + ii);
 
                 ii++;
 
@@ -610,6 +625,7 @@ namespace mp3scraper
             string content = File.ReadAllText(filePath);
             content = content.Replace(ConfigurationManager.AppSettings["url0001"], ConfigurationManager.AppSettings["channelUrl0001"]);
             content = content.Replace("itunes", "itunes:");
+            content = content.Replace("podcastlocked", "podcast:locked");
             content = content.Replace("<rss xmlns:a10=\"http://www.w3.org/2005/Atom\" version=\"2.0\">", "<rss xmlns:a10=\"http://www.w3.org/2005/Atom\" xmlns:atom=\"http://www.w3.org/2005/Atom\" xmlns:content=\"http://purl.org/rss/1.0/modules/content/\" xmlns:googleplay=\"http://www.google.com/schemas/play-podcasts/1.0\" xmlns:itunes=\"http://www.itunes.com/dtds/podcast-1.0.dtd\" xmlns:media=\"http://search.yahoo.com/mrss/\" xmlns:podcast=\"https://podcastindex.org/namespace/1.0\" version=\"2.0\">");
             content = content.Replace("http://www.gocek.org/podcasts/mp3scraper-logo.jpg", ConfigurationManager.AppSettings["channelLogo0001"]);
             File.WriteAllText(filePath, content);
